@@ -531,7 +531,7 @@ sup.fn{font-size:10px;color:var(--brand);font-weight:700;margin-left:2px;}
 /* ===== 요약 타일 (v3) ===== */
 .tile .ksub{font-size:11.5px;color:rgba(255,255,255,.72);margin-top:1px;line-height:1.45;}
 .tile .v{font-size:27px;}
-.tile.t-imp{background:linear-gradient(120deg,#0C6B4D,#17A377);}
+.tile.t-imp{background:linear-gradient(120deg,#2C4A60,#4E7690);}
 .tile.t-good{background:linear-gradient(120deg,#0A3D73,#1B6FD0);}
 .tile.t-rate{background:linear-gradient(120deg,#07182B,#0B3C6E);border:1px solid rgba(255,255,255,.16);}
 .tile.t-rate .v{font-size:32px;}
@@ -683,6 +683,63 @@ body,button,input,select,table,th,td{word-break:keep-all;overflow-wrap:break-wor
 .lt-why{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:5px;
   line-height:1.5;white-space:normal;}
 
+/* ── 설정 모달 : 진단 메시지 · CSV 붙여넣기 ─────────────────────── */
+.cfgmsg{font-size:13px;line-height:1.65;padding:11px 13px;border-radius:5px;border:1px solid;
+  word-break:keep-all;overflow-wrap:break-word;}
+.cfgmsg.ok{background:var(--good-bg);border-color:var(--good-bd);color:var(--good-tx);}
+.cfgmsg.err{background:var(--bad-bg);border-color:var(--bad-bd);color:var(--bad-tx);}
+.cfgmsg code{background:rgba(0,0,0,.06);}
+.cfg-sep{display:flex;align-items:center;gap:10px;margin-top:4px;color:var(--muted);font-size:12px;font-weight:700;}
+.cfg-sep::before,.cfg-sep::after{content:"";flex:1;height:1px;background:var(--border);}
+#csvPaste{font-family:'Roboto Mono',ui-monospace,monospace;font-size:12.5px;line-height:1.6;width:100%;
+  padding:9px 11px;border:1px solid var(--border-strong);border-radius:4px;background:var(--surface);
+  color:var(--ink);resize:vertical;}
+
+/* ── 인증평가 결과값 중심 개편 ─────────────────────────────────── */
+.tile.t-na{background:linear-gradient(120deg,#40536B,#63768D);}
+.kpi-years{display:flex;gap:12px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);align-items:center;}
+.kpi-years b{color:var(--ink-2);font-weight:700;}
+.kpi-years .prov{font-size:10.5px;color:var(--muted);background:var(--surface-3);
+  border:1px solid var(--border);border-radius:3px;padding:0 5px;}
+.sb-k em{font-style:normal;display:block;font-size:10.5px;color:var(--muted);margin-top:1px;font-weight:400;}
+.tbl tbody tr.em td{background:var(--brand-soft);font-weight:700;}
+.tbl tbody tr.em:hover{background:var(--brand-soft2);}
+.lt-yv{font-size:13.5px;font-weight:500;color:var(--ink-2);white-space:nowrap;}
+.lt-yv.na{color:var(--muted);}
+.lt-eval{display:block;font-size:16px;font-weight:900;white-space:nowrap;letter-spacing:-.02em;}
+.lt-eval.ok{color:var(--good-tx);} .lt-eval.warn{color:var(--warn-tx);}
+.lt-eval.no{color:var(--bad-tx);}  .lt-eval.na{color:var(--muted);font-size:14px;}
+.listtbl{min-width:1240px;}
+.legend i{border-radius:2px;}
+
+/* 막대 안쪽 라벨용 대비색 */
+:root{ --on-mark:#FFFFFF; }
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){ --on-mark:#08131D; }}
+:root[data-theme="dark"]{ --on-mark:#08131D; }
+.legend i{width:12px;height:12px;border-radius:3px;}
+.legend i.dash{width:16px;height:0;border-top:2.5px dashed var(--s2);background:none;border-radius:0;}
+
+.tile.t-imp{background:linear-gradient(120deg,#2C4A60,#4E7690);}
+.gauge-wrap{width:100%;}
+
+#spotTable{min-width:430px;}
+@media (max-width:600px){ .spot-b{padding:16px;} }
+
+.listtbl{min-width:1300px;}
+.listtbl thead th{white-space:normal;line-height:1.4;}
+.kpi .delta{align-items:flex-start;line-height:1.45;}
+.kpi .delta em{display:block;}
+
+.kpi-na-txt{padding:0;}
+.kpi-na-txt b{display:block;font-size:29px;font-weight:900;color:var(--muted);letter-spacing:-.04em;line-height:1.1;}
+.kpi-na-txt em{margin-top:4px;}
+
+/* 전체 보기 : 머리글 가운데 정렬 (여러 줄로 접히는 제목이 고르게 보이도록) */
+.listtbl thead th{text-align:center;vertical-align:middle;}
+.listtbl thead th.r{text-align:center;}
+.lt-judge{align-items:center;}
+.listtbl td.mid .lt-judge{width:100%;}
+
 </style>
 </head>
 <body>
@@ -717,12 +774,12 @@ body,button,input,select,table,th,td{word-break:keep-all;overflow-wrap:break-wor
   <div class="pagehead"><svg class="wm" viewBox="0 0 200.64 200.16" aria-hidden="true" focusable="false"><use href="#skhu-sym"/></svg><div class="wrap">
     <p class="crumb">성공회대학교 대학IR센터</p>
     <h1>성과관리</h1>
-    <p class="lede">대학기관평가인증 정량지표를 기준으로 최근 2개년 실적과 인증 기준값을 모니터링합니다.</p>
+    <p class="lede">대학기관평가인증 정량지표의 평가 대학값이 인증 기준값을 충족하는지 점검합니다.</p>
   </div></div>
 
   <div class="wrap body">
     <div class="topline">
-      <p class="topline-txt">인증 정량지표 <b class="n">24</b>개 · 2025 · 2026 실적과 인증 기준값 도달 여부</p>
+      <p class="topline-txt">인증 정량지표 <b class="n">24</b>개 · 2027 인증평가모니터링 결과값 기준 충족 여부</p>
       <a class="notelink" href="#note">지표 구성 · 자료 기준<span aria-hidden="true">↓</span></a>
     </div>
 
@@ -730,8 +787,6 @@ body,button,input,select,table,th,td{word-break:keep-all;overflow-wrap:break-wor
       <div class="src" id="srcBox"><span class="dot" id="srcDot"></span><span id="srcText">출처 · 대학알리미 정보공시 및 인증 평가자료</span></div>
       <div class="spacer"></div>
       <div class="segmented" id="areaSeg"></div>
-      <label style="font-size:13px;color:var(--muted)">기준연도
-        <select id="yearSel" aria-label="기준연도 선택"></select></label>
       <button class="btn btn-line btn-sm" id="reloadBtn" hidden>↻ 새로고침</button>
       <button class="btn btn-blue btn-sm" id="cfgBtn" hidden>⚙ 구글시트 연결</button>
     </div>
@@ -745,8 +800,8 @@ body,button,input,select,table,th,td{word-break:keep-all;overflow-wrap:break-wor
           <div class="ksub" id="tTotalSub">–</div></div></div>
       <div class="tile t-imp"><div class="ic">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
-        <div><div class="k">전년 대비 개선</div><div class="v n" id="tImp">–</div>
-          <div class="ksub" id="tImpSub">최근 2개년 실적 비교</div></div></div>
+        <div><div class="k">2024 인증평가(본평가) 대비 개선</div><div class="v n" id="tNa">–</div>
+          <div class="ksub" id="tNaSub">–</div></div></div>
       <div class="tile t-good"><div class="ic">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
         <div><div class="k">기준값 달성</div><div class="v n" id="tGood">–</div>
@@ -778,7 +833,7 @@ body,button,input,select,table,th,td{word-break:keep-all;overflow-wrap:break-wor
     <section class="card spot" id="spotCard">
       <div class="spot-h">
         <div>
-          <p class="spot-eyebrow">ACTUAL · ACCREDITATION BENCHMARK</p>
+          <p class="spot-eyebrow">EVALUATION RESULT · ACCREDITATION BENCHMARK</p>
           <h3 id="spotName">–</h3>
         </div>
         <div class="spot-nav">
@@ -791,18 +846,15 @@ body,button,input,select,table,th,td{word-break:keep-all;overflow-wrap:break-wor
         <div class="spot-left">
           <p class="spot-desc" id="spotDesc">–</p>
           <div class="spot-boxes">
-            <div class="sbox"><div class="sb-k">우리 대학<span id="spotYear2"></span></div><div class="sb-v n" id="spotVal">–</div></div>
+            <div class="sbox"><div class="sb-k" id="spotValK">인증평가 결과값</div><div class="sb-v n" id="spotVal">–</div></div>
             <div class="sbox"><div class="sb-k">인증 기준값</div><div class="sb-v std" id="spotStd">–</div></div>
             <div class="sbox"><div class="sb-k">판정</div><div class="sb-v" id="spotJudge">–</div></div>
-            <div class="sbox"><div class="sb-k">전년 대비</div><div class="sb-v" id="spotDelta">–</div></div>
+            <div class="sbox"><div class="sb-k" id="spotPrev24K">직전 공시연도 대비</div><div class="sb-v n" id="spotPrev24">–</div></div>
           </div>
           <table class="dinfo" id="spotInfo" style="margin-top:16px"></table>
         </div>
         <div class="spot-right">
-          <div class="legend" style="margin-bottom:10px;justify-content:flex-end">
-            <span><i class="line" style="background:var(--s1)"></i>우리 대학</span>
-            <span><i class="dash"></i>인증 기준값</span>
-          </div>
+          <div class="legend" id="spotLegend" style="margin-bottom:10px;justify-content:flex-end"></div>
           <div id="spotChart"></div>
           <div class="scroll-x" style="border:1px solid var(--border);border-radius:5px;overflow:hidden;margin-top:14px">
             <table class="tbl" id="spotTable"></table></div>
@@ -826,7 +878,7 @@ body,button,input,select,table,th,td{word-break:keep-all;overflow-wrap:break-wor
       <h4>지표 구성 및 자료 기준</h4>
       <ol>
         <li><b>지표 구성</b> — 한국대학평가원이 주관하는 <b>대학기관평가인증 3주기 정량지표</b> 중 성공회대학교에 적용되는 사립대학 지표 <b>24개</b>로 구성했습니다.</li>
-        <li><b>실적 표기</b> — 각 지표는 최근 2개년 실적을 제시하며, 산출이 완료되지 않은 항목은 <b>‘산출 자료 준비 중’</b>으로 표기하고 그 사유를 함께 적었습니다.</li>
+        <li><b>판정 기준</b> — 판정은 연도별 실적이 아니라 <b>2027 인증평가모니터링의 결과값</b>(2027 모니터링 사전평가 산출값, 대체로 2025·2026년 공시 평균)과 인증 기준값을 비교한 것입니다. 산출 기준연도가 도래하지 않은 2030 인증평가 지표는 최근 실적으로 <b>잠정</b> 산출했고, 산출이 불가한 항목은 그 사유를 함께 적었습니다.</li>
         <li><b>자료 기준</b> — 한국대학평가원 <b>「2024년(하반기) 대학기관평가인증 편람」</b>과 본교 인증자격 모니터링 사전평가 산출자료를 기준으로 작성했습니다.</li>
       </ol>
     </div>
@@ -869,7 +921,7 @@ body,button,input,select,table,th,td{word-break:keep-all;overflow-wrap:break-wor
       <button class="btn btn-sm" id="cfgClose" style="background:rgba(255,255,255,.16);color:#fff">닫기 ✕</button></div>
     <div class="modal-b">
       <p style="font-size:13.5px;color:var(--muted);line-height:1.7">
-        구글시트 <code>KPI_DATA</code> 탭에 실적을 입력하면 이 대시보드에 그대로 반영됩니다.</p>
+        구글시트 <code>KPI_DATA</code> 탭에 값을 입력하면 이 대시보드에 그대로 반영됩니다. 판정은 <b>2027 인증평가모니터링의 결과값</b>과 인증 기준값을 비교해 자동으로 계산됩니다.</p>
       <ol class="steps">
         <li>입력 양식 파일을 구글드라이브에 올려 스프레드시트로 변환합니다.</li>
         <li><code>파일 → 공유 → 웹에 게시</code>에서 <code>KPI_DATA</code> 탭, <code>쉼표로 구분된 값(.csv)</code>을 선택해 게시합니다.</li>
@@ -878,13 +930,25 @@ body,button,input,select,table,th,td{word-break:keep-all;overflow-wrap:break-wor
       </ol>
       <div class="field"><label for="urlKpi">KPI_DATA 시트 CSV 주소</label>
         <input type="text" id="urlKpi" placeholder="https://docs.google.com/spreadsheets/d/e/…/pub?gid=0&single=true&output=csv">
-        <span class="hint">필수 열: <code>kpi_id</code>, <code>year</code>, <code>value</code> · 선택 열: <code>kpi_name</code>, <code>unit</code>, <code>기준값</code>, <code>입력메모(선택)</code></span></div>
+        <span class="hint">필수 열: <code>kpi_id</code> · 값 열: <code>2024 인증평가(본평가)</code>, <code>2025년 공시</code>, <code>2026년 공시</code>, <code>2027 인증평가모니터링의 결과값</code> · 선택 열: <code>인증 기준값</code></span></div>
       <div class="notice" style="font-size:13px"><span class="ii">⚠</span>
         <span>이 페이지가 <b>claude.ai 아티팩트</b>로 열려 있으면 보안 정책상 외부 주소를 불러올 수 없어 내장 데이터가 표시됩니다.
           실시간 연동은 HTML 파일을 학교 웹서버나 GitHub Pages 등에 올려 사용할 때 동작합니다.</span></div>
       <div style="display:flex;gap:8px;justify-content:flex-end">
         <button class="btn btn-line btn-sm" id="cfgReset">연결 해제</button>
         <button class="btn btn-blue btn-sm" id="cfgSave">저장하고 불러오기</button></div>
+      <div id="cfgMsg" class="cfgmsg" hidden></div>
+
+      <div class="cfg-sep"><span>연결이 안 될 때 · CSV 직접 붙여넣기</span></div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7">
+        구글시트에서 <code>파일 → 다운로드 → 쉼표로 구분된 값(.csv)</code>으로 받은 파일을 메모장으로 열어
+        전체 복사한 뒤 아래에 붙여넣고 <b>적용</b>을 누르세요. 주소 연결이 막힌 환경에서도 값이 바로 반영됩니다.
+        (시트 화면에서 표 전체를 드래그 복사해 붙여넣어도 됩니다.)</p>
+      <div class="field"><label for="csvPaste">CSV 내용</label>
+        <textarea id="csvPaste" rows="5" placeholder="kpi_id,2024 인증평가(본평가),2025년 공시,2026년 공시,2027 인증평가모니터링의 결과값&#10;Q01,63.2,63.6,63.3,63.4&#10;Q02,3.51,4.28,3.17,3.72"></textarea></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn btn-line btn-sm" id="pasteClear">붙여넣기 지우기</button>
+        <button class="btn btn-blue btn-sm" id="pasteApply">적용</button></div>
     </div>
   </div>
 </div>
@@ -909,15 +973,23 @@ const KPI_DEF = [
   "basis": "2024, 2025회계연도 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "결산 자료",
   "desc": "사립대학 교비회계 운영수입에서 등록금 수입이 차지하는 비율",
   "submit": 63.4,
-  "dept": "총무처 회계팀",
+  "dept": "기획팀 · 회계팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "낮을수록 기준값 달성에 유리(등록금 외 재원이 늘어날수록 비율 감소)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 63.4,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 63.2,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "평균값의 소수점 둘째 자리에서 절사",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q02",
@@ -937,15 +1009,23 @@ const KPI_DEF = [
   "basis": "2024, 2025회계연도 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "결산 자료",
   "desc": "교비회계 운영수입에서 기부금이 차지하는 비율",
   "submit": 3.72,
-  "dept": "총무처 회계팀",
+  "dept": "기획팀 · 회계팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(기부금 모금 실적이 늘어날수록 비율 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 3.72,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 3.51,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "평균값의 소수점 셋째 자리에서 절사",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q03",
@@ -965,15 +1045,23 @@ const KPI_DEF = [
   "basis": "2024, 2025회계연도 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "결산 자료",
   "desc": "사립대학 교비회계 운영수입에서 법인전입금이 차지하는 비율",
   "submit": 0.44,
-  "dept": "총무처 회계팀",
+  "dept": "기획팀 · 회계팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(법인전입금이 늘어날수록 비율 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 0.44,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 1.27,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "평균값의 소수점 셋째 자리에서 절사",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q04",
@@ -993,15 +1081,23 @@ const KPI_DEF = [
   "basis": "2024, 2025회계연도 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "결산 자료",
   "desc": "등록금 수입 대비 학생 교육에 투입한 총교육비의 비율",
   "submit": 138.6,
-  "dept": "총무처 회계팀",
+  "dept": "회계팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(교육비 투자가 등록금 수입보다 크게 늘어날수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 138.6,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 150.3,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q05",
@@ -1021,15 +1117,23 @@ const KPI_DEF = [
   "basis": "2025.4.1., 2026.4.1. 평균 편제 및 재학생 기준 중 낮은 수치",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "교원 법정정원 대비 전임교원 확보 비율",
   "submit": 71.7,
-  "dept": "교무처 교무팀",
+  "dept": "교무팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(전임교원 수 증가 또는 편제정원 감소 시 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 71.7,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 73.5,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q06",
@@ -1049,21 +1153,29 @@ const KPI_DEF = [
   "basis": "2025.1학기, 2026.1학기",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "강사에게 지급한 시간당 평균 강의료",
   "submit": 61200.0,
   "stdY": {
    "2025": 53100,
    "2026": 54200
   },
-  "dept": "교무처 교무팀",
+  "dept": "교무팀",
   "disclosure": "연 1회 (6월 공시)",
   "direction": "높을수록 기준값 달성에 유리(시간당 지급 단가가 높을수록 증가)",
   "fnote": "",
   "remark": [
    "2025년 53,100원 · 2026년 54,200원 (물가상승률을 고려하여 매년 재설정)"
   ],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 61200.0,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 61200,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q07",
@@ -1083,15 +1195,23 @@ const KPI_DEF = [
   "basis": "2024.1.1.~2024.12.31., 2025.1.1.~2025.12.31. 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "전임교원 1인당 대학이 자체 지원한 교내연구비와 교내대응자금",
   "submit": 891.0,
-  "dept": "연구정보처 연구지원팀",
+  "dept": "연구지원팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(교내연구비 예산이 늘어날수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 891.0,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 827.8,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q08",
@@ -1111,15 +1231,23 @@ const KPI_DEF = [
   "basis": "2025.4.1., 2026.4.1. 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "직원 1명이 담당하는 학부와 대학원 재학생 수",
   "submit": 30.4,
-  "dept": "교무처 교무팀",
+  "dept": "총무팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "낮을수록 기준값 달성에 유리(직원 수 증가 또는 재학생 수 감소 시 감소)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 30.4,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 29.0,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "평균값의 소수점 둘째 자리에서 절사",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q09",
@@ -1139,15 +1267,23 @@ const KPI_DEF = [
   "basis": "2024, 2025회계연도 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "학부 장학금이 학부 등록금에서 차지하는 비율",
   "submit": 17.4,
-  "dept": "학생복지처 학생복지팀",
+  "dept": "학생복지팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(장학금 총액이 등록금 총액보다 크게 늘어날수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 17.4,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 17.6,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "평균값의 소수점 둘째 자리에서 절사",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q10",
@@ -1167,15 +1303,23 @@ const KPI_DEF = [
   "basis": "2026.4.1.",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "교사 기준면적 대비 보유면적의 비율",
   "submit": 139.0,
-  "dept": "교무처 교무팀",
+  "dept": "시설관리팀",
   "disclosure": "연 1회 (10월 공시)",
   "direction": "높을수록 기준값 달성에 유리(교사시설 보유면적이 기준면적보다 여유 있을수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 139.0,
+  "evalProv": false,
+  "evalHow": "평가 기준일 2026.4.1. 현재 값",
+  "prev2024": 123.7,
+  "evalHowShort": "기준일 단년 값",
+  "evalRound": "연도별 평균을 적용하지 않고 평가 기준일 시점의 값을 그대로 사용",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q11",
@@ -1195,7 +1339,7 @@ const KPI_DEF = [
   "basis": "2026.4.1.",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "학부 및 주간 대학원 재학생 대비 기숙사 수용 가능 인원의 비율",
   "submit": 18.4,
   "dept": "학생생활관",
@@ -1203,7 +1347,15 @@ const KPI_DEF = [
   "direction": "높을수록 기준값 달성에 유리(기숙사 수용 인원이 늘어날수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 18.4,
+  "evalProv": false,
+  "evalHow": "평가 기준일 2026.4.1. 현재 값",
+  "prev2024": 21.1,
+  "evalHowShort": "기준일 단년 값",
+  "evalRound": "연도별 평균을 적용하지 않고 평가 기준일 시점의 값을 그대로 사용",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q12",
@@ -1223,7 +1375,7 @@ const KPI_DEF = [
   "basis": "2024, 2025회계연도 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "결산 자료",
   "desc": "재학생 1인당 연간 도서·전자자료·연속간행물 구입비",
   "submit": 81937.5,
   "dept": "중앙도서관",
@@ -1231,7 +1383,15 @@ const KPI_DEF = [
   "direction": "높을수록 기준값 달성에 유리(도서·전자자료 구입 예산이 늘어날수록 증가)",
   "fnote": "자료구입비 = 기타운영비 중 중앙도서관 전자정보 구독료 + 도서구입비",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 81937.5,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 82788.0,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q13",
@@ -1251,7 +1411,7 @@ const KPI_DEF = [
   "basis": "2025.4.1., 2026.4.1. 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학 자체 작성",
   "desc": "재학생 1,000명당 환산 도서관 직원 수",
   "submit": 1.17,
   "dept": "중앙도서관",
@@ -1259,7 +1419,15 @@ const KPI_DEF = [
   "direction": "높을수록 기준값 달성에 유리(도서관 전담 직원이 늘어날수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 1.17,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 1.31,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "평균값의 소수점 셋째 자리에서 절사",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q14",
@@ -1279,15 +1447,23 @@ const KPI_DEF = [
   "basis": "2025.4.1., 2026.4.1. 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "정원내 모집인원 대비 실제 입학한 정원내 신입생의 비율",
   "submit": 103.7,
-  "dept": "입학홍보처 입학홍보팀",
+  "dept": "입학홍보팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(모집정원 대비 입학자가 많을수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 103.7,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 99.9,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q15",
@@ -1307,15 +1483,23 @@ const KPI_DEF = [
   "basis": "2025.4.1., 2026.4.1. 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "학생정원 대비 정원내 재학생의 비율",
   "submit": 96.8,
-  "dept": "입학홍보처 입학홍보팀",
+  "dept": "교무팀 · 입학홍보팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(학사경고·제적·휴학 관리로 재학생이 유지될수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 96.8,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 93.8,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
   "id": "Q16",
@@ -1335,19 +1519,27 @@ const KPI_DEF = [
   "basis": "2024.1.1.~2024.12.31., 2025.1.1.~2025.12.31. 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "전임교원 1인당 한국연구재단 등재(후보)학술지 게재 논문 수",
   "submit": 0.447,
-  "dept": "연구정보처 연구지원팀",
+  "dept": "연구지원팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(등재(후보)지 게재 실적이 늘어날수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 0.447,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 0.291,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "평균값의 소수점 넷째 자리에서 절사",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
-  "id": "Q18",
-  "no": 18,
+  "id": "Q17",
+  "no": 17,
   "code": "5.3",
   "codeName": "연구성과",
   "areaKey": "5영역",
@@ -1363,19 +1555,27 @@ const KPI_DEF = [
   "basis": "2024.1.1.~2024.12.31., 2025.1.1.~2025.12.31. 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "전임교원 1인당 저서·역서 실적",
   "submit": 0.113,
-  "dept": "연구정보처 연구지원팀",
+  "dept": "연구지원팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(저서·역서 발간 실적이 늘어날수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 0.113,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 0.092,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
-  "id": "Q19",
-  "no": 19,
+  "id": "Q18",
+  "no": 18,
   "code": "5.3",
   "codeName": "연구성과",
   "areaKey": "5영역",
@@ -1391,19 +1591,27 @@ const KPI_DEF = [
   "basis": "2024.1.1.~2024.12.31., 2025.1.1.~2025.12.31. 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "전임교원 1인당 외부에서 수주한 교외연구비와 교외대응자금",
   "submit": 8218.7,
-  "dept": "연구정보처 연구지원팀",
+  "dept": "연구지원팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(외부 수탁·국고 연구비 수주가 늘어날수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 8218.7,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 23295.6,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "평균값의 소수점 둘째 자리에서 절사",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
-  "id": "Q20",
-  "no": 20,
+  "id": "Q19",
+  "no": 19,
   "code": "5.3",
   "codeName": "연구성과",
   "areaKey": "5영역",
@@ -1419,10 +1627,10 @@ const KPI_DEF = [
   "basis": "2024.1.1.~2024.12.31., 2025.1.1.~2025.12.31. 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "등재(후보)지 · 저역서 · 교외연구비를 각 기준값으로 나누어 합산한 연구성과 지표",
   "submit": 7.2,
-  "dept": "연구정보처 연구지원팀",
+  "dept": "연구지원팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(세 개 연구 지표의 기준값 대비 달성 배수를 합산하므로 개별 지표가 개선될수록 증가)",
   "fnote": "",
@@ -1430,11 +1638,19 @@ const KPI_DEF = [
    "자연계열 교수 비율이 20% 미만인 대학은 전임교원 1인당 SCI급 논문 실적을 제외하고 3 이상",
    "기준값 대비 실적의 합은 2개 이상의 지표가 기준값을 충족한 경우에만 인정"
   ],
-  "naReason": ""
+  "naReason": "",
+  "evalVal": 7.2,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 13.9,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "평균값의 소수점 둘째 자리에서 절사",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
-  "id": "Q21",
-  "no": 21,
+  "id": "Q20",
+  "no": 20,
   "code": "5.4",
   "codeName": "취·창업지원 및 성과",
   "areaKey": "5영역",
@@ -1450,19 +1666,27 @@ const KPI_DEF = [
   "basis": "2024.12.31., 2025.12.31. 평균",
   "evalKey": "2027",
   "evalName": "2027 모니터링사전평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "졸업자 중 취업대상자 대비 취업자의 비율",
   "submit": null,
-  "dept": "학생성장지원센터",
+  "dept": "진로취창업지원팀",
   "disclosure": "연 1회 (12월 공시)",
   "direction": "높을수록 기준값 달성에 유리(졸업생 취업자 수가 늘어날수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": "2025년도 취업통계조사 2027년 1월 실시 예정"
+  "naReason": "2025년도 취업통계조사 2027년 1월 실시 예정",
+  "evalVal": null,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 59.5,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2027 인증평가모니터링의 결과값",
+  "evalLabelShort": "2027 모니터링 결과값"
  },
  {
-  "id": "Q22",
-  "no": 22,
+  "id": "Q21",
+  "no": 21,
   "code": "1.5",
   "codeName": "교육성과(2030인증평가 신설)",
   "areaKey": "1영역",
@@ -1478,19 +1702,27 @@ const KPI_DEF = [
   "basis": "2028, 2029, 2030 공시 평균",
   "evalKey": "2030",
   "evalName": "2030 인증평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학정보공시",
   "desc": "정원 내외를 합한 재학생이 학생정원에서 차지하는 비율",
   "submit": null,
-  "dept": "입학홍보처 입학홍보팀",
+  "dept": "교무팀 · 입학홍보팀",
   "disclosure": "연 1회 (8월 공시)",
   "direction": "높을수록 기준값 달성에 유리(정원 내외 재학생이 유지될수록 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "2030 인증평가 산출 기준연도(2028~2030년 공시) 미도래",
+  "evalVal": null,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": null,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2030 인증평가의 결과값",
+  "evalLabelShort": "2030 인증평가 결과값"
  },
  {
-  "id": "Q23",
-  "no": 23,
+  "id": "Q22",
+  "no": 22,
   "code": "4.4",
   "codeName": "교육시설",
   "areaKey": "4영역",
@@ -1506,19 +1738,27 @@ const KPI_DEF = [
   "basis": "2030.4.1.",
   "evalKey": "2030",
   "evalName": "2030 인증평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학 자체 작성",
   "desc": "재학생 1인당 일반·멀티미디어 강의실 면적",
   "submit": null,
-  "dept": "총무처 시설관리팀",
+  "dept": "시설관리팀",
   "disclosure": "-",
   "direction": "높을수록 기준값 달성에 유리(강의실 면적 증가 또는 재학생 수 감소 시 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "2030 인증평가 기준일(2030.4.1.) 미도래",
+  "evalVal": null,
+  "evalProv": false,
+  "evalHow": "평가 기준일 2030.4.1. 현재 값",
+  "prev2024": 1.3,
+  "evalHowShort": "기준일 단년 값",
+  "evalRound": "",
+  "evalLabel": "2030 인증평가의 결과값",
+  "evalLabelShort": "2030 인증평가 결과값"
  },
  {
-  "id": "Q24",
-  "no": 24,
+  "id": "Q23",
+  "no": 23,
   "code": "4.4",
   "codeName": "교육시설",
   "areaKey": "4영역",
@@ -1534,19 +1774,27 @@ const KPI_DEF = [
   "basis": "2030.4.1.",
   "evalKey": "2030",
   "evalName": "2030 인증평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "대학 자체 작성",
   "desc": "계열 가중 재학생 1인당 실험·실습실 면적",
   "submit": null,
-  "dept": "총무처 시설관리팀",
+  "dept": "시설관리팀",
   "disclosure": "-",
   "direction": "높을수록 기준값 달성에 유리(실험·실습실 면적 증가 또는 재학생 수 감소 시 증가)",
   "fnote": "",
   "remark": [],
-  "naReason": ""
+  "naReason": "2030 인증평가 기준일(2030.4.1.) 미도래",
+  "evalVal": null,
+  "evalProv": false,
+  "evalHow": "평가 기준일 2030.4.1. 현재 값",
+  "prev2024": 2.75,
+  "evalHowShort": "기준일 단년 값",
+  "evalRound": "",
+  "evalLabel": "2030 인증평가의 결과값",
+  "evalLabelShort": "2030 인증평가 결과값"
  },
  {
-  "id": "Q25",
-  "no": 25,
+  "id": "Q24",
+  "no": 24,
   "code": "4.4",
   "codeName": "교육시설",
   "areaKey": "4영역",
@@ -1562,20 +1810,28 @@ const KPI_DEF = [
   "basis": "2027, 2028, 2029회계연도 평균",
   "evalKey": "2030",
   "evalName": "2030 인증평가",
-  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "src": "결산 자료",
   "desc": "재학생 1인당 실험·실습 기자재 구입비",
   "submit": null,
-  "dept": "총무처 시설관리팀",
+  "dept": "나눔융합전공대학",
   "disclosure": "-",
   "direction": "높을수록 기준값 달성에 유리(실험·실습 기자재 구입 예산이 늘어날수록 증가)",
   "fnote": "",
   "remark": [
    "기준값 89천원 = (공학계열 평균등록금 8,073,973원 − 인문사회계열 평균등록금 7,479,938원) × 15%"
   ],
-  "naReason": "산출 대상 회계연도(2027~2029) 미도래"
+  "naReason": "2030 인증평가 산출 대상 회계연도(2027~2029) 미도래",
+  "evalVal": null,
+  "evalProv": false,
+  "evalHow": "2025 · 2026년 평균",
+  "prev2024": 221.2,
+  "evalHowShort": "2개년 평균",
+  "evalRound": "",
+  "evalLabel": "2030 인증평가의 결과값",
+  "evalLabelShort": "2030 인증평가 결과값"
  }
 ];
-const SAMPLE_VALUES = [{"id": "Q01", "year": 2024, "v": 63.2}, {"id": "Q01", "year": 2025, "v": 63.6}, {"id": "Q01", "year": 2026, "v": 63.3}, {"id": "Q02", "year": 2024, "v": 3.51}, {"id": "Q02", "year": 2025, "v": 4.28}, {"id": "Q02", "year": 2026, "v": 3.17}, {"id": "Q03", "year": 2024, "v": 1.27}, {"id": "Q03", "year": 2025, "v": 0.12}, {"id": "Q03", "year": 2026, "v": 0.77}, {"id": "Q04", "year": 2024, "v": 150.3}, {"id": "Q04", "year": 2025, "v": 143.4}, {"id": "Q04", "year": 2026, "v": 133.8}, {"id": "Q05", "year": 2024, "v": 73.5}, {"id": "Q05", "year": 2025, "v": 69.5}, {"id": "Q05", "year": 2026, "v": 73.9}, {"id": "Q06", "year": 2024, "v": 61200.0}, {"id": "Q06", "year": 2025, "v": 61200.0}, {"id": "Q06", "year": 2026, "v": 61200.0}, {"id": "Q07", "year": 2024, "v": 827.8}, {"id": "Q07", "year": 2025, "v": 895.0}, {"id": "Q07", "year": 2026, "v": 887.0}, {"id": "Q08", "year": 2024, "v": 29.0}, {"id": "Q08", "year": 2025, "v": 30.4}, {"id": "Q08", "year": 2026, "v": 30.5}, {"id": "Q09", "year": 2024, "v": 17.6}, {"id": "Q09", "year": 2025, "v": 16.6}, {"id": "Q09", "year": 2026, "v": 18.3}, {"id": "Q10", "year": 2024, "v": 123.7}, {"id": "Q10", "year": 2025, "v": 137.7}, {"id": "Q10", "year": 2026, "v": 139.0}, {"id": "Q11", "year": 2024, "v": 21.1}, {"id": "Q11", "year": 2025, "v": 19.3}, {"id": "Q11", "year": 2026, "v": 18.4}, {"id": "Q12", "year": 2024, "v": 82788.0}, {"id": "Q12", "year": 2025, "v": 81998.9}, {"id": "Q12", "year": 2026, "v": 81876.1}, {"id": "Q13", "year": 2024, "v": 1.31}, {"id": "Q13", "year": 2025, "v": 1.2}, {"id": "Q13", "year": 2026, "v": 1.15}, {"id": "Q14", "year": 2024, "v": 99.9}, {"id": "Q14", "year": 2025, "v": 100.3}, {"id": "Q14", "year": 2026, "v": 107.1}, {"id": "Q15", "year": 2024, "v": 93.8}, {"id": "Q15", "year": 2025, "v": 94.5}, {"id": "Q15", "year": 2026, "v": 99.1}, {"id": "Q16", "year": 2024, "v": 0.291}, {"id": "Q16", "year": 2025, "v": 0.368}, {"id": "Q16", "year": 2026, "v": 0.527}, {"id": "Q18", "year": 2024, "v": 0.092}, {"id": "Q18", "year": 2025, "v": 0.117}, {"id": "Q18", "year": 2026, "v": 0.109}, {"id": "Q19", "year": 2024, "v": 23295.6}, {"id": "Q19", "year": 2025, "v": 10674.9}, {"id": "Q19", "year": 2026, "v": 5762.6}, {"id": "Q20", "year": 2024, "v": 13.9}, {"id": "Q20", "year": 2025, "v": 8.3}, {"id": "Q20", "year": 2026, "v": 6.2}, {"id": "Q21", "year": 2024, "v": 59.5}, {"id": "Q21", "year": 2025, "v": 56.9}, {"id": "Q22", "year": 2025, "v": 111.2}, {"id": "Q22", "year": 2026, "v": 117.2}, {"id": "Q23", "year": 2024, "v": 1.3}, {"id": "Q23", "year": 2025, "v": 1.42}, {"id": "Q23", "year": 2026, "v": 1.35}, {"id": "Q24", "year": 2024, "v": 2.75}, {"id": "Q24", "year": 2025, "v": 2.63}, {"id": "Q24", "year": 2026, "v": 2.59}, {"id": "Q25", "year": 2024, "v": 221.2}, {"id": "Q25", "year": 2025, "v": 227.0}];
+const SAMPLE_VALUES = [{"id": "Q01", "year": 2024, "v": 63.2}, {"id": "Q01", "year": 2025, "v": 63.6}, {"id": "Q01", "year": 2026, "v": 63.3}, {"id": "Q02", "year": 2024, "v": 3.51}, {"id": "Q02", "year": 2025, "v": 4.28}, {"id": "Q02", "year": 2026, "v": 3.17}, {"id": "Q03", "year": 2024, "v": 1.27}, {"id": "Q03", "year": 2025, "v": 0.12}, {"id": "Q03", "year": 2026, "v": 0.77}, {"id": "Q04", "year": 2024, "v": 150.3}, {"id": "Q04", "year": 2025, "v": 143.4}, {"id": "Q04", "year": 2026, "v": 133.8}, {"id": "Q05", "year": 2024, "v": 73.5}, {"id": "Q05", "year": 2025, "v": 69.5}, {"id": "Q05", "year": 2026, "v": 73.9}, {"id": "Q06", "year": 2024, "v": 61200.0}, {"id": "Q06", "year": 2025, "v": 61200.0}, {"id": "Q06", "year": 2026, "v": 61200.0}, {"id": "Q07", "year": 2024, "v": 827.8}, {"id": "Q07", "year": 2025, "v": 895.0}, {"id": "Q07", "year": 2026, "v": 887.0}, {"id": "Q08", "year": 2024, "v": 29.0}, {"id": "Q08", "year": 2025, "v": 30.4}, {"id": "Q08", "year": 2026, "v": 30.5}, {"id": "Q09", "year": 2024, "v": 17.6}, {"id": "Q09", "year": 2025, "v": 16.6}, {"id": "Q09", "year": 2026, "v": 18.3}, {"id": "Q10", "year": 2024, "v": 123.7}, {"id": "Q10", "year": 2025, "v": 137.7}, {"id": "Q10", "year": 2026, "v": 139.0}, {"id": "Q11", "year": 2024, "v": 21.1}, {"id": "Q11", "year": 2025, "v": 19.3}, {"id": "Q11", "year": 2026, "v": 18.4}, {"id": "Q12", "year": 2024, "v": 82788.0}, {"id": "Q12", "year": 2025, "v": 81998.9}, {"id": "Q12", "year": 2026, "v": 81876.1}, {"id": "Q13", "year": 2024, "v": 1.31}, {"id": "Q13", "year": 2025, "v": 1.2}, {"id": "Q13", "year": 2026, "v": 1.15}, {"id": "Q14", "year": 2024, "v": 99.9}, {"id": "Q14", "year": 2025, "v": 100.3}, {"id": "Q14", "year": 2026, "v": 107.1}, {"id": "Q15", "year": 2024, "v": 93.8}, {"id": "Q15", "year": 2025, "v": 94.5}, {"id": "Q15", "year": 2026, "v": 99.1}, {"id": "Q16", "year": 2024, "v": 0.291}, {"id": "Q16", "year": 2025, "v": 0.368}, {"id": "Q16", "year": 2026, "v": 0.527}, {"id": "Q17", "year": 2024, "v": 0.092}, {"id": "Q17", "year": 2025, "v": 0.117}, {"id": "Q17", "year": 2026, "v": 0.109}, {"id": "Q18", "year": 2024, "v": 23295.6}, {"id": "Q18", "year": 2025, "v": 10674.9}, {"id": "Q18", "year": 2026, "v": 5762.6}, {"id": "Q19", "year": 2024, "v": 13.9}, {"id": "Q19", "year": 2025, "v": 8.3}, {"id": "Q19", "year": 2026, "v": 6.2}, {"id": "Q20", "year": 2024, "v": 59.5}, {"id": "Q20", "year": 2025, "v": 56.9}, {"id": "Q21", "year": 2025, "v": 111.2}, {"id": "Q21", "year": 2026, "v": 117.2}, {"id": "Q22", "year": 2024, "v": 1.3}, {"id": "Q22", "year": 2025, "v": 1.42}, {"id": "Q22", "year": 2026, "v": 1.35}, {"id": "Q23", "year": 2024, "v": 2.75}, {"id": "Q23", "year": 2025, "v": 2.63}, {"id": "Q23", "year": 2026, "v": 2.59}, {"id": "Q24", "year": 2024, "v": 221.2}, {"id": "Q24", "year": 2025, "v": 227.0}];
 </script>
 <script>
 /* ================= 설정 / CSV / 계산 ================= */
@@ -1614,6 +1870,11 @@ function toObjects(rows){
 function pick(o,names){for(const n of names){const k=n.toLowerCase().replace(/\s/g,'');if(o[k]!==undefined&&o[k]!=='')return o[k];}return'';}
 function num(v){if(v===''||v==null)return null;const n=parseFloat(String(v).replace(/[,\s%원편]/g,''));return isFinite(n)?n:null;}
 async function fetchCSV(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return toObjects(parseCSV(await r.text()));}
+
+/* 붙여넣은 CSV 데이터 저장소 */
+const LS_ROWS='skhu_ir_rows_v1';
+function loadRows(){try{const r=localStorage.getItem(LS_ROWS);return r?JSON.parse(r):null;}catch(e){return null;}}
+function saveRows(rows){try{rows?localStorage.setItem(LS_ROWS,JSON.stringify(rows)):localStorage.removeItem(LS_ROWS);}catch(e){}}
 </script>
 <script>
 
@@ -1633,19 +1894,64 @@ let YEARS = [], CUR_YEAR = null, CUR_AREA = 'all', CUR_KPI = null;
 
 function useSample(){ ROWS = SAMPLE_VALUES.slice(); LIVE = false; }
 
+/* CSV 객체 → 대시보드 값 반영 (가로형 · 세로형 모두 지원) */
+function rowsFromObjs(objs){
+  const rows = [];
+  let hit = 0;
+  objs.forEach(o => {
+    const id = pick(o, ['kpi_id','kpiid','지표id','지표코드','id']).toUpperCase();
+    if(!id || !META[id]) return;
+    const d = META[id];
+
+    /* 세로형 : kpi_id / year / value */
+    const y = num(pick(o, ['year','연도','기준연도']));
+    if(y){
+      const v = num(pick(o, ['value','실적값','값','실적']));
+      if(v != null){ rows.push({id:id, year:y, v:v}); hit++; }
+    }else{
+      /* 가로형 : 연도 열이 그대로 머리글인 경우 */
+      Object.keys(o).forEach(k => {
+        const mm = k.match(/^(20\d\d)/);
+        if(mm && !/본평가|결과|인증평가/.test(k)){
+          const v = num(o[k]);
+          if(v != null){ rows.push({id:id, year:+mm[1], v:v}); hit++; }
+        }
+      });
+    }
+    const p24 = num(pick(o, ['2024인증평가(본평가)','2024인증평가본평가','2024인증평가','2024본평가','본평가','prev2024']));
+    if(p24 != null){ d.prev2024 = p24; hit++; }
+    const ev = num(pick(o, ['2027인증평가모니터링의결과값','2027인증평가모니터링결과값','2027모니터링결과값','2027결과값','평가결과값','결과값','evalvalue']));
+    if(ev != null){ d.evalVal = ev; hit++; }
+    const std = num(pick(o, ['인증기준값','기준값','std']));
+    if(std != null) d.std = std;
+  });
+  if(!hit) return [];
+  return rows;
+}
+
+/* 붙여넣은 텍스트 → 실적 행 (쉼표 CSV · 탭 구분 모두 허용) */
+function rowsFromText(text){
+  let t = String(text).trim();
+  if(!t) throw new Error('내용이 비어 있습니다');
+  if(t.indexOf('\t') >= 0 && t.split('\n')[0].indexOf(',') < 0)
+    t = t.split('\n').map(l => l.split('\t').map(c => '"'+c.replace(/"/g,'""')+'"').join(',')).join('\n');
+  const objs = toObjects(parseCSV(t));
+  if(!objs.length) throw new Error('표 형태로 읽히지 않습니다. 첫 줄에 머리글(kpi_id 등)이 있어야 합니다');
+  const out = rowsFromObjs(objs);
+  if(!out.length) throw new Error('일치하는 지표가 없습니다. kpi_id 열이 Q01~Q24 형식인지 확인해 주세요');
+  return out;
+}
+
 async function loadData(){
+  const kept = loadRows();
+  if(kept && kept.length){
+    ROWS = kept; LIVE = true;
+    LOAD_MSG = '붙여넣은 데이터 ' + kept.length + '행을 사용 중입니다.';
+    return;
+  }
   if(!CFG.kpi){ useSample(); LOAD_MSG = '구글시트가 연결되지 않아 내장 데이터를 표시합니다.'; return; }
   try{
-    const objs = await fetchCSV(CFG.kpi), out = [];
-    objs.forEach(o => {
-      const id = pick(o, ['kpi_id','kpiid','지표id','지표코드','id']).toUpperCase();
-      const y  = num(pick(o, ['year','연도','기준연도']));
-      if(!id || !META[id] || !y) return;
-      const v = num(pick(o, ['value','실적값','값','실적']));
-      if(v != null) out.push({id:id, year:y, v:v});
-      const std = num(pick(o, ['기준값','인증기준값','std']));
-      if(std != null) META[id].std = std;
-    });
+    const out = rowsFromObjs(await fetchCSV(CFG.kpi));
     if(!out.length) throw new Error('유효한 행이 없습니다');
     ROWS = out; LIVE = true; LOAD_MSG = '';
   }catch(err){
@@ -1708,6 +2014,22 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':
 const $ = s => document.querySelector(s);
 const judged = y => KPI_DEF.filter(d => statusOf(d.id, y) !== 'na');
 const inView = () => CUR_AREA === 'all' ? KPI_DEF : KPI_DEF.filter(d => d.areaKey === CUR_AREA);
+/* ── 인증평가 결과값(2027 모니터링 사전평가 제출값) 기준 판정 ── */
+const STD_Y = 2026;                       /* 기준값 판단 연도 */
+const evalStd    = d => stdOf(d, STD_Y);
+const evalStdTxt = d => stdTxtOf(d, STD_Y);
+const evalRatio  = d => ratioValOf(d.evalVal, d, STD_Y);
+function evalStatus(d){ const p = evalRatio(d); return p == null ? 'na' : (p >= 100 ? 'ok' : p >= 95 ? 'warn' : 'no'); }
+const prevRatio  = d => d.prev2024 == null ? null : ratioValOf(d.prev2024, d, STD_Y);
+const HAS_PREV   = () => KPI_DEF.some(d => d.prev2024 != null);
+function evalDelta(d){
+  if(d.prev2024 == null || d.evalVal == null) return null;
+  const diff = d.evalVal - d.prev2024;
+  return {diff:diff, pct: d.prev2024 ? diff / Math.abs(d.prev2024) * 100 : null,
+          better: d.op === '이하' ? diff < 0 : diff > 0};
+}
+const yv = (id, y) => { const r = atYear(id, y); return r ? r.v : null; };
+
 function improvedOf(id, y){        /* 전년 대비 개선 여부 */
   const d = META[id], del = deltaOf(id, y);
   if(!del || del.diff === 0) return null;
@@ -1721,17 +2043,15 @@ function arc(cx,cy,r,a0,a1){
   return `M ${x0.toFixed(2)} ${y0.toFixed(2)} A ${r} ${r} 0 ${Math.abs(a1-a0)>180?1:0} ${a1>a0?1:0} ${x1.toFixed(2)} ${y1.toFixed(2)}`;
 }
 function gaugeChart(pct, label){
-  const W=250,H=168,cx=125,cy=132,R=96,SW=20;
+  const W=260,H=176,cx=130,cy=136,R=96,SW=18;
   const col = pct==null?'var(--muted)': pct>=100?'var(--good)': pct>=80?'var(--warn)':'var(--bad)';
   const clamp = Math.max(0, Math.min(100, pct==null?0:pct));
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:290px;display:block" role="img"
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:300px;display:block;margin:0 auto" role="img"
       aria-label="인증 기준 충족률 ${pct==null?'자료없음':pct.toFixed(1)+'퍼센트'}">
     <path d="${arc(cx,cy,R,180,360)}" fill="none" stroke="var(--surface-3)" stroke-width="${SW}" stroke-linecap="round"/>
     ${clamp>0?`<path d="${arc(cx,cy,R,180,180+clamp*1.8)}" fill="none" stroke="${col}" stroke-width="${SW}" stroke-linecap="round"/>`:''}
-    <text x="${cx}" y="${cy-14}" text-anchor="middle" font-size="46" font-weight="900" fill="var(--ink)" style="letter-spacing:-2px">${pct==null?'–':pct.toFixed(1)}</text>
-    <text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="12.5" fill="var(--muted)">%  ·  ${esc(label)}</text>
-    <text x="${cx-R}" y="${cy+18}" text-anchor="middle" font-size="10.5" fill="var(--muted)">0</text>
-    <text x="${cx+R}" y="${cy+18}" text-anchor="middle" font-size="10.5" fill="var(--muted)">100</text>
+    <text x="${cx}" y="${cy-18}" text-anchor="middle" font-size="38" font-weight="900" fill="var(--ink)" style="letter-spacing:-1.5px">${pct==null?'–':pct.toFixed(1)}<tspan font-size="18" font-weight="700" dx="2">%</tspan></text>
+    <text x="${cx}" y="${cy+10}" text-anchor="middle" font-size="12.5" fill="var(--muted)">${esc(label)}</text>
   </svg>`;
 }
 function donutChart(parts, total){
@@ -1757,11 +2077,11 @@ function donutChart(parts, total){
         <span style="color:var(--muted);font-size:12px">${total?Math.round(p.v/total*100):0}%</span></div>`).join('')}
     </div></div>`;
 }
-function areaStatChart(y){
+function areaStatChart(){
   return `<div class="areastat">${AREAS.map(a => {
     const ms = KPI_DEF.filter(d => d.areaKey === a.key);
     const c = {ok:0,warn:0,no:0,na:0};
-    ms.forEach(d => c[statusOf(d.id, y)]++);
+    ms.forEach(d => c[evalStatus(d)]++);
     const okAll = c.ok, noAll = c.warn + c.no, tot = ms.length;
     const seg = (n,cls) => n ? `<i class="${cls}" style="width:${(n/tot*100).toFixed(2)}%"></i>` : '';
     return `<div class="row" style="--ac:${a.color}">
@@ -1772,66 +2092,113 @@ function areaStatChart(y){
   <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:2px">
     <span><i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--good);vertical-align:-1px;margin-right:5px"></i>충족</span>
     <span><i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bad);vertical-align:-1px;margin-right:5px"></i>미충족</span>
-    <span><i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--border-strong);vertical-align:-1px;margin-right:5px"></i>자료 준비 중</span>
+    <span><i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--border-strong);vertical-align:-1px;margin-right:5px"></i>산출 준비 중</span>
   </div></div>`;
 }
-/* 최근 2개 연도 실적 추이 + 인증 기준선 */
-function trendChart(id){
-  const m = META[id], ys = shownYears();
-  const s = ys.map(y => ({year:y, v:(atYear(id,y)||{}).v ?? null}));
-  if(!s.some(r => r.v != null))
-    return `<div class="chart-na">산출 자료 준비 중${m.naReason?`<span>${esc(m.naReason)}</span>`:''}</div>`;
-  const W=560,H=250,L=58,R=118,T=30,B=40,iw=W-L-R,ih=H-T-B;
-  const stdRef = stdOf(m, ys[ys.length-1]);
-  const vals = s.filter(r=>r.v!=null).map(r=>r.v).concat(stdRef!=null?[stdRef]:[]);
-  let mx = Math.max(...vals), mn = Math.min(...vals);
-  const pad = (mx-mn) || Math.abs(mx)*0.25 || 1;
-  mn = Math.max(0, mn - pad*0.9); mx = mx + pad*0.55;
-  const step = niceStep((mx-mn)/3);
-  mn = Math.max(0, Math.floor(mn/step)*step); mx = Math.ceil(mx/step)*step;
-  const X = i => L + (s.length===1 ? iw/2 : i*iw/(s.length-1));
-  const Y = v => T + ih - ((v-mn)/(mx-mn))*ih;
-  let g='';
-  for(let v=mn; v<=mx+1e-9; v+=step){
-    g += `<line x1="${L}" y1="${Y(v).toFixed(1)}" x2="${W-R}" y2="${Y(v).toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>
-          <text x="${L-9}" y="${(Y(v)+4).toFixed(1)}" text-anchor="end" font-size="11" fill="var(--muted)">${shortNum(v,m)}</text>`;
+/* 공시연도 실적 · 인증평가 결과값 · 인증 기준값 비교 */
+const BAR_COL = {prev:'#8FA3B7', year:'var(--s1)'};
+function evalMarkColor(d){
+  const st = evalStatus(d);
+  return st === 'ok' ? 'var(--good)' : st === 'warn' ? 'var(--warn)' : st === 'no' ? 'var(--bad)' : 'var(--border-strong)';
+}
+/* 윗변만 둥근 막대 */
+function barPath(x, y, w, h, r){
+  const rr = Math.min(r, w/2, h);
+  return `M ${x.toFixed(1)} ${(y+h).toFixed(1)} L ${x.toFixed(1)} ${(y+rr).toFixed(1)}`
+       + ` Q ${x.toFixed(1)} ${y.toFixed(1)} ${(x+rr).toFixed(1)} ${y.toFixed(1)}`
+       + ` L ${(x+w-rr).toFixed(1)} ${y.toFixed(1)}`
+       + ` Q ${(x+w).toFixed(1)} ${y.toFixed(1)} ${(x+w).toFixed(1)} ${(y+rr).toFixed(1)}`
+       + ` L ${(x+w).toFixed(1)} ${(y+h).toFixed(1)} Z`;
+}
+function evalBarChart(d){
+  const ys = shownYears();
+  const cats = [];
+  if(d.prev2024 != null) cats.push({k:'2024 인증평가(본평가)', v:d.prev2024, kind:'prev'});
+  ys.forEach(y => cats.push({k:y + ' 공시', v:yv(d.id, y), kind:'year'}));
+  cats.push({k:d.evalLabelShort, v:d.evalVal, kind:'eval'});
+
+  const std = evalStd(d);
+  const vals = cats.map(c => c.v).filter(v => v != null).concat(std != null ? [std] : []);
+  if(!vals.length)
+    return `<div class="chart-na">산출 자료 준비 중${d.naReason?`<span>${esc(d.naReason)}</span>`:''}</div>`;
+
+  const W=560, H=292, L=64, R=126, T=26, B=64, iw=W-L-R, ih=H-T-B;
+  let mx = Math.max(...vals);
+  const step = niceStep(mx / 4);
+  mx = Math.ceil((mx * 1.1) / step) * step;
+  const Y = v => T + ih - (v / mx) * ih;
+
+  let grid = '';
+  for(let v = 0; v <= mx + 1e-9; v += step)
+    grid += `<line x1="${L}" y1="${Y(v).toFixed(1)}" x2="${W-R}" y2="${Y(v).toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`
+          + `<text x="${L-10}" y="${(Y(v)+4).toFixed(1)}" text-anchor="end" font-size="11" fill="var(--muted)">${shortNum(v, d)}</text>`;
+
+  const n = cats.length, slot = iw / n;
+  const wid = (t, fs) => t.length * fs * 0.6;
+  let need = 0;
+  cats.forEach(c => { if(c.v != null) need = Math.max(need, wid(fmt(c.v, d), c.kind === 'eval' ? 14.5 : 12.5)); });
+  const bw = Math.max(34, Math.min(slot - 16, Math.max(50, need + 16)));
+  const evCol = evalMarkColor(d);
+  const bars = cats.map((c, i) => {
+    const cx = L + slot * i + slot / 2;
+    if(c.v == null)
+      return `<text x="${cx.toFixed(1)}" y="${(T+ih-12).toFixed(1)}" text-anchor="middle" font-size="13" fill="var(--muted)">–</text>`;
+    const y0 = Y(c.v), h = Math.max(3, T + ih - y0);
+    const fill = c.kind === 'eval' ? evCol : BAR_COL[c.kind];
+    const big  = c.kind === 'eval';
+    const txt  = fmt(c.v, d);
+    const base = big ? 14.5 : 12.5;
+    const fs   = Math.max(10, Math.min(base, (bw - 10) / (txt.length * 0.6)));
+    const inside = h >= fs + 18;
+    const ly  = inside ? y0 + fs + 7 : y0 - 9;
+    const lab = inside
+      ? `<text x="${cx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-size="${fs.toFixed(1)}" font-weight="${big?'900':'700'}" fill="var(--on-mark)">${txt}</text>`
+      : `<text x="${cx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-size="${fs.toFixed(1)}" font-weight="${big?'900':'700'}" fill="var(--ink)" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">${txt}</text>`;
+    return `<g><title>${esc(c.k)} · ${fmt(c.v, d)}${esc(d.unit)}</title>`
+      + `<path d="${barPath(cx-bw/2, y0, bw, h, 4)}" fill="${fill}"/>${lab}</g>`;
+  }).join('');
+
+  const xlab = cats.map((c, i) => {
+    const cx = L + slot * i + slot / 2;
+    const fill = c.kind === 'eval' ? 'var(--ink)' : 'var(--muted)';
+    const fw   = c.kind === 'eval' ? '700' : '400';
+    let lines = [c.k];
+    if(c.k.length > 11){
+      const p2 = c.k.lastIndexOf(' ');
+      if(p2 > 0) lines = [c.k.slice(0, p2), c.k.slice(p2 + 1)];
+    }
+    return lines.map((t, j) =>
+      `<text x="${cx.toFixed(1)}" y="${H-B+22+j*15}" text-anchor="middle" font-size="11.5" font-weight="${fw}" fill="${fill}">${esc(t)}</text>`).join('');
+  }).join('');
+
+  let line = '';
+  if(std != null && std <= mx){
+    line = `<line x1="${L}" y1="${Y(std).toFixed(1)}" x2="${W-R+6}" y2="${Y(std).toFixed(1)}" stroke="var(--s2)" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="round"/>`
+      + `<text x="${W-R+13}" y="${(Y(std)-3).toFixed(1)}" font-size="10.5" font-weight="700" fill="var(--s2)" letter-spacing=".04em">인증 기준값</text>`
+      + `<text x="${W-R+13}" y="${(Y(std)+13).toFixed(1)}" font-size="12.5" font-weight="900" fill="var(--s2)">${esc(evalStdTxt(d))}</text>`;
+  }else if(std != null){
+    line = `<text x="${W-R+13}" y="${T+12}" font-size="10.5" font-weight="700" fill="var(--s2)" letter-spacing=".04em">인증 기준값</text>`
+      + `<text x="${W-R+13}" y="${T+28}" font-size="12.5" font-weight="900" fill="var(--s2)">${esc(evalStdTxt(d))}</text>`;
   }
-  const pts = s.map((r,i) => r.v==null ? null : [X(i), Y(r.v)]);
-  const have = pts.filter(Boolean);
-  const path = have.map((p,i) => (i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
-  const area = have.length>1 ? path + ` L${have[have.length-1][0].toFixed(1)} ${T+ih} L${have[0][0].toFixed(1)} ${T+ih} Z` : '';
-  const dots = s.map((r,i) => r.v==null ? '' :
-    `<circle cx="${X(i).toFixed(1)}" cy="${Y(r.v).toFixed(1)}" r="5.5" fill="var(--s1)" stroke="var(--surface)" stroke-width="2.5"/>
-     <text x="${X(i).toFixed(1)}" y="${(Y(r.v)-15).toFixed(1)}" text-anchor="${i===0?'start':'end'}" font-size="14" font-weight="900" fill="var(--ink)">${fmt(r.v,m)}</text>`).join('');
-  let std='';
-  const stdTx = stdTxtOf(m, ys[ys.length-1]);
-  if(stdRef!=null && stdRef>=mn && stdRef<=mx){
-    std = `<line x1="${L}" y1="${Y(stdRef).toFixed(1)}" x2="${W-R+8}" y2="${Y(stdRef).toFixed(1)}" stroke="var(--s2)" stroke-width="2.5" stroke-dasharray="7 5" stroke-linecap="round"/>
-      <text x="${W-R+14}" y="${(Y(stdRef)-4).toFixed(1)}" font-size="11" font-weight="700" fill="var(--s2)">인증 기준값</text>
-      <text x="${W-R+14}" y="${(Y(stdRef)+12).toFixed(1)}" font-size="12.5" font-weight="900" fill="var(--s2)">${esc(stdTx)}</text>`;
-  }else if(stdRef!=null){
-    std = `<text x="${W-R+14}" y="${T+14}" font-size="11" font-weight="700" fill="var(--s2)">인증 기준값</text>
-      <text x="${W-R+14}" y="${T+30}" font-size="12.5" font-weight="900" fill="var(--s2)">${esc(stdTx)}</text>
-      <text x="${W-R+14}" y="${T+46}" font-size="10.5" fill="var(--muted)">(축 범위 밖)</text>`;
-  }
-  const xs = s.map((r,i) => `<text x="${X(i).toFixed(1)}" y="${H-B+24}" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink-2)">${r.year}</text>`).join('');
-  const gid = 'sg_'+id;
-  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:340px;display:block" role="img"
-      aria-label="${esc(m.name)} 최근 2개 연도 추이와 인증 기준값"><title>${esc(m.name)} 추이</title>
-    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="var(--s1)" stop-opacity=".18"/><stop offset="100%" stop-color="var(--s1)" stop-opacity="0"/></linearGradient></defs>
-    ${g}<line x1="${L}" y1="${T+ih}" x2="${W-R}" y2="${T+ih}" stroke="var(--border-strong)" stroke-width="1.5"/>
-    ${area?`<path d="${area}" fill="url(#${gid})"/>`:''}
-    ${have.length>1?`<path d="${path}" fill="none" stroke="var(--s1)" stroke-width="2.5" stroke-linecap="round"/>`:''}
-    ${std}${dots}${xs}</svg>`;
+
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:470px;display:block" role="img"
+      aria-label="${esc(d.name)} 2024 본평가와 공시연도 실적, 인증평가 결과값을 인증 기준값과 비교"><title>${esc(d.name)}</title>
+    ${grid}${line}<line x1="${L}" y1="${T+ih}" x2="${W-R}" y2="${T+ih}" stroke="var(--border-strong)" stroke-width="1.5"/>
+    ${bars}${xlab}</svg>`;
+}
+function evalLegend(d){
+  const items = [];
+  if(d.prev2024 != null) items.push(`<span><i style="background:${BAR_COL.prev}"></i>2024 인증평가(본평가)</span>`);
+  items.push(`<span><i style="background:var(--s1)"></i>공시연도 실적</span>`);
+  items.push(`<span><i style="background:${evalMarkColor(d)}"></i>${esc(d.evalLabelShort)}</span>`);
+  items.push(`<span><i class="dash"></i>인증 기준값</span>`);
+  return items.join('');
 }
 
 /* ================= 렌더 ================= */
 function renderControls(){
   YEARS = shownYears();
-  CUR_YEAR = (CUR_YEAR && YEARS.includes(CUR_YEAR)) ? CUR_YEAR : YEARS[YEARS.length-1];
-  $('#yearSel').innerHTML = YEARS.slice().reverse().map(y =>
-    `<option value="${y}"${y===CUR_YEAR?' selected':''}>${y}년</option>`).join('');
+  CUR_YEAR = YEARS[YEARS.length-1];
   const seg = $('#areaSeg');
   if(!seg.dataset.built){
     seg.innerHTML = `<button data-area="all" class="on">전체 영역</button>` +
@@ -1844,60 +2211,61 @@ function renderControls(){
 function renderSource(){
   const dot = $('#srcDot'), txt = $('#srcText'), note = $('#fallbackNote');
   dot.className = LIVE ? 'dot' : 'dot warnd';
-  txt.innerHTML = '출처 · 대학알리미 정보공시 및 인증 평가자료';
+  txt.innerHTML = '출처 · 대학정보공시 · 결산 자료 · 대학 자체 작성';
   note.style.display = 'none'; note.innerHTML = '';
   if(ADMIN){
-    txt.innerHTML = LIVE ? `구글시트 연동 · <b class="n">${ROWS.length}</b>행`
+    txt.innerHTML = LIVE ? `연동 데이터 · <b class="n">${ROWS.length}</b>행`
                          : `연동 대기 · 내장 데이터 표시 중${LOAD_MSG ? ' · ' + esc(LOAD_MSG) : ''}`;
   }
 }
 function renderSummary(){
   const view = inView();
   const c = {ok:0, warn:0, no:0, na:0};
-  view.forEach(d => c[statusOf(d.id, CUR_YEAR)]++);
+  view.forEach(d => c[evalStatus(d)]++);
   const jud = c.ok + c.warn + c.no;
   const rate = jud ? c.ok / jud * 100 : null;
-
-  let imp = 0, cmp = 0;
-  view.forEach(d => { const v = improvedOf(d.id, CUR_YEAR); if(v !== null) cmp++; if(v === true) imp++; });
-  const prevY = allYears().filter(y => y < CUR_YEAR).pop();
+  const n27 = view.filter(d => d.evalKey === '2027').length;
+  const n30 = view.length - n27;
 
   $('#tTotal').innerHTML   = `${view.length}<small>개</small>`;
-  $('#tTotalSub').textContent = c.na ? `산출 자료 준비 중 ${c.na}개 포함` : '전 지표 산출 완료';
-  $('#tImp').innerHTML     = `${imp}<small> / ${cmp}개</small>`;
-  $('#tImpSub').textContent = prevY ? `${prevY}년 대비 실적 개선` : '직전 연도 실적 미입력';
-  $('#tGood').innerHTML    = `${c.ok}<small> / ${jud}개</small>`;
-  $('#tGoodSub').textContent = (c.warn + c.no) ? `기준값 미달성 ${c.warn + c.no}개` : '판정 가능 지표 전부 달성';
-  $('#tRate').innerHTML    = rate == null ? '–' : `${rate.toFixed(1)}<small>%</small>`;
-  $('#tRateSub').textContent = `인증 정량지표 ${view.length}개 중 ${c.ok}개 기준값 달성`;
+  $('#tTotalSub').textContent = `2027 모니터링 사전평가 ${n27}개 · 2030 인증평가 ${n30}개`;
 
-  $('#gaugeYear').textContent = CUR_YEAR + '년 기준';
-  $('#gauge').innerHTML = gaugeChart(rate, `판정 가능 ${jud}개 중 ${c.ok}개 달성`);
-  $('#areaBars').innerHTML = areaStatChart(CUR_YEAR);
+  let imp = 0, cmp = 0;
+  view.forEach(d => { const dl = evalDelta(d); if(dl && dl.diff !== 0){ cmp++; if(dl.better) imp++; } });
+  $('#tNa').innerHTML      = cmp ? `${imp}<small> / ${cmp}개</small>` : '–';
+  $('#tNaSub').textContent = cmp ? '2024 인증평가 결과값과 비교' : '본평가 결과값 비교 불가';
+
+  $('#tGood').innerHTML    = `${c.ok}<small> / ${jud}개</small>`;
+  $('#tGoodSub').textContent = (c.warn + c.no) ? `기준값 미달성 ${c.warn + c.no}개`
+    : (c.na ? `산출 준비 중 ${c.na}개 제외` : '전 지표 기준값 달성');
+
+  $('#tRate').innerHTML    = rate == null ? '–' : `${rate.toFixed(1)}<small>%</small>`;
+  $('#tRateSub').textContent = `결과값 산출 완료 ${jud}개 지표 기준`;
+
+  $('#gaugeYear').textContent = '2027 인증평가모니터링 결과값 기준';
+  $('#gauge').innerHTML = gaugeChart(rate, `${c.ok} / ${jud}개 기준값 달성`);
+  $('#areaBars').innerHTML = areaStatChart();
 }
 function kpiCard(d){
-  const r = atYear(d.id, CUR_YEAR), st = statusOf(d.id, CUR_YEAR), p = ratioOf(d.id, CUR_YEAR);
-  const del = deltaOf(d.id, CUR_YEAR);
-  let dHtml = '<span class="delta flat">전년 대비 자료 없음</span>';
-  if(del && del.diff === 0){
-    dHtml = `<span class="delta flat">전년과 동일<em> vs ${del.prevYear}</em></span>`;
-  }else if(del){
-    const better = d.op === '이하' ? del.diff < 0 : del.diff > 0;
-    dHtml = `<span class="delta ${better?'good':'poor'}">${del.diff>0?'▲':'▼'} <span class="n">${fmt(Math.abs(del.diff), d)}</span>` +
-      (del.pct != null ? `<span class="n"> (${del.pct>0?'+':''}${del.pct.toFixed(1)}%)</span>` : '') +
-      `<em> vs ${del.prevYear}</em></span>`;
-  }
+  const st = evalStatus(d), p = evalRatio(d);
+  const ys = shownYears();
+  const yline = ys.map(y => {
+    const v = yv(d.id, y);
+    return `<span>${y} <b>${v == null ? '–' : fmt(v, d)}</b></span>`;
+  }).join('');
+  const del = evalDelta(d);
   const w = p == null ? 0 : Math.max(2, Math.min(100, p));
   return `<button class="kpi ev-${d.evalKey} st-${st==='ok'?'good':st==='warn'?'warn':st==='no'?'bad':'na'}${CUR_KPI===d.id?' sel':''}"
       data-id="${d.id}" aria-label="${esc(d.name)}${d.evalKey==='2030'?' · 2030 인증평가':''} 상세 보기">
     <div class="kpi-top"><span class="kcode">${d.id}</span>
       <span class="kstat"><span class="chip ${ST_CLS[st]}">${ST_KO[st]}${p!=null?` <b class="n">${ratioTxt(p)}</b>`:''}</span></span></div>
     <div class="kpi-name">${esc(d.name)}</div>
-    <div class="kpi-mid">${(r&&r.v!=null)
-      ? `<div class="kpi-val"><b class="n">${fmt(r.v,d)}</b><span>${d.unit}</span></div>`
-      : `<div class="kpi-na-txt">산출 자료 준비 중${d.naReason?`<em>${esc(d.naReason)}</em>`:''}</div>`}</div>
-    ${dHtml}
-    <div class="kpi-std">기준 <b>${esc(stdTxtOf(d, CUR_YEAR))}</b>${(d.remark&&d.remark.length)?'<span class="chip cond">비고</span>':''}${d.evalKey==='2030'?'<span class="ev-tag">2030</span>':''}</div>
+    <div class="kpi-mid">${(d.evalVal != null)
+      ? `<div class="kpi-val"><b class="n">${fmt(d.evalVal,d)}</b><span>${d.unit}</span></div>`
+      : `<div class="kpi-na-txt"><b>–</b>${d.naReason?`<em>${esc(d.naReason)}</em>`:''}</div>`}</div>
+    <div class="kpi-years n">${yline}</div>
+    ${del ? `<span class="delta ${del.better?'good':'poor'}">${del.diff>0?'▲':'▼'} <span class="n">${fmt(Math.abs(del.diff), d)}</span><em>2024 인증평가(본평가) 대비</em></span>` : ''}
+    <div class="kpi-std">기준 <b>${esc(evalStdTxt(d))}</b>${d.evalKey==='2030'?'<span class="ev-tag">2030</span>':''}</div>
     <div class="kpi-foot"><div class="meter"><i class="${st==='ok'?'good':st==='warn'?'warn':'bad'}" style="width:${w}%"></i></div></div>
   </button>`;
 }
@@ -1907,13 +2275,13 @@ function renderGrid(){
   const groups = AREAS.filter(a => view.some(d => d.areaKey === a.key));
   host.innerHTML = groups.map(a => {
     const ms = view.filter(d => d.areaKey === a.key);
-    const c = {ok:0,warn:0,no:0,na:0}; ms.forEach(d => c[statusOf(d.id, CUR_YEAR)]++);
+    const c = {ok:0,warn:0,no:0,na:0}; ms.forEach(d => c[evalStatus(d)]++);
     return `<section class="kgroup" style="--gc:${a.color}">
       <header class="kgroup-h">
         <span class="kgroup-code">${a.key}</span>
         <span class="kgroup-name">${esc(a.name)}</span>
         <span class="kgroup-cnt">${ms.length}개 지표</span>
-        <span class="kgroup-avg">충족 <b class="n">${c.ok}</b> · 미충족 <b class="n">${c.warn+c.no}</b>${c.na?` · 자료 준비 중 <b class="n">${c.na}</b>`:''}</span>
+        <span class="kgroup-avg">달성 <b class="n">${c.ok}</b> · 미달성 <b class="n">${c.warn+c.no}</b>${c.na?` · 산출 준비 중 <b class="n">${c.na}</b>`:''}</span>
       </header>
       <div class="kgroup-grid">${ms.map(kpiCard).join('')}</div></section>`;
   }).join('');
@@ -1924,64 +2292,69 @@ function setSpot(id, scroll){
   const list = spotList();
   if(!list.length) return;
   CUR_KPI = list.some(d => d.id === id) ? id : list[0].id;
-  const d = META[CUR_KPI], y = CUR_YEAR;
-  const r = atYear(CUR_KPI, y), st = statusOf(CUR_KPI, y), p = ratioOf(CUR_KPI, y);
+  const d = META[CUR_KPI];
+  const st = evalStatus(d), p = evalRatio(d);
   const idx = list.findIndex(x => x.id === CUR_KPI);
 
   $('#spotCount').textContent = String(idx+1).padStart(2,'0') + ' / ' + String(list.length).padStart(2,'0');
-  $('#spotName').innerHTML = `<span class="chip blue" style="margin-right:6px;vertical-align:2px">${d.id}</span>${esc(d.name)}`
-;
+  $('#spotName').innerHTML = `<span class="chip blue" style="margin-right:6px;vertical-align:2px">${d.id}</span>${esc(d.name)}`;
   $('#spotDesc').textContent = d.desc || d.formula;
-  $('#spotYear2').textContent = ` (${y})`;
-  $('#spotVal').innerHTML = (r && r.v != null)
-    ? `${fmt(r.v, d)}<small>${d.unit}</small>` : `<span style="font-size:15px;color:var(--muted)">산출 자료 준비 중</span>`;
-  $('#spotStd').textContent = stdTxtOf(d, y);
+  $('#spotValK').innerHTML = `${esc(d.evalLabel)} <em>${esc(d.evalHow)}</em>`;
+  $('#spotVal').innerHTML = (d.evalVal != null)
+    ? `${fmt(d.evalVal, d)}<small>${d.unit}</small>` : `<span style="color:var(--muted)">–</span>`;
+  $('#spotStd').textContent = evalStdTxt(d);
   $('#spotJudge').innerHTML = `<span class="chip ${ST_CLS[st]}" style="font-size:12.5px;padding:4px 11px">${ST_KO[st]}</span>` +
     (p != null ? `<span style="font-size:13px;color:var(--muted);margin-left:7px">기준 대비 ${ratioTxt(p)}</span>` : '') +
     (st === 'na' && d.naReason ? `<div class="na-why">${esc(d.naReason)}</div>` : '');
 
-  const del = deltaOf(CUR_KPI, y);
-  if(!del){
-    $('#spotDelta').innerHTML = `<span class="mut" style="font-size:15px;color:var(--muted);font-weight:700">–</span>`;
-  }else if(del.diff === 0){
-    $('#spotDelta').innerHTML = `<span style="font-size:16px;color:var(--muted);font-weight:700">전년과 동일</span>`;
+  const del = evalDelta(d);
+  const bk = $('#spotPrev24K'), bv = $('#spotPrev24');
+  if(d.prev2024 != null){
+    bk.textContent = '2024 인증평가(본평가)';
+    bv.innerHTML = `${fmt(d.prev2024, d)}<small>${d.unit}</small>`
+      + (del ? `<div style="font-size:11.5px;font-weight:700;margin-top:2px;color:${del.better?'var(--good-tx)':'var(--bad-tx)'}">${del.diff>0?'▲':'▼'} ${fmt(Math.abs(del.diff), d)} ${del.diff>0?'증가':'감소'}</div>` : '');
   }else{
-    const better = d.op === '이하' ? del.diff < 0 : del.diff > 0;
-    $('#spotDelta').innerHTML = `<span style="color:${better?'var(--good-tx)':'var(--bad-tx)'}">${del.diff>0?'▲':'▼'} ${fmt(Math.abs(del.diff), d)}</span>` +
-      (del.pct != null ? `<small style="color:${better?'var(--good-tx)':'var(--bad-tx)'};margin-left:6px">(${del.pct>0?'+':''}${del.pct.toFixed(1)}%)</small>` : '') +
-      `<div style="font-size:11.5px;color:var(--muted);font-weight:400;margin-top:2px">${del.prevYear}년 대비 ${better?'개선':'하락'}</div>`;
+    const ys = shownYears(), a = yv(d.id, ys[0]), b2 = yv(d.id, ys[1]);
+    bk.textContent = '직전 공시연도 대비';
+    if(a == null || b2 == null){
+      bv.innerHTML = `<span style="font-size:15px;color:var(--muted);font-weight:700">–</span>`;
+    }else if(a === b2){
+      bv.innerHTML = `<span style="font-size:16px;color:var(--muted);font-weight:700">변동 없음</span>`;
+    }else{
+      const diff = b2 - a, better = d.op === '이하' ? diff < 0 : diff > 0;
+      bv.innerHTML = `<span style="color:${better?'var(--good-tx)':'var(--bad-tx)'}">${diff>0?'▲':'▼'} ${fmt(Math.abs(diff), d)}</span>`
+        + `<div style="font-size:11.5px;color:var(--muted);font-weight:400;margin-top:2px">${ys[0]} → ${ys[1]} 공시</div>`;
+    }
   }
 
-  $('#spotChart').innerHTML = trendChart(CUR_KPI);
+  $('#spotLegend').innerHTML = evalLegend(d);
+  $('#spotChart').innerHTML = evalBarChart(d);
 
-  const ys = shownYears().slice().reverse();
+  const rows = [];
+  if(d.prev2024 != null) rows.push({k:'2024 인증평가(본평가)', v:d.prev2024, em:false});
+  shownYears().forEach(y => rows.push({k:y + '년 공시 실적', v:yv(d.id, y), em:false}));
+  rows.push({k:d.evalLabel, v:d.evalVal, em:true});
   $('#spotTable').innerHTML =
-    `<thead><tr><th>연도</th><th class="r">실적</th><th class="r">인증 기준값</th><th class="r">기준 대비</th><th class="r">전년 대비</th></tr></thead><tbody>`
-    + ys.map(yy => {
-        const rr = atYear(CUR_KPI, yy), s2 = statusOf(CUR_KPI, yy), pp = ratioOf(CUR_KPI, yy), dd = deltaOf(CUR_KPI, yy);
+    `<thead><tr><th>구분</th><th class="r">값</th><th class="r">인증 기준값</th><th class="r">기준 대비</th></tr></thead><tbody>`
+    + rows.map(r => {
+        const pp = ratioValOf(r.v, d, STD_Y);
+        const s2 = pp == null ? 'na' : (pp >= 100 ? 'ok' : pp >= 95 ? 'warn' : 'no');
         const col = s2==='ok'?'var(--good-tx)': s2==='warn'?'var(--warn-tx)': s2==='no'?'var(--bad-tx)':'var(--muted)';
-        let dt = '<span style="color:var(--muted)">–</span>';
-        if(dd && dd.diff === 0) dt = '<span style="color:var(--muted)">전년과 동일</span>';
-        else if(dd){
-          const better = d.op === '이하' ? dd.diff < 0 : dd.diff > 0;
-          dt = `<span style="color:${better?'var(--good-tx)':'var(--bad-tx)'};font-weight:700">${dd.diff>0?'▲':'▼'} ${fmt(Math.abs(dd.diff), d)}${dd.pct!=null?` (${dd.pct>0?'+':''}${dd.pct.toFixed(1)}%)`:''}</span>`;
-        }
-        return `<tr><td class="n"><b>${yy}</b></td>
-          <td class="r"><b>${rr&&rr.v!=null?fmt(rr.v,d):'<span style="color:var(--muted);font-weight:400">자료 준비 중</span>'}</b></td>
-          <td class="r" style="color:var(--muted)">${esc(stdTxtOf(d, yy))}</td>
-          <td class="r" style="color:${col};font-weight:700">${pp==null?'–':ratioTxt(pp)}</td>
-          <td class="r">${dt}</td></tr>`;
+        return `<tr${r.em?' class="em"':''}><td>${esc(r.k)}</td>
+          <td class="r"><b>${r.v!=null?fmt(r.v,d)+d.unit:'<span style="color:var(--muted);font-weight:400">–</span>'}</b></td>
+          <td class="r" style="color:var(--muted)">${esc(evalStdTxt(d))}</td>
+          <td class="r" style="color:${col};font-weight:700">${pp==null?'–':ratioTxt(pp)}</td></tr>`;
       }).join('') + '</tbody>';
 
   let subVal = '<span class="dmut">-</span>';
-  if(d.submit != null){
-    const ly = shownYears()[shownYears().length-1];
-    const ss = statusOfVal(d.submit, d, ly), sp = ratioValOf(d.submit, d, ly);
-    subVal = `<b style="font-size:15px">${fmt(d.submit,d)}${d.unit}</b>`
-      + `<span class="chip ${ST_CLS[ss]}" style="margin-left:8px">${ST_KO[ss]}${sp!=null?` ${ratioTxt(sp)}`:''}</span>`
-      + `<div class="dsub">${esc(d.evalName)}에 제출되는 2개년 평균값</div>`;
+  if(d.evalVal != null){
+    subVal = `<b style="font-size:15px">${fmt(d.evalVal,d)}${d.unit}</b>`
+      + `<span class="chip ${ST_CLS[st]}" style="margin-left:8px">${ST_KO[st]}${p!=null?` ${ratioTxt(p)}`:''}</span>`
+      + `<div class="dsub">${esc(d.evalName)} 산출값 (${esc(d.evalHow)})`
+      + `${d.evalRound?`<br>${esc(d.evalRound)}`:''}`
+      + `</div>`;
   }else if(d.naReason){
-    subVal = `<span class="dmut">산출 자료 준비 중</span><div class="dsub">${esc(d.naReason)}</div>`;
+    subVal = `<span class="dmut">–</span><div class="dsub">${esc(d.naReason)}</div>`;
   }
   const remarkRow = (d.remark && d.remark.length)
     ? `<tr><th>비고</th><td><ul class="dlist">${d.remark.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></td></tr>` : '';
@@ -2012,7 +2385,6 @@ function renderAll(){
   setSpot(CUR_KPI || spotList()[0].id, false);
 }
 
-
 /* ================= 정량지표 전체 보기 ================= */
 function deltaUnit(d){ return d.unit === '%' ? '%p' : d.unit; }
 function miniTrend(id){
@@ -2033,36 +2405,35 @@ function miniTrend(id){
 }
 function renderList(){
   const host = $('#listTbl'); if(!host) return;
-  const view = inView(), y = CUR_YEAR;
+  const view = inView(), ys = shownYears(), hp = HAS_PREV();
   $('#listCount').textContent = `${view.length}개 지표`;
   host.innerHTML = `<thead><tr>
-      <th style="width:150px">평가영역 · 준거</th>
-      <th style="min-width:300px">지표명</th>
-      <th style="width:112px" class="r">${y}년 실적</th>
-      <th style="width:270px">인증 기준값</th>
-      <th style="width:126px">모니터링 판정</th>
-      <th style="width:118px" class="r">전년 대비</th>
-      <th style="width:66px" class="r">추이</th>
+      <th style="width:146px">평가영역 · 준거</th>
+      <th style="min-width:250px">지표명</th>
+      ${hp?'<th style="width:104px" class="r">2024 인증평가(본평가)</th>':''}
+      ${ys.map(y => `<th style="width:92px" class="r">${y} 공시</th>`).join('')}
+      <th style="width:132px" class="r">2027 인증평가모니터링의 결과값</th>
+      <th style="width:170px">인증 기준값</th>
+      <th style="width:120px">판정</th>
     </tr></thead><tbody>` + view.map(d => {
-    const r = atYear(d.id, y), st = statusOf(d.id, y), del = deltaOf(d.id, y);
-    /* 판정 : 기준값 달성 / 미달성 / 자료 준비 중 */
+    const st = evalStatus(d), p = evalRatio(d);
     let judge = '<span class="lt-mut">–</span>';
-    if(st === 'ok')      judge = '<span class="chip good">기준값 달성</span>';
+    if(st === 'ok')        judge = '<span class="chip good">기준값 달성</span>';
     else if(st === 'warn') judge = '<span class="chip warn">기준값 근접</span>';
     else if(st === 'no')   judge = '<span class="chip bad">기준값 미달성</span>';
-    else if(st === 'na') judge = `<span class="chip na">자료 준비 중</span>`
-                            + (d.naReason ? `<span class="lt-why">${esc(d.naReason)}</span>` : '');
+    else                   judge = '<span class="chip na">산출 준비 중</span>'
+                                 + (d.naReason ? `<span class="lt-why">${esc(d.naReason)}</span>` : '');
+    if(st !== 'na' && p != null) judge += `<span class="lt-why">기준 대비 ${ratioTxt(p)}</span>`;
 
-    let dl = '<span class="lt-mut">–</span>';
-    if(del && del.diff === 0) dl = '<span class="lt-dl flat">변동 없음</span>';
-    else if(del){
-      const better = d.op === '이하' ? del.diff < 0 : del.diff > 0;
-      dl = `<span class="lt-dl ${better?'good':'poor'}">${del.diff>0?'▲':'▼'} ${fmt(Math.abs(del.diff), d)}${deltaUnit(d)}</span>`;
-    }
-    /* 기준값 : 조건부 문구를 괄호가 아니라 아랫줄로 분리 */
-    const stdCell = `<div class="lt-std">${esc(stdTxtOf(d, y))}`
+    const stdCell = `<div class="lt-std">${esc(evalStdTxt(d))}`
       + ((d.remark && d.remark.length) ? d.remark.map(t=>`<span class="lt-cond">· ${esc(t)}</span>`).join('') : '')
       + `</div>`;
+    const yCells = ys.map(y => {
+      const v = yv(d.id, y);
+      return `<td class="r mid"><span class="lt-yv${v==null?' na':''}">${v==null?'–':fmt(v,d)}</span></td>`;
+    }).join('');
+    const evCell = `<td class="r mid"><span class="lt-eval ${st}">${d.evalVal==null?'–':fmt(d.evalVal,d)+d.unit}</span>`
+      + `<span class="lt-why">${d.evalVal==null?'':esc(d.evalHowShort)}</span></td>`;
     return `<tr data-id="${d.id}" class="ev-${d.evalKey}${CUR_KPI===d.id?' on':''}">
       <td><div class="lt-areawrap" style="--ac:${d.color}">
         <span class="lt-areakey">${d.areaKey}</span>
@@ -2070,11 +2441,11 @@ function renderList(){
         <span class="lt-critcode">준거 ${d.code} ${esc(d.codeName)}</span></div></td>
       <td><div class="lt-name">${esc(d.name)}${d.evalKey==='2030'?' <span class="ev-tag">2030 인증평가</span>':''}</div>
         <div class="lt-desc">${esc(d.desc||'')}</div></td>
-      <td class="r mid"><span class="lt-val${(r&&r.v!=null)?'':' na'}">${(r&&r.v!=null)?fmt(r.v,d)+d.unit:'–'}</span></td>
+      ${hp?`<td class="r mid"><span class="lt-yv${d.prev2024==null?' na':''}">${d.prev2024==null?'–':fmt(d.prev2024,d)}</span></td>`:''}
+      ${yCells}
+      ${evCell}
       <td>${stdCell}</td>
       <td class="mid"><div class="lt-judge">${judge}</div></td>
-      <td class="r mid">${dl}</td>
-      <td class="r mid">${miniTrend(d.id)}</td>
     </tr>`;
   }).join('') + '</tbody>';
   host.querySelectorAll('tbody tr').forEach(tr =>
@@ -2102,9 +2473,6 @@ function initUI(){
     renderSummary(); renderGrid(); renderList();
     setSpot(spotList().some(d => d.id === CUR_KPI) ? CUR_KPI : spotList()[0].id, false);
   });
-  $('#yearSel').addEventListener('change', e => {
-    CUR_YEAR = +e.target.value; renderSummary(); renderGrid(); setSpot(CUR_KPI, false);
-  });
   $('#spotPrev').addEventListener('click', () => moveSpot(-1));
   $('#spotNext').addEventListener('click', () => moveSpot(1));
   document.addEventListener('keydown', e => {
@@ -2115,17 +2483,49 @@ function initUI(){
   $('#reloadBtn').addEventListener('click', async () => { await loadData(); renderAll(); });
 
   const modal = $('#cfgModal');
-  const open = () => { $('#urlKpi').value = CFG.kpi || ''; modal.classList.add('open'); };
+  const open = () => { $('#urlKpi').value = CFG.kpi || ''; const mm=$('#cfgMsg'); if(mm) mm.hidden = true; modal.classList.add('open'); };
   const close = () => modal.classList.remove('open');
   $('#cfgBtn').addEventListener('click', open);
   $('#cfgClose').addEventListener('click', close);
   modal.addEventListener('click', e => { if(e.target === modal) close(); });
   document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
+  const msg = (cls, html) => { const el = $('#cfgMsg'); el.hidden = false; el.className = 'cfgmsg ' + cls; el.innerHTML = html; };
+
   $('#cfgSave').addEventListener('click', async () => {
-    CFG = {kpi: $('#urlKpi').value.trim()}; saveCfg(CFG); close(); await loadData(); renderAll();
+    const url = $('#urlKpi').value.trim();
+    CFG = {kpi:url}; saveCfg(CFG);
+    if(!url){ saveRows(null); await loadData(); renderAll(); msg('err','주소가 비어 있습니다. 내장 데이터를 표시합니다.'); return; }
+    msg('ok','불러오는 중…');
+    try{
+      const out = rowsFromObjs(await fetchCSV(url));
+      if(!out.length) throw new Error('일치하는 지표가 없습니다. kpi_id 열과 값 열의 머리글을 확인해 주세요');
+      saveRows(null); ROWS = out; LIVE = true; LOAD_MSG = '';
+      renderAll();
+      msg('ok', '연결되었습니다. 실적 <b>' + out.length + '행</b>을 불러왔습니다.');
+    }catch(err){
+      await loadData(); renderAll();
+      const net = /Failed to fetch|NetworkError|CORS|Load failed/i.test(err.message);
+      msg('err', '불러오지 못했습니다 — <code>' + esc(err.message) + '</code>'
+        + (net ? '<br>브라우저가 외부 주소 요청을 차단했습니다. 이 파일을 웹서버(학교 서버·GitHub Pages 등)에 올려 <b>http(s) 주소</b>로 열면 연동됩니다. 지금 바로 값을 넣으시려면 아래 <b>CSV 직접 붙여넣기</b>를 이용하세요.' : ''));
+    }
   });
   $('#cfgReset').addEventListener('click', async () => {
-    CFG = {kpi:''}; saveCfg(CFG); close(); await loadData(); renderAll();
+    CFG = {kpi:''}; saveCfg(CFG); saveRows(null);
+    await loadData(); renderAll(); $('#urlKpi').value = '';
+    msg('ok','연결을 해제하고 내장 데이터로 되돌렸습니다.');
+  });
+  $('#pasteApply').addEventListener('click', () => {
+    try{
+      const out = rowsFromText($('#csvPaste').value);
+      saveRows(out); ROWS = out; LIVE = true; LOAD_MSG = '붙여넣은 데이터 ' + out.length + '행을 사용 중입니다.';
+      renderAll();
+      msg('ok', '적용되었습니다. 실적 <b>' + out.length + '행</b>을 반영했습니다. 이 브라우저에 저장되어 다음에 열 때도 유지됩니다.');
+    }catch(err){ msg('err', '읽지 못했습니다 — ' + esc(err.message)); }
+  });
+  $('#pasteClear').addEventListener('click', async () => {
+    saveRows(null); $('#csvPaste').value = '';
+    await loadData(); renderAll();
+    msg('ok','붙여넣은 데이터를 지웠습니다.');
   });
 }
 
