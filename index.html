@@ -1,0 +1,2140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="성공회대학교 대학IR센터 — 센터 소개, 성과관리 대시보드, 진단조사 결과">
+<title>성공회대학교 대학IR센터 성과관리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap">
+<style>
+/* ================= TOKENS ================= */
+:root{
+  --brand:#0B57A4; --brand-mid:#1B7FD4; --brand-lt:#4A9BE8;
+  --brand-dark:#0A2540; --brand-deep:#06182B;
+  --brand-soft:#E8F1FB; --brand-soft2:#D3E5F8;
+  --s1:#1B6FD0; --s2:#C97614; --s3:#12876A;
+  --good:#12805C; --warn:#DFA100; --bad:#CE2B2B;
+  --good-tx:#0E6B4D; --warn-tx:#8A6200; --bad-tx:#B5241C;
+  --good-bg:#E6F4EE; --warn-bg:#FCF3DC; --bad-bg:#FCEAE8;
+  --good-bd:#B4DDCC; --warn-bd:#F0DAA0; --bad-bd:#F3C4BF;
+  --surface:#FFFFFF; --surface-2:#F1F4F8; --surface-3:#E7ECF3;
+  --border:#DBE2EB; --border-strong:#BCC8D6;
+  --ink:#111C2B; --ink-2:#33455C; --muted:#61738A;
+  --grid:#E6EBF2;
+  --shadow-sm:0 1px 2px rgba(11,37,64,.07);
+  --shadow:0 2px 4px rgba(11,37,64,.06),0 10px 28px rgba(11,37,64,.09);
+  --hdr:62px;
+  --r:6px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --brand:#4C97E8; --brand-mid:#3A87DA; --brand-lt:#7FB8F0;
+  --brand-dark:#0B1928; --brand-deep:#060F1A;
+  --brand-soft:#10273F; --brand-soft2:#173553;
+  --s1:#4C97E8; --s2:#C87F2A; --s3:#2FA383;
+  --good:#2FA383; --warn:#D9A32E; --bad:#E0605A;
+  --good-tx:#4FBE9D; --warn-tx:#E0AE47; --bad-tx:#EC7C76;
+  --good-bg:#0F2C24; --warn-bg:#2E2512; --bad-bg:#2E1817;
+  --good-bd:#255345; --warn-bd:#57451F; --bad-bd:#5C302D;
+  --surface:#0F1A26; --surface-2:#08111B; --surface-3:#16232F;
+  --border:#22323F; --border-strong:#32475A;
+  --ink:#E7EEF6; --ink-2:#BFCDDC; --muted:#8CA0B6;
+  --grid:#1C2A38;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.45);
+  --shadow:0 2px 4px rgba(0,0,0,.45),0 10px 28px rgba(0,0,0,.4);
+}}
+:root[data-theme="dark"]{
+  --brand:#4C97E8; --brand-mid:#3A87DA; --brand-lt:#7FB8F0;
+  --brand-dark:#0B1928; --brand-deep:#060F1A;
+  --brand-soft:#10273F; --brand-soft2:#173553;
+  --s1:#4C97E8; --s2:#C87F2A; --s3:#2FA383;
+  --good:#2FA383; --warn:#D9A32E; --bad:#E0605A;
+  --good-tx:#4FBE9D; --warn-tx:#E0AE47; --bad-tx:#EC7C76;
+  --good-bg:#0F2C24; --warn-bg:#2E2512; --bad-bg:#2E1817;
+  --good-bd:#255345; --warn-bd:#57451F; --bad-bd:#5C302D;
+  --surface:#0F1A26; --surface-2:#08111B; --surface-3:#16232F;
+  --border:#22323F; --border-strong:#32475A;
+  --ink:#E7EEF6; --ink-2:#BFCDDC; --muted:#8CA0B6;
+  --grid:#1C2A38;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.45);
+  --shadow:0 2px 4px rgba(0,0,0,.45),0 10px 28px rgba(0,0,0,.4);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;background:var(--surface-2);color:var(--ink);
+  font-family:'Roboto','Noto Sans KR',system-ui,-apple-system,'Malgun Gothic',sans-serif;
+  font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.35;text-wrap:balance;letter-spacing:-.02em;}
+p{margin:0;}
+a{color:var(--brand);text-decoration:none;}
+a:hover{text-decoration:underline;}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:3px;}
+.n{font-variant-numeric:tabular-nums;letter-spacing:-.01em;}
+img,svg{max-width:100%;}
+[hidden]{display:none!important;}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+/* ================= HEADER ================= */
+.utilbar{background:var(--brand-deep);color:rgba(255,255,255,.62);font-size:12px;}
+.utilbar-in{max-width:1280px;margin:0 auto;padding:0 22px;height:34px;display:flex;align-items:center;gap:16px;}
+.utilbar a{color:rgba(255,255,255,.62);}
+.utilbar a:hover{color:#fff;text-decoration:none;}
+.utilbar .sp{margin-left:auto;display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.8);font-weight:500;}
+
+.topbar{position:sticky;top:0;z-index:90;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.topbar-in{max-width:1280px;margin:0 auto;padding:0 22px;height:var(--hdr);display:flex;align-items:center;gap:26px;}
+.brand{display:flex;align-items:center;gap:11px;flex-shrink:0;color:var(--ink);}
+.brand:hover{text-decoration:none;}
+.brand .sym{width:38px;height:38px;flex-shrink:0;color:var(--ink);}
+.brand .word{height:19px;width:auto;color:var(--ink);}
+:root[data-theme="dark"] .brand .sym,:root[data-theme="dark"] .brand .word{filter:invert(1) brightness(1.6);}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .brand .sym,
+  :root:not([data-theme="light"]) .brand .word{filter:invert(1) brightness(1.6);}}
+.brand .bar{width:1px;height:20px;background:var(--border-strong);}
+.brand .ctr{font-size:18px;font-weight:700;color:var(--brand);letter-spacing:-.03em;}
+
+.gnb{display:flex;margin-left:auto;height:100%;}
+.gnb-li{position:relative;display:flex;align-items:center;}
+.gnb-a{display:flex;align-items:center;height:100%;padding:0 20px;color:var(--ink-2);font-size:15.5px;
+  font-weight:500;border-bottom:3px solid transparent;}
+.gnb-a:hover{color:var(--brand);text-decoration:none;}
+.gnb-li.on .gnb-a{color:var(--brand);border-bottom-color:var(--brand);font-weight:700;}
+.gnb-sub{position:absolute;top:100%;left:0;min-width:216px;background:var(--surface);border:1px solid var(--border);
+  border-top:3px solid var(--brand);box-shadow:var(--shadow);padding:6px;display:none;}
+.gnb-li:hover .gnb-sub,.gnb-li:focus-within .gnb-sub{display:block;}
+.gnb-sub a{display:block;padding:9px 13px;font-size:14px;color:var(--ink-2);border-radius:3px;}
+.gnb-sub a:hover{background:var(--brand-soft);color:var(--brand);text-decoration:none;}
+.hdr-tools{display:flex;align-items:center;gap:7px;flex-shrink:0;}
+.icon-btn{width:34px;height:34px;display:grid;place-items:center;background:var(--surface-3);border:1px solid var(--border);
+  color:var(--ink-2);cursor:pointer;border-radius:4px;font-size:14px;}
+.icon-btn:hover{background:var(--brand-soft);color:var(--brand);}
+.menu-btn{display:none;}
+
+/* ================= LAYOUT ================= */
+.wrap{max-width:1280px;margin:0 auto;padding:0 22px;}
+.page{display:none;}
+.page.active{display:block;animation:fade .24s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:none;}}
+
+.pagehead{position:relative;overflow:hidden;color:#fff;padding:40px 0 36px;
+  background:linear-gradient(105deg,var(--brand-dark) 0%,var(--brand) 62%,var(--brand-mid) 100%);}
+.pagehead .wm{position:absolute;right:-30px;top:50%;transform:translateY(-50%);width:220px;opacity:.09;color:#fff;}
+.pagehead .wrap{position:relative;}
+.crumb{font-size:12.5px;color:rgba(255,255,255,.72);margin-bottom:9px;}
+.pagehead h1{font-size:31px;color:#fff;}
+.pagehead .lede{margin-top:9px;font-size:15px;color:rgba(255,255,255,.85);max-width:66ch;font-weight:300;}
+
+.subnav{background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.subnav-in{max-width:1280px;margin:0 auto;padding:0 22px;display:flex;gap:0;overflow-x:auto;}
+.subnav a{padding:14px 20px;font-size:14.5px;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;font-weight:500;}
+.subnav a:hover{color:var(--ink);text-decoration:none;background:var(--surface-2);}
+.subnav a.on{color:var(--brand);border-bottom-color:var(--brand);font-weight:700;}
+.body{padding:34px 0 76px;}
+.stack{display:flex;flex-direction:column;gap:38px;}
+
+.eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.14em;
+  color:var(--brand);margin-bottom:8px;}
+.eyebrow::before{content:"";width:16px;height:3px;background:var(--brand);border-radius:2px;}
+h2.sec{font-size:23px;margin-bottom:5px;}
+h2.sec::after{content:"";display:block;width:34px;height:3px;background:var(--brand);border-radius:2px;margin-top:9px;}
+h3.sub{font-size:16.5px;margin-bottom:9px;}
+.sec-lede{color:var(--muted);font-size:14.5px;max-width:74ch;margin:14px 0 20px;}
+.prose p{max-width:74ch;color:var(--ink-2);margin-bottom:13px;}
+.prose p:last-child{margin-bottom:0;}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow-sm);}
+.card-h{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.card-h h3{font-size:15px;display:flex;align-items:center;gap:8px;}
+.card-h h3::before{content:"";width:4px;height:15px;background:var(--brand);border-radius:2px;}
+.card-b{padding:18px;}
+.grid{display:grid;gap:16px;}
+.g2{grid-template-columns:repeat(2,1fr);}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g4{grid-template-columns:repeat(4,1fr);}
+
+/* ================= HOME ================= */
+.hero{position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(115deg,var(--brand-deep) 0%,var(--brand-dark) 40%,var(--brand) 100%);}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.62;}
+.hero .wm{position:absolute;right:4%;top:50%;transform:translateY(-50%);width:330px;opacity:.07;color:#fff;}
+.hero-in{position:relative;max-width:1280px;margin:0 auto;padding:74px 22px 66px;}
+.hero .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.12em;color:#fff;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:100px;margin-bottom:18px;}
+.hero h1{font-size:clamp(29px,4.3vw,45px);color:#fff;letter-spacing:-.035em;max-width:21ch;font-weight:900;}
+.hero h1 em{font-style:normal;color:#8FC5FF;}
+.hero .lede{margin-top:16px;font-size:16px;font-weight:300;color:rgba(255,255,255,.84);max-width:54ch;}
+.hero-cta{margin-top:26px;display:flex;gap:9px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;font-size:14px;font-weight:700;
+  border:1px solid transparent;cursor:pointer;font-family:inherit;border-radius:4px;}
+.btn-primary{background:#fff;color:var(--brand-dark);}
+.btn-primary:hover{background:#E8F1FB;text-decoration:none;}
+.btn-ghost{border-color:rgba(255,255,255,.42);color:#fff;background:rgba(255,255,255,.06);}
+.btn-ghost:hover{background:rgba(255,255,255,.16);text-decoration:none;}
+.btn-sm{padding:7px 13px;font-size:13px;font-weight:500;}
+.btn-line{border-color:var(--border-strong);color:var(--ink-2);background:var(--surface);}
+.btn-line:hover{background:var(--brand-soft);color:var(--brand);border-color:var(--brand-lt);text-decoration:none;}
+.btn-blue{background:var(--brand);color:#fff;}
+.btn-blue:hover{background:var(--brand-mid);text-decoration:none;}
+
+.hstrip{background:var(--brand-dark);border-top:1px solid rgba(255,255,255,.1);}
+.hstrip-in{max-width:1280px;margin:0 auto;padding:0 22px;display:grid;grid-template-columns:repeat(4,1fr);}
+.hstat{padding:20px 0;border-right:1px solid rgba(255,255,255,.1);}
+.hstat:last-child{border-right:0;}
+.hstat .k{font-size:12px;color:rgba(255,255,255,.6);}
+.hstat .v{font-size:27px;font-weight:900;color:#fff;line-height:1.35;}
+.hstat .v small{font-size:13px;font-weight:400;color:rgba(255,255,255,.62);margin-left:3px;}
+
+.navcard{display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;
+  transition:transform .16s,box-shadow .16s,border-color .16s;position:relative;overflow:hidden;}
+.navcard::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--brand);}
+.navcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--brand-lt);text-decoration:none;}
+.navcard .n2{font-size:11.5px;font-weight:700;color:var(--brand);letter-spacing:.1em;}
+.navcard h3{font-size:18.5px;margin:7px 0 9px;color:var(--ink);}
+.navcard p{font-size:14px;color:var(--muted);}
+.navcard ul{margin:13px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;}
+.navcard li{font-size:13.5px;color:var(--ink-2);padding-left:13px;position:relative;}
+.navcard li::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:50%;background:var(--brand-lt);}
+
+/* ================= DASHBOARD ================= */
+.dashbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--r);margin-bottom:16px;box-shadow:var(--shadow-sm);}
+.src{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--good);flex-shrink:0;box-shadow:0 0 0 3px var(--good-bg);}
+.dot.warnd{background:var(--warn);box-shadow:0 0 0 3px var(--warn-bg);}
+.spacer{margin-left:auto;}
+select{font-family:inherit;font-size:13.5px;padding:7px 9px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);border-radius:4px;}
+input[type=text]{font-family:inherit;font-size:13.5px;padding:9px 11px;border:1px solid var(--border-strong);background:var(--surface);color:var(--ink);border-radius:4px;width:100%;}
+.segmented{display:flex;border:1px solid var(--border-strong);border-radius:4px;overflow:hidden;}
+.segmented button{padding:7px 14px;font-size:13px;font-family:inherit;background:var(--surface);color:var(--muted);
+  border:0;border-right:1px solid var(--border);cursor:pointer;}
+.segmented button:last-child{border-right:0;}
+.segmented button.on{background:var(--brand);color:#fff;font-weight:700;}
+
+/* summary tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px;}
+.tile{border-radius:var(--r);padding:16px 18px;display:flex;align-items:center;gap:14px;color:#fff;box-shadow:var(--shadow-sm);}
+.tile.t-total{background:linear-gradient(120deg,#0A2540,#0B57A4);}
+.tile.t-good{background:linear-gradient(120deg,#0C6B4D,#17A377);}
+.tile.t-warn{background:linear-gradient(120deg,#9A6E00,#DFA100);}
+.tile.t-bad{background:linear-gradient(120deg,#9B1F1A,#D9463A);}
+.tile .ic{width:42px;height:42px;border-radius:8px;background:rgba(255,255,255,.18);display:grid;place-items:center;flex-shrink:0;}
+.tile .k{font-size:12.5px;color:rgba(255,255,255,.82);}
+.tile .v{font-size:29px;font-weight:900;line-height:1.2;}
+.tile .v small{font-size:13px;font-weight:400;opacity:.85;margin-left:2px;}
+
+.chartrow{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:16px;margin-bottom:16px;}
+.gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);align-items:center;}
+.legend b{color:var(--ink);font-weight:700;}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;}
+.legend i.line{height:3px;border-radius:2px;}
+.legend i.dash{height:3px;background:repeating-linear-gradient(90deg,var(--s2) 0 5px,transparent 5px 9px);}
+
+/* kpi groups */
+#kpiGrid{display:flex;flex-direction:column;gap:22px;}
+.kgroup-h{display:flex;align-items:center;gap:11px;padding:0 0 10px;border-bottom:2px solid var(--gc);margin-bottom:14px;flex-wrap:wrap;}
+.kgroup-name{font-size:16px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.kgroup-name::before{content:"";width:5px;height:17px;background:var(--gc);border-radius:2px;}
+.kgroup-cnt{font-size:12.5px;color:var(--muted);}
+.kgroup-avg{margin-left:auto;font-size:13px;color:var(--muted);}
+.kgroup-avg b{color:var(--ink);font-size:15px;}
+.kgroup-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media (max-width:980px){.kgroup-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:720px){.kgroup-grid{grid-template-columns:1fr;}}
+/* kpi cards */
+.kpi{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;
+  text-align:left;font-family:inherit;transition:transform .14s,box-shadow .14s,border-color .14s;
+  display:flex;flex-direction:column;gap:9px;padding:15px 16px 14px;}
+.kpi::before{content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:3px;border-radius:var(--r) var(--r) 0 0;}
+.kpi.st-good::before{background:var(--good);} .kpi.st-warn::before{background:var(--warn);}
+.kpi.st-bad::before{background:var(--bad);}   .kpi.st-none::before{background:var(--border-strong);}
+.kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--brand-lt);}
+.kpi.sel{border-color:var(--brand);box-shadow:0 0 0 2px var(--brand-soft2);}
+.kpi-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.kcode{font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--brand);background:var(--brand-soft);
+  padding:2px 8px;border-radius:3px;}
+.kstat{font-size:11.5px;font-weight:500;color:var(--muted);}
+.kstat b{font-weight:900;margin-left:2px;}
+.kpi.st-good .kstat b{color:var(--good-tx);} .kpi.st-warn .kstat b{color:var(--warn-tx);}
+.kpi.st-bad .kstat b{color:var(--bad-tx);}
+.kpi-name{font-size:13.5px;font-weight:500;color:var(--ink-2);line-height:1.42;min-height:2.85em;}
+.kpi-mid{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;}
+.kpi-val{display:flex;align-items:baseline;gap:4px;}
+.kpi-val b{font-size:29px;font-weight:900;letter-spacing:-.04em;line-height:1.1;}
+.kpi-val span{font-size:13px;color:var(--muted);font-weight:500;}
+.delta{font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;gap:3px;}
+.delta.up{color:var(--bad-tx);} .delta.down{color:var(--s1);} .delta.flat{color:var(--muted);}
+.delta em{font-style:normal;color:var(--muted);font-weight:400;font-size:11.5px;}
+.kpi-foot{margin-top:1px;}
+.meter{height:6px;background:var(--surface-3);border-radius:4px;overflow:hidden;}
+.meter i{display:block;height:100%;border-radius:4px;}
+.meter i.good{background:var(--good);} .meter i.warn{background:var(--warn);} .meter i.bad{background:var(--bad);}
+
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:100px;border:1px solid;}
+.chip.good{background:var(--good-bg);color:var(--good-tx);border-color:var(--good-bd);}
+.chip.warn{background:var(--warn-bg);color:var(--warn-tx);border-color:var(--warn-bd);}
+.chip.bad{background:var(--bad-bg);color:var(--bad-tx);border-color:var(--bad-bd);}
+.chip.neutral{background:var(--surface-3);color:var(--muted);border-color:var(--border);}
+.chip.blue{background:var(--brand-soft);color:var(--brand);border-color:var(--brand-soft2);}
+
+.detail{margin-top:16px;}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;}
+.tbl th,.tbl td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;}
+.tbl thead th{background:var(--brand-dark);color:#fff;font-weight:700;font-size:12.5px;white-space:nowrap;border-bottom:0;}
+.tbl tbody th{background:var(--surface-3);font-weight:700;color:var(--ink-2);font-size:13px;white-space:nowrap;}
+.tbl td.r,.tbl th.r{text-align:right;font-variant-numeric:tabular-nums;}
+.tbl tbody tr:hover{background:var(--brand-soft);}
+.scroll-x{overflow-x:auto;}
+.deflist{display:grid;grid-template-columns:104px 1fr;gap:9px 14px;font-size:13.5px;}
+.deflist dt{color:var(--muted);font-weight:500;}
+.deflist dd{margin:0;color:var(--ink-2);}
+
+.notice{display:flex;gap:11px;padding:13px 15px;border:1px solid var(--warn-bd);background:var(--warn-bg);
+  color:var(--warn-tx);font-size:13.5px;border-radius:var(--r);align-items:flex-start;line-height:1.6;}
+.notice.info{border-color:var(--brand-soft2);background:var(--brand-soft);color:var(--ink-2);}
+.notice .ii{flex-shrink:0;font-weight:900;}
+
+/* ================= ORG ================= */
+.org{display:flex;flex-direction:column;align-items:center;}
+.onode{border:1.5px solid var(--border-strong);background:var(--surface);padding:11px 22px;text-align:center;min-width:172px;border-radius:5px;}
+.onode .t{font-size:14.5px;font-weight:700;}
+.onode .d{font-size:12px;color:var(--muted);margin-top:1px;}
+.onode.head{background:var(--brand-dark);border-color:var(--brand-dark);color:#fff;}
+.onode.head .d{color:rgba(255,255,255,.68);}
+.onode.mid{background:var(--brand);border-color:var(--brand);color:#fff;}
+.onode.mid .d{color:rgba(255,255,255,.75);}
+.onode.center{background:var(--brand-soft);border-color:var(--brand);border-width:2px;color:var(--brand);}
+.onode.center .t{font-size:16px;}
+.onode.center .d{color:var(--brand);opacity:.8;}
+.onode.dash{border-style:dashed;background:var(--surface-2);}
+.vline{width:2px;height:22px;background:var(--border-strong);}
+.orow{display:flex;gap:16px;justify-content:center;align-items:stretch;flex-wrap:wrap;position:relative;}
+.orow::before{content:"";position:absolute;top:-11px;left:14%;right:14%;height:2px;background:var(--border-strong);}
+.ocol{display:flex;flex-direction:column;align-items:center;}
+.ocol>.cnode{flex:1;display:flex;flex-direction:column;}
+.ocol>.cnode>.cnode-b{flex:1;}
+.ocol .vline{height:11px;}
+.side-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
+.side-right{position:absolute;left:100%;top:50%;transform:translateY(-50%);display:flex;align-items:center;}
+.hline{width:40px;height:0;border-top:2px dashed var(--border-strong);flex-shrink:0;}
+.team-body{margin-top:9px;border-top:1px solid var(--border);padding-top:9px;font-size:12.5px;color:var(--muted);text-align:left;line-height:1.6;}
+.team-body li{margin-left:15px;}
+.cnode{width:252px;border:1px solid var(--brand);border-radius:5px;overflow:hidden;background:var(--surface);}
+.cnode-h{background:var(--brand);color:#fff;font-weight:700;font-size:14.5px;padding:13px 14px;text-align:center;line-height:1.42;min-height:74px;display:flex;align-items:center;justify-content:center;}
+.cnode-b{background:var(--brand-soft);color:var(--ink-2);font-size:12.8px;padding:16px 12px;text-align:center;line-height:1.7;min-height:104px;display:flex;align-items:center;justify-content:center;}
+
+/* ================= FLOW / TIMELINE ================= */
+.flow5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;counter-reset:f;}
+.fstep{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;overflow:hidden;}
+.fstep::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--brand),var(--brand-mid));}
+.fstep::after{content:"";position:absolute;right:-7px;top:50%;width:12px;height:12px;border-top:2px solid var(--border-strong);border-right:2px solid var(--border-strong);transform:translateY(-50%) rotate(45deg);background:var(--surface-2);z-index:2;}
+.fstep:last-child::after{display:none;}
+.fnum{font-size:12px;font-weight:900;color:#fff;background:var(--brand);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;letter-spacing:0;}
+.fstep h4{font-size:15px;margin:11px 0 8px;}
+.fstep p{font-size:12.8px;color:var(--muted);line-height:1.65;}
+@media (max-width:1080px){.flow5{grid-template-columns:repeat(3,1fr);}.fstep::after{display:none;}}
+@media (max-width:720px){.flow5{grid-template-columns:1fr;}}
+/* ================= PDCA / TIMELINE ================= */
+.pdca{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.pstep{border:1px solid var(--border);background:var(--surface);border-radius:var(--r);padding:18px;position:relative;overflow:hidden;}
+.pstep::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;}
+.pstep.p1::before{background:var(--s1);} .pstep.p2::before{background:var(--s3);}
+.pstep.p3::before{background:var(--s2);} .pstep.p4::before{background:var(--bad);}
+.pstep .p{font-size:24px;font-weight:900;line-height:1;letter-spacing:-.03em;}
+.pstep.p1 .p{color:var(--s1);} .pstep.p2 .p{color:var(--s3);}
+.pstep.p3 .p{color:var(--s2);} .pstep.p4 .p{color:var(--bad);}
+.pstep h4{font-size:15px;margin:7px 0 8px;}
+.pstep p{font-size:13px;color:var(--muted);line-height:1.62;}
+
+.tline{border-left:3px solid var(--brand-soft2);margin-left:8px;display:flex;flex-direction:column;gap:20px;padding:4px 0;}
+.titem{position:relative;padding-left:22px;}
+.titem::before{content:"";position:absolute;left:-9px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--brand);border:3px solid var(--surface);}
+.titem .when{font-size:12px;color:var(--brand);font-weight:700;}
+.titem .what{font-size:14.5px;font-weight:500;margin-top:1px;}
+.titem .who{font-size:13px;color:var(--muted);}
+
+/* ================= SURVEY ================= */
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:12px;}
+.qcard{border:1px solid var(--border);background:var(--surface);padding:14px 16px;border-radius:var(--r);border-left:4px solid var(--brand);}
+.qcard .qn{font-size:11px;color:var(--brand);letter-spacing:.08em;font-weight:700;}
+.qcard .qt{font-size:14px;font-weight:700;margin-top:3px;}
+.qcard .qd{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.55;}
+.barrow{display:flex;align-items:center;gap:11px;padding:8px 0;border-bottom:1px solid var(--border);}
+.barrow:last-child{border-bottom:0;}
+.barrow .bl{width:142px;font-size:13.5px;color:var(--ink-2);flex-shrink:0;}
+.barrow .bt{flex:1;height:22px;background:var(--surface-3);border-radius:4px;overflow:hidden;}
+.barrow .bt i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-mid));border-radius:0 4px 4px 0;}
+.barrow .bv{width:54px;text-align:right;font-size:13.5px;font-weight:900;font-variant-numeric:tabular-nums;}
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:9px;margin:0;padding:0;list-style:none;}
+.steps li{counter-increment:s;position:relative;padding-left:29px;font-size:13.5px;color:var(--ink-2);line-height:1.62;}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:50%;
+  background:var(--brand);color:#fff;font-size:11.5px;font-weight:700;display:grid;place-items:center;}
+
+.cic{width:52px;height:52px;margin:0 auto;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;}
+.fwrap{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.fcol{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--surface);}
+.fcol-h{background:var(--brand-dark);color:#fff;font-size:14px;font-weight:700;padding:12px 14px;text-align:center;}
+.fcol:nth-child(2) .fcol-h{background:var(--brand);}
+.fcol:nth-child(3) .fcol-h{background:var(--brand-mid);}
+.fcol:nth-child(4) .fcol-h{background:var(--s3);}
+.fcol-b{padding:14px;display:flex;flex-direction:column;gap:8px;}
+.fitem{background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:10px 12px;font-size:13px;color:var(--ink-2);text-align:center;}
+@media (max-width:980px){.fwrap{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:600px){.fwrap{grid-template-columns:1fr;}}
+
+/* ================= BOARD ================= */
+.board{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--surface);}
+.board-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.board-count{font-size:13px;color:var(--muted);}
+.catfilter{display:flex;gap:6px;flex-wrap:wrap;}
+.catfilter button{font-family:inherit;font-size:13px;padding:7px 13px;border:1px solid var(--border-strong);background:var(--surface);color:var(--muted);border-radius:100px;cursor:pointer;}
+.catfilter button:hover{border-color:var(--brand-lt);color:var(--brand);}
+.catfilter button.on{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700;}
+.board-count b{color:var(--brand);}
+.board-search{margin-left:auto;display:flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--border-strong);border-radius:4px;padding:0 10px;color:var(--muted);}
+.board-search input{border:0;background:transparent;padding:8px 0;font-size:13.5px;width:200px;color:var(--ink);}
+.board-search input:focus{outline:none;}
+.board-tbl{font-size:13.8px;}
+.board-tbl thead th{background:var(--surface-3);color:var(--ink-2);border-bottom:2px solid var(--border-strong);}
+.board-tbl td{padding:12px 12px;}
+.board-tbl tbody tr:hover{background:var(--brand-soft);}
+.filelink{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:4px;color:var(--brand);background:var(--brand-soft);}
+.filelink:hover{background:var(--brand);color:#fff;text-decoration:none;}
+
+/* ================= FOOTER ================= */
+footer{background:var(--brand-deep);color:rgba(255,255,255,.6);padding:40px 0 30px;font-size:13px;}
+.foot-in{max-width:1280px;margin:0 auto;padding:0 22px;display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:30px;}
+footer h4{font-size:12.5px;color:#fff;font-weight:700;letter-spacing:.05em;margin-bottom:11px;}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;}
+footer a{color:rgba(255,255,255,.6);}
+footer a:hover{color:#fff;}
+.foot-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.foot-brand .sym{width:36px;height:36px;color:#fff;filter:invert(1) brightness(2);}
+.foot-brand .fname{font-size:16px;color:#fff;font-weight:700;}
+.foot-bot{max-width:1280px;margin:26px auto 0;padding:16px 22px 0;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:rgba(255,255,255,.4);}
+
+/* ================= MODAL ================= */
+.modal{position:fixed;inset:0;background:rgba(6,24,43,.6);display:none;place-items:center;z-index:200;padding:18px;}
+.modal.open{display:grid;}
+.modal-box{background:var(--surface);border-radius:var(--r);max-width:640px;width:100%;max-height:88vh;overflow:auto;box-shadow:var(--shadow);}
+.modal-h{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--brand-dark);color:#fff;border-radius:var(--r) var(--r) 0 0;}
+.modal-h h3{font-size:16px;color:#fff;}
+.modal-b{padding:20px;display:flex;flex-direction:column;gap:15px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:13px;font-weight:700;}
+.field .hint{font-size:12.5px;color:var(--muted);line-height:1.55;}
+code{font-family:'Roboto Mono',ui-monospace,monospace;font-size:12.5px;background:var(--surface-3);padding:1px 5px;border-radius:3px;color:var(--ink);}
+
+/* ================= TOOLTIP ================= */
+.chtip{position:absolute;display:none;background:var(--brand-dark);color:#fff;padding:8px 11px;font-size:12.5px;
+  border-radius:4px;pointer-events:none;white-space:nowrap;z-index:6;box-shadow:var(--shadow);line-height:1.55;}
+.chtip b{color:#fff;} .chtip .m{color:rgba(255,255,255,.7);}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:1080px){
+  .chartrow{grid-template-columns:1fr 1fr;}
+  .chartrow>:nth-child(3){grid-column:1/-1;}
+}
+@media (max-width:980px){
+  .g4,.kpi-grid,.pdca,.tiles{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:1fr;}
+  .detail-grid{grid-template-columns:1fr!important;}
+  .foot-in{grid-template-columns:1fr 1fr;}
+  .hero .wm{display:none;}
+}
+@media (max-width:720px){
+  .menu-btn{display:grid;}
+  .utilbar .hidesm{display:none;}
+  .gnb{display:none;position:absolute;top:var(--hdr);left:0;right:0;background:var(--surface);flex-direction:column;
+    padding:6px;height:auto;border-bottom:2px solid var(--brand);box-shadow:var(--shadow);}
+  .gnb.open{display:flex;}
+  .gnb-li{display:block;}
+  .gnb-a{height:auto;padding:12px 14px;border-bottom:0;width:100%;}
+  .gnb-sub{position:static;display:block;border:0;box-shadow:none;padding:0 0 8px 14px;}
+  .g2,.g4,.kpi-grid,.pdca,.tiles,.chartrow,.hstrip-in{grid-template-columns:1fr;}
+  .chartrow>:nth-child(3){grid-column:auto;}
+  .hstat{border-right:0;border-bottom:1px solid rgba(255,255,255,.1);}
+  .deflist{grid-template-columns:1fr;gap:1px 0;}
+  .deflist dd{margin-bottom:8px;}
+  .foot-in{grid-template-columns:1fr;}
+  .pagehead h1{font-size:25px;}
+  .barrow .bl{width:96px;font-size:12.5px;}
+  .brand .word{display:none;}
+}
+.wm{filter:brightness(0) invert(1);pointer-events:none;}
+
+/* ===== 3주기 인증 대시보드 추가 스타일 ===== */
+:root{ --s4:#9B4DBF; --a1:#1B6FD0; --a2:#C97614; --a3:#12876A; --a4:#9B4DBF; }
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --s4:#A968CC; --a1:#4C97E8; --a2:#C87F2A; --a3:#2FA383; --a4:#A968CC; }}
+:root[data-theme="dark"]{ --s4:#A968CC; --a1:#4C97E8; --a2:#C87F2A; --a3:#2FA383; --a4:#A968CC; }
+
+/* 헤더 : 단일 페이지라 GNB 대신 안내 */
+.hdr-note{margin-left:auto;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:14px;}
+.hdr-note a{color:var(--muted);}
+.hdr-note a:hover{color:var(--brand);}
+
+/* 각주 */
+.foot-note{border:1px solid var(--border);background:var(--surface);border-radius:var(--r);padding:18px 20px;}
+.foot-note h4{font-size:13.5px;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.foot-note h4::before{content:"";width:4px;height:14px;background:var(--brand);border-radius:2px;}
+.foot-note ol{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px;}
+.foot-note li{font-size:12.8px;color:var(--muted);line-height:1.7;}
+.foot-note li b{color:var(--ink-2);}
+sup.fn{font-size:10px;color:var(--brand);font-weight:700;margin-left:2px;}
+
+/* 상태 : 자료 준비 중 */
+.kpi.st-na{opacity:.86;}
+.kpi.st-na::before{background:var(--border-strong);}
+.kpi.st-na .kpi-val{display:none;}
+.kpi-na-txt{font-size:13.5px;color:var(--muted);font-weight:500;padding:4px 0 2px;}
+.chip.na{background:var(--surface-3);color:var(--muted);border-color:var(--border-strong);}
+.tile.t-na{background:linear-gradient(120deg,#43546B,#67798F);}
+
+/* 기준값 줄 */
+.kpi-std{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;}
+.kpi-std b{color:var(--ink-2);font-weight:700;}
+
+/* 영역별 충족 현황 */
+.areastat{display:flex;flex-direction:column;gap:13px;}
+.areastat .row{display:flex;flex-direction:column;gap:6px;}
+.areastat .lb{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;}
+.areastat .lb > span{color:var(--ink-2);font-weight:500;display:flex;align-items:center;gap:7px;}
+.areastat .lb > span::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--ac);}
+.areastat .lb b{font-size:14px;white-space:nowrap;}
+.areastat .track{display:flex;height:14px;border-radius:4px;overflow:hidden;background:var(--surface-3);gap:2px;}
+.areastat .track i{display:block;height:100%;}
+.areastat .track i.ok{background:var(--good);}
+.areastat .track i.no{background:var(--bad);}
+.areastat .track i.na{background:var(--border-strong);}
+
+/* 그룹 헤더 */
+.kgroup-h{border-bottom-color:var(--gc);}
+.kgroup-name::before{background:var(--gc);}
+.kgroup-code{font-size:11.5px;font-weight:700;color:#fff;background:var(--gc);padding:2px 8px;border-radius:3px;letter-spacing:.02em;}
+
+/* 상세 정의 표 */
+.dinfo{width:100%;border-collapse:collapse;font-size:13px;}
+.dinfo th{width:96px;text-align:left;padding:8px 10px 8px 0;color:var(--muted);font-weight:500;vertical-align:top;white-space:nowrap;}
+.dinfo td{padding:8px 0;color:var(--ink-2);vertical-align:top;line-height:1.6;border-bottom:1px solid var(--border);}
+.dinfo tr:last-child td{border-bottom:0;}
+
+
+/* 전년 대비 색 */
+.delta.good{color:var(--good-tx);} .delta.poor{color:var(--bad-tx);} .delta.flat{color:var(--muted);}
+.kgroup-avg b{color:var(--ink);}
+
+/* ===== 요약 타일 (v3) ===== */
+.tile .ksub{font-size:11.5px;color:rgba(255,255,255,.72);margin-top:1px;line-height:1.45;}
+.tile .v{font-size:27px;}
+.tile.t-imp{background:linear-gradient(120deg,#0C6B4D,#17A377);}
+.tile.t-good{background:linear-gradient(120deg,#0A3D73,#1B6FD0);}
+.tile.t-rate{background:linear-gradient(120deg,#07182B,#0B3C6E);border:1px solid rgba(255,255,255,.16);}
+.tile.t-rate .v{font-size:32px;}
+
+/* ===== 스포트라이트 ===== */
+.spot{overflow:hidden;}
+.spot-h{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:18px 22px;border-bottom:1px solid var(--border);background:var(--surface-2);}
+.spot-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:.16em;color:var(--brand);margin-bottom:5px;}
+.spot-h h3{font-size:21px;letter-spacing:-.025em;}
+.spot-nav{display:flex;align-items:center;gap:8px;}
+.spot-count{font-size:12.5px;color:var(--muted);font-weight:700;letter-spacing:.04em;}
+.navbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border-strong);background:var(--surface);
+  color:var(--ink-2);font-size:17px;line-height:1;cursor:pointer;display:grid;place-items:center;font-family:inherit;}
+.navbtn:hover{background:var(--brand);border-color:var(--brand);color:#fff;}
+.spot-b{display:grid;grid-template-columns:minmax(280px,1fr) 1.25fr;gap:26px;padding:22px;}
+.spot-desc{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
+.spot-boxes{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sbox{background:var(--surface-2);border:1px solid var(--border);border-radius:5px;padding:13px 14px;}
+.sb-k{font-size:11.5px;color:var(--muted);margin-bottom:4px;}
+.sb-k span{margin-left:3px;}
+.sb-v{font-size:21px;font-weight:900;letter-spacing:-.03em;line-height:1.25;}
+.sb-v small{font-size:13px;font-weight:500;color:var(--muted);margin-left:2px;}
+.sb-v.std{color:var(--s2);font-size:18px;}
+.sb-v.mut{color:var(--muted);font-size:15px;font-weight:700;}
+.spot-right{min-width:0;}
+@media (max-width:980px){.spot-b{grid-template-columns:1fr;}}
+
+/* 조건부 기준 칩 */
+.chip.cond{background:var(--brand-soft);color:var(--brand);border-color:var(--brand-soft2);font-weight:500;}
+.kpi-std{flex-wrap:wrap;gap:6px;}
+
+/* 각주 링크 */
+.notelink{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--brand);
+  background:var(--brand-soft);border:1px solid var(--brand-soft2);border-radius:100px;padding:3px 11px;margin-left:6px;
+  white-space:nowrap;vertical-align:1px;}
+.notelink:hover{background:var(--brand);border-color:var(--brand);color:#fff;text-decoration:none;}
+.notelink span{font-size:11px;}
+.note-lede{font-size:12.8px;color:var(--muted);margin:-4px 0 12px;line-height:1.65;}
+.foot-note ol{padding-left:0;list-style:none;counter-reset:nt;}
+.foot-note li{counter-increment:nt;position:relative;padding-left:30px;}
+.foot-note li::before{content:counter(nt) ")";position:absolute;left:0;top:0;font-weight:700;color:var(--brand);font-size:12.5px;}
+.foot-note:target{box-shadow:0 0 0 3px var(--brand-soft2);}
+.foot-note{scroll-margin-top:86px;}
+
+/* ===== 정량지표 전체 보기 ===== */
+.kpilist{overflow:hidden;}
+.kpilist-h{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:18px 22px;border-bottom:1px solid var(--border);background:var(--surface-2);}
+.kpilist-h h3{font-size:20px;letter-spacing:-.025em;}
+.kpilist-cnt{font-size:12.5px;color:var(--muted);font-weight:500;}
+.listtbl{font-size:13px;min-width:1120px;}
+.listtbl thead th{background:var(--surface-3);color:var(--ink-2);font-size:12px;font-weight:700;
+  border-bottom:2px solid var(--border-strong);white-space:nowrap;padding:11px 12px;}
+.listtbl td{padding:13px 12px;vertical-align:middle;}
+.listtbl tbody tr{cursor:pointer;}
+.listtbl tbody tr:hover{background:var(--brand-soft);}
+.listtbl tbody tr.on{background:var(--brand-soft);box-shadow:inset 3px 0 0 var(--brand);}
+.lt-code{display:inline-grid;place-items:center;min-width:34px;padding:3px 7px;border-radius:4px;
+  background:var(--surface-3);color:var(--ink-2);font-size:11.5px;font-weight:700;}
+.lt-area{font-size:11.5px;color:var(--muted);line-height:1.5;display:inline-block;}
+.lt-name{font-size:13.5px;font-weight:700;color:var(--ink);}
+.lt-desc{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.5;max-width:44ch;}
+.lt-val{font-size:16px;font-weight:900;white-space:nowrap;}
+.lt-val.na{font-size:14px;font-weight:700;color:var(--muted);}
+.lt-std{font-size:12.5px;color:var(--ink-2);line-height:1.55;max-width:30ch;}
+.lt-std em{font-style:normal;color:var(--muted);}
+.lt-dl{font-size:13px;font-weight:700;white-space:nowrap;}
+.lt-dl.good{color:var(--good-tx);} .lt-dl.poor{color:var(--bad-tx);} .lt-dl.flat{color:var(--muted);}
+.lt-mut{color:var(--muted);}
+@media (max-width:720px){.kpilist-h{padding:16px;}}
+
+/* ===== 한글 줄바꿈 : 단어 중간에서 끊기지 않도록 ===== */
+body,button,input,select,table,th,td{word-break:keep-all;overflow-wrap:break-word;}
+.kpi-name,.lt-name,.lt-desc,.lt-std,.spot-desc,.spot-h h3,.dinfo td,.foot-note li,
+.sec-lede,.pagehead .lede,.qcard .qd,.tile .k,.tile .ksub,.kgroup-name{word-break:keep-all;overflow-wrap:break-word;}
+
+/* ===== 정량지표 전체 보기 : 열 폭·가독성 재조정 ===== */
+.listtbl{min-width:1180px;}
+.listtbl td{padding:14px 14px;vertical-align:top;}
+.listtbl thead th{padding:12px 14px;}
+.listtbl td.mid{vertical-align:middle;}
+.lt-areawrap{display:flex;flex-direction:column;gap:5px;align-items:flex-start;}
+.lt-areakey{font-size:10.5px;font-weight:700;color:#fff;background:var(--ac,var(--brand));
+  padding:2px 7px;border-radius:3px;letter-spacing:.02em;line-height:1.5;}
+.lt-areaname{font-size:11.5px;color:var(--muted);line-height:1.5;}
+.lt-name{font-size:14px;font-weight:700;color:var(--ink);line-height:1.45;}
+.lt-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.6;max-width:38ch;}
+.lt-std{font-size:13px;color:var(--ink-2);line-height:1.5;font-weight:700;}
+.lt-cond{display:block;font-size:11.5px;color:var(--muted);font-weight:400;margin-top:5px;line-height:1.6;
+  padding-left:9px;border-left:2px solid var(--brand-soft2);}
+.lt-judge{display:flex;flex-direction:column;gap:5px;align-items:flex-start;}
+#spotChart{overflow-x:auto;}
+@media (max-width:600px){
+  .spot-boxes{grid-template-columns:1fr;}
+  .spot-h h3{font-size:18px;}
+  .sb-v{font-size:19px;}
+}
+.chip.ev30{background:#F3EAFB;color:#6B2E9E;border-color:#E0C9F2;font-weight:600;font-size:10.5px;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip.ev30{background:#2A1A38;color:#C79AE8;border-color:#4A2F63;}}
+:root[data-theme="dark"] .chip.ev30{background:#2A1A38;color:#C79AE8;border-color:#4A2F63;}
+#evalSeg button{font-size:12.5px;}
+
+/* ===== 화면 정리 (v5) ===== */
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+.topline-txt{font-size:13.5px;color:var(--muted);}
+.topline-txt b{color:var(--ink);font-weight:700;}
+.notelink{margin-left:0;}
+.chartrow{grid-template-columns:minmax(280px,0.8fr) 1.5fr;}
+@media (max-width:900px){.chartrow{grid-template-columns:1fr;}.chartrow>:nth-child(3){grid-column:auto;}}
+
+/* 평가 구분 : 은은하게 구분 */
+.evlegend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);}
+.evlegend b{font-weight:700;}
+.evlegend .ev{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px;}
+.evlegend .ev27{background:var(--brand-soft2);border:1px solid var(--brand-lt);}
+.evlegend .ev30{background:#EDE9F4;border:1px solid #BDAED4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .evlegend .ev30{background:#2A2338;border-color:#4C4066;}}
+:root[data-theme="dark"] .evlegend .ev30{background:#2A2338;border-color:#4C4066;}
+
+.kpi.ev-2030 .kcode{background:#EDE9F4;color:#5C4C7D;}
+.kpi.ev-2030{border-style:dashed;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kpi.ev-2030 .kcode{background:#2A2338;color:#B9A8D6;}}
+:root[data-theme="dark"] .kpi.ev-2030 .kcode{background:#2A2338;color:#B9A8D6;}
+.ev-tag{font-size:10.5px;color:#5C4C7D;background:#EDE9F4;border:1px solid #DCD2EA;border-radius:3px;padding:1px 6px;font-weight:600;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ev-tag{background:#2A2338;color:#B9A8D6;border-color:#4C4066;}}
+:root[data-theme="dark"] .ev-tag{background:#2A2338;color:#B9A8D6;border-color:#4C4066;}
+.listtbl tbody tr.ev-2030 .lt-code{background:#EDE9F4;color:#5C4C7D;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .listtbl tbody tr.ev-2030 .lt-code{background:#2A2338;color:#B9A8D6;}}
+:root[data-theme="dark"] .listtbl tbody tr.ev-2030 .lt-code{background:#2A2338;color:#B9A8D6;}
+
+/* 목록 : 준거를 평가영역 칸으로 합쳐 열 수 축소 */
+.lt-critcode{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.02em;}
+
+/* ── 자료 준비 중 사유 · 상세표 통일 서식 ─────────────────────────── */
+.kpi-na-txt em{display:block;font-style:normal;font-size:11px;color:var(--muted);
+  font-weight:400;margin-top:3px;line-height:1.45;}
+.chart-na{min-height:220px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:6px;border:1px dashed var(--border-strong);border-radius:6px;
+  color:var(--muted);font-size:13.5px;text-align:center;padding:16px;}
+.chart-na span{font-size:12px;color:var(--muted);opacity:.9;}
+.na-why{font-size:11.5px;color:var(--muted);font-weight:400;margin-top:5px;line-height:1.5;}
+.dinfo th{width:104px;}
+.dinfo .dsub{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.55;}
+.dinfo .dmut{color:var(--muted);}
+.dinfo .dlist{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;}
+.dinfo .dlist li{position:relative;padding-left:12px;line-height:1.6;}
+.dinfo .dlist li::before{content:'·';position:absolute;left:2px;color:var(--muted);font-weight:700;}
+.lt-why{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:5px;
+  line-height:1.5;white-space:normal;}
+
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="skhu-sym" viewBox="202.08 37.92 200.64 200.16"><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 341.089844 185.339844 L 261.5625 185.339844 L 352.945312 104.007812 L 352.945312 144.050781 L 351.589844 144.050781 L 351.589844 107.132812 L 289.855469 172.414062 L 315.613281 172.414062 Z M 341.089844 185.339844 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 261.5625 185.339844 L 341.089844 185.339844 L 251.480469 103.171875 L 251.480469 143.214844 L 252.839844 143.214844 L 252.839844 106.296875 L 312.796875 172.414062 L 287.042969 172.414062 Z M 261.5625 185.339844 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 240.917969 152.832031 L 252.136719 139.773438 L 263.359375 152.832031 Z M 240.917969 152.832031 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 341.042969 153.960938 L 352.265625 140.90625 L 363.488281 153.960938 Z M 341.042969 153.960938 "/><path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 290.722656 182.351562 L 290.722656 178.148438 L 288.984375 178.148438 L 288.984375 177.550781 C 289.519531 177.542969 290.011719 177.460938 290.390625 177.257812 C 290.679688 177.109375 290.914062 176.796875 290.945312 176.46875 L 291.757812 176.46875 L 291.757812 182.351562 Z M 290.722656 182.351562 "/><path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 297.996094 176.964844 C 297.03125 176.964844 296.34375 177.511719 296.34375 178.292969 C 296.34375 179.078125 297.03125 179.625 297.996094 179.625 C 298.96875 179.625 299.632812 179.070312 299.632812 178.292969 C 299.632812 177.519531 298.96875 176.964844 297.996094 176.964844 M 300.617188 181.023438 C 300.160156 181.953125 299.300781 182.480469 297.953125 182.480469 C 296.527344 182.480469 295.414062 181.6875 295.296875 180.835938 L 296.34375 180.835938 C 296.421875 181.273438 297.019531 181.828125 297.996094 181.828125 C 298.9375 181.828125 299.324219 181.367188 299.570312 180.921875 C 299.828125 180.445312 299.828125 180.015625 299.804688 179.679688 C 299.332031 180.027344 298.683594 180.355469 297.792969 180.324219 C 296.269531 180.269531 295.253906 179.363281 295.253906 178.292969 C 295.253906 177.183594 296.398438 176.328125 297.953125 176.328125 C 299.417969 176.328125 300.265625 176.964844 300.683594 177.832031 C 301.058594 178.609375 301.046875 180.171875 300.617188 181.023438 "/><path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 305.140625 182.351562 L 305.140625 178.148438 L 303.40625 178.148438 L 303.40625 177.550781 C 303.941406 177.542969 304.433594 177.460938 304.808594 177.257812 C 305.097656 177.109375 305.332031 176.796875 305.363281 176.46875 L 306.179688 176.46875 L 306.179688 182.351562 Z M 305.140625 182.351562 "/><path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 313.269531 177.636719 L 310.519531 180.609375 L 313.269531 180.609375 Z M 314.289062 181.230469 L 314.289062 182.351562 L 313.269531 182.351562 L 313.269531 181.230469 L 309.53125 181.230469 L 309.53125 180.40625 L 313.25 176.46875 L 314.289062 176.46875 L 314.289062 180.609375 L 315.523438 180.609375 L 315.523438 181.230469 Z M 314.289062 181.230469 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 302.132812 85.996094 L 297.261719 80.230469 L 297.3125 91.699219 L 306.957031 91.699219 L 307.011719 80.230469 Z M 302.132812 85.996094 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 277.40625 105.085938 L 271.640625 109.960938 L 283.113281 109.90625 L 283.113281 100.261719 L 271.640625 100.214844 Z M 277.40625 105.085938 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 326.769531 105.085938 L 332.535156 109.960938 L 321.066406 109.90625 L 321.066406 100.261719 L 332.535156 100.214844 Z M 326.769531 105.085938 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 317.386719 134.039062 L 285.894531 134.039062 L 285.894531 132.472656 L 317.386719 132.472656 Z M 317.386719 134.039062 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 300.566406 126.582031 L 302.714844 126.582031 L 302.714844 133.257812 L 300.566406 133.257812 Z M 300.566406 126.582031 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 287.503906 109.003906 L 287.503906 102.621094 L 289.75 102.621094 L 289.75 107.917969 L 295.339844 107.917969 L 295.339844 109.003906 Z M 287.503906 109.003906 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 297.394531 102.570312 L 299.820312 102.570312 L 299.820312 106.054688 C 299.820312 106.605469 299.847656 106.964844 299.910156 107.128906 C 300.011719 107.390625 300.257812 107.605469 300.648438 107.765625 C 301.039062 107.921875 301.574219 108.003906 302.25 108.003906 C 302.9375 108.003906 303.457031 107.925781 303.804688 107.773438 C 304.152344 107.625 304.363281 107.4375 304.4375 107.21875 C 304.507812 107 304.542969 106.632812 304.542969 106.128906 L 304.542969 102.570312 L 306.96875 102.570312 L 306.96875 105.949219 C 306.96875 106.71875 306.902344 107.265625 306.773438 107.585938 C 306.636719 107.90625 306.398438 108.171875 306.046875 108.394531 C 305.695312 108.613281 305.222656 108.785156 304.632812 108.917969 C 304.042969 109.046875 303.273438 109.113281 302.324219 109.113281 C 301.175781 109.113281 300.308594 109.039062 299.714844 108.898438 C 299.121094 108.757812 298.65625 108.574219 298.3125 108.34375 C 297.96875 108.121094 297.742188 107.882812 297.632812 107.632812 C 297.472656 107.265625 297.394531 106.71875 297.394531 106 Z M 297.394531 102.570312 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 307.976562 109.003906 L 311.78125 105.644531 L 308.332031 102.570312 L 310.960938 102.570312 L 313.195312 104.636719 L 315.378906 102.570312 L 317.984375 102.570312 L 314.523438 105.691406 L 318.328125 109.003906 L 315.613281 109.003906 L 313.148438 106.777344 L 310.671875 109.003906 Z M 307.976562 109.003906 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 297.261719 100.660156 L 297.261719 94.226562 L 300.285156 94.226562 L 302.101562 98.613281 L 303.898438 94.226562 L 306.933594 94.226562 L 306.933594 100.660156 L 305.054688 100.660156 L 305.054688 95.59375 L 303.066406 100.660156 L 301.117188 100.660156 L 299.136719 95.59375 L 299.136719 100.660156 Z M 297.261719 100.660156 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 297.308594 117.34375 L 297.308594 110.90625 L 299.699219 110.90625 L 304.683594 115.207031 L 304.683594 110.90625 L 306.96875 110.90625 L 306.96875 117.34375 L 304.5 117.34375 L 299.589844 113.148438 L 299.589844 117.34375 Z M 297.308594 117.34375 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 299.703125 120.34375 L 299.703125 124.601562 L 301.425781 124.601562 C 302.070312 124.601562 302.53125 124.582031 302.816406 124.542969 C 303.191406 124.488281 303.5 124.402344 303.75 124.273438 C 303.996094 124.148438 304.199219 123.941406 304.351562 123.652344 C 304.507812 123.363281 304.585938 122.972656 304.585938 122.476562 C 304.585938 121.976562 304.507812 121.597656 304.351562 121.328125 C 304.199219 121.0625 303.976562 120.851562 303.699219 120.707031 C 303.417969 120.554688 303.0625 120.453125 302.632812 120.402344 C 302.308594 120.363281 301.679688 120.34375 300.738281 120.34375 Z M 297.402344 119.25 L 301.613281 119.25 C 302.5625 119.25 303.285156 119.292969 303.785156 119.375 C 304.453125 119.484375 305.027344 119.683594 305.503906 119.964844 C 305.980469 120.253906 306.34375 120.597656 306.59375 121.007812 C 306.839844 121.421875 306.96875 121.925781 306.96875 122.53125 C 306.96875 123.0625 306.847656 123.515625 306.617188 123.898438 C 306.332031 124.371094 305.925781 124.746094 305.394531 125.035156 C 304.996094 125.261719 304.457031 125.429688 303.777344 125.550781 C 303.265625 125.640625 302.585938 125.6875 301.738281 125.6875 L 297.402344 125.6875 Z M 297.402344 119.25 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 370.5 187.855469 C 370.15625 187.609375 369.773438 187.535156 369.355469 187.617188 C 368.933594 187.699219 368.597656 187.917969 368.359375 188.257812 L 367.480469 189.539062 L 371.289062 192.148438 L 372.160156 190.871094 C 372.40625 190.519531 372.480469 190.136719 372.40625 189.714844 C 372.324219 189.285156 372.113281 188.964844 371.765625 188.726562 Z M 370.5 187.855469 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 247.082031 202.425781 C 246.652344 202.464844 246.3125 202.640625 246.039062 202.96875 L 241.167969 208.929688 C 240.914062 209.25 240.800781 209.625 240.839844 210.050781 C 240.875 210.480469 241.066406 210.832031 241.398438 211.105469 C 241.734375 211.371094 242.113281 211.484375 242.535156 211.445312 C 242.964844 211.398438 243.304688 211.207031 243.570312 210.890625 L 248.4375 204.929688 C 248.710938 204.605469 248.820312 204.230469 248.777344 203.800781 C 248.722656 203.386719 248.546875 203.027344 248.21875 202.765625 C 247.886719 202.496094 247.511719 202.382812 247.082031 202.425781 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 293.777344 219.851562 C 293.351562 219.820312 292.972656 219.933594 292.644531 220.214844 C 292.316406 220.480469 292.132812 220.835938 292.097656 221.25 L 291.441406 228.921875 C 291.40625 229.328125 291.527344 229.703125 291.800781 230.023438 C 292.074219 230.367188 292.425781 230.542969 292.847656 230.582031 C 293.269531 230.625 293.652344 230.488281 293.980469 230.222656 C 294.308594 229.949219 294.484375 229.597656 294.523438 229.179688 L 295.191406 221.515625 C 295.21875 221.101562 295.105469 220.730469 294.824219 220.398438 C 294.539062 220.074219 294.199219 219.878906 293.777344 219.851562 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 278.085938 54.304688 C 279.945312 53.964844 281.171875 52.296875 280.851562 50.585938 C 280.542969 48.871094 278.773438 47.765625 276.933594 48.121094 C 275.078125 48.457031 273.839844 50.117188 274.167969 51.832031 C 274.480469 53.535156 276.238281 54.660156 278.085938 54.304688 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 244.082031 79.242188 C 245.417969 80.710938 248.566406 80.035156 251.121094 77.71875 C 253.671875 75.402344 254.65625 72.335938 253.328125 70.871094 C 251.992188 69.398438 248.847656 70.085938 246.296875 72.390625 C 243.742188 74.707031 242.753906 77.773438 244.082031 79.242188 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 389.863281 153.703125 C 389.167969 155.6875 387.941406 156.464844 386.167969 156.082031 L 381.671875 155.066406 L 382.355469 152.015625 L 386.851562 153.019531 C 387.257812 153.117188 387.65625 153.050781 388.007812 152.8125 C 388.378906 152.582031 388.609375 152.253906 388.703125 151.847656 C 388.800781 151.429688 388.71875 151.039062 388.5 150.664062 C 388.269531 150.304688 387.957031 150.066406 387.53125 149.992188 L 383.035156 148.96875 L 383.730469 145.921875 L 388.226562 146.9375 C 390 147.339844 390.777344 148.574219 390.542969 150.660156 L 396.546875 152.015625 L 395.859375 155.0625 Z M 392.65625 166.324219 L 380.929688 162.570312 L 379.984375 165.542969 L 378.511719 165.078125 L 381.371094 156.160156 L 382.832031 156.625 L 381.878906 159.601562 L 393.601562 163.355469 Z M 389.097656 175.742188 L 376.277344 170.507812 L 377.460938 167.613281 L 390.277344 172.851562 Z M 385.433594 183.5625 L 384.726562 184.953125 C 384.234375 185.867188 383.648438 186.4375 382.953125 186.667969 C 382.257812 186.894531 381.460938 186.765625 380.554688 186.292969 L 381.269531 184.914062 C 381.359375 184.972656 381.441406 185.007812 381.488281 185.050781 C 381.863281 185.234375 382.214844 185.234375 382.574219 185.050781 C 382.914062 184.859375 383.171875 184.597656 383.351562 184.246094 C 383.609375 183.746094 383.675781 183.332031 383.558594 182.992188 C 383.429688 182.65625 383.148438 182.371094 382.695312 182.132812 C 382.347656 181.953125 381.960938 181.925781 381.527344 182.042969 L 376.761719 183.289062 C 375.894531 183.527344 375.113281 183.460938 374.40625 183.097656 L 373.726562 182.742188 C 372.984375 182.355469 372.480469 181.75 372.230469 180.925781 C 371.976562 180.109375 372.042969 179.316406 372.445312 178.554688 L 373.160156 177.164062 C 374.070312 175.433594 375.460938 174.984375 377.339844 175.816406 L 376.617188 177.207031 C 375.636719 176.851562 374.960938 177.050781 374.574219 177.800781 C 374.3125 178.28125 374.246094 178.703125 374.339844 179.066406 C 374.445312 179.433594 374.722656 179.738281 375.179688 179.976562 C 375.527344 180.15625 375.90625 180.191406 376.359375 180.066406 L 381.121094 178.828125 C 382 178.601562 382.789062 178.664062 383.472656 179.015625 L 384.160156 179.378906 C 384.902344 179.773438 385.40625 180.367188 385.652344 181.1875 C 385.910156 182.015625 385.84375 182.800781 385.433594 183.5625 M 379.382812 193.949219 L 375.578125 191.34375 C 375.226562 191.097656 374.84375 191.015625 374.429688 191.097656 C 374 191.1875 373.671875 191.398438 373.433594 191.746094 L 372.554688 193.019531 L 377.636719 196.503906 L 375.863281 199.078125 L 364.449219 191.25 L 367.976562 186.097656 C 368.460938 185.402344 369.121094 184.972656 369.964844 184.816406 C 370.8125 184.648438 371.589844 184.808594 372.277344 185.277344 L 372.953125 185.75 C 373.523438 186.140625 373.933594 186.710938 374.191406 187.464844 C 374.445312 188.222656 374.253906 189.066406 373.617188 189.988281 L 374.496094 188.707031 C 374.738281 188.355469 375.070312 188.132812 375.5 188.050781 C 375.921875 187.972656 376.308594 188.050781 376.65625 188.296875 L 381.152344 191.375 Z M 367.839844 208.25 L 357.628906 198.90625 L 362.894531 193.148438 L 364.027344 194.183594 L 360.863281 197.640625 L 364.277344 200.753906 L 366.394531 198.421875 L 367.527344 199.472656 L 365.402344 201.789062 L 368.820312 204.902344 L 371.976562 201.457031 L 373.117188 202.484375 Z M 362.390625 211.160156 C 362.226562 212.625 361.570312 213.816406 360.429688 214.722656 L 357.285156 217.230469 L 348.640625 206.421875 L 351.078125 204.480469 L 358.765625 214.082031 L 359.976562 213.113281 C 360.3125 212.847656 360.496094 212.5 360.535156 212.066406 C 360.589844 211.648438 360.480469 211.28125 360.222656 210.945312 L 353.5 202.539062 L 355.9375 200.589844 L 361.300781 207.296875 C 362.199219 208.410156 362.558594 209.703125 362.390625 211.160156 M 349.421875 222.007812 L 342.535156 210 L 345.246094 208.4375 L 352.128906 220.453125 Z M 343.332031 225.148438 L 332.558594 220.960938 L 335.257812 228.179688 L 333.785156 228.726562 L 328.933594 215.757812 L 329.601562 215.507812 L 340.382812 219.6875 L 337.683594 212.472656 L 339.148438 211.929688 L 344.007812 224.894531 Z M 328.210938 229.171875 C 327.730469 229.890625 327.066406 230.328125 326.234375 230.480469 L 323.167969 231.082031 C 322.332031 231.238281 321.5625 231.082031 320.847656 230.597656 C 320.128906 230.128906 319.695312 229.480469 319.53125 228.648438 L 317.488281 218.066406 L 320.554688 217.480469 L 322.597656 228.0625 C 322.679688 228.464844 322.898438 228.792969 323.246094 229.023438 C 323.597656 229.269531 323.988281 229.351562 324.410156 229.269531 C 324.832031 229.1875 325.160156 228.957031 325.398438 228.609375 C 325.636719 228.253906 325.71875 227.878906 325.636719 227.472656 L 323.597656 216.886719 L 326.664062 216.300781 L 328.703125 226.875 C 328.867188 227.695312 328.703125 228.464844 328.210938 229.171875 M 301.285156 232.621094 L 301.230469 218.796875 L 309.03125 218.753906 L 309.039062 220.289062 L 304.351562 220.316406 L 304.378906 224.929688 L 307.527344 224.914062 L 307.527344 226.457031 L 304.390625 226.460938 L 304.402344 231.082031 L 309.09375 231.066406 L 309.09375 232.601562 Z M 297.632812 229.453125 C 297.5625 230.285156 297.195312 230.980469 296.542969 231.539062 C 295.875 232.082031 295.125 232.320312 294.265625 232.246094 L 291.164062 231.980469 C 290.3125 231.914062 289.605469 231.542969 289.058594 230.890625 C 288.5 230.230469 288.25 229.492188 288.332031 228.65625 L 288.992188 220.988281 C 289.058594 220.140625 289.429688 219.457031 290.082031 218.90625 C 290.75 218.34375 291.5 218.117188 292.359375 218.195312 L 295.460938 218.457031 C 296.3125 218.53125 297.003906 218.898438 297.5625 219.554688 C 298.128906 220.214844 298.367188 220.957031 298.300781 221.792969 Z M 283.949219 231.136719 L 280.890625 230.523438 L 282.117188 224.484375 L 279.070312 223.871094 L 277.859375 229.890625 L 274.792969 229.273438 L 277.558594 215.710938 L 280.613281 216.328125 L 279.386719 222.367188 L 282.417969 222.980469 L 283.652344 216.953125 L 286.703125 217.570312 Z M 274.179688 217.984375 L 272.699219 217.480469 C 272.925781 216.46875 272.613281 215.8125 271.753906 215.507812 L 270.28125 214.996094 C 269.871094 214.851562 269.484375 214.871094 269.097656 215.054688 C 268.699219 215.242188 268.441406 215.535156 268.304688 215.925781 L 265.757812 223.199219 C 265.621094 223.601562 265.640625 223.988281 265.832031 224.375 C 266.023438 224.757812 266.316406 225.019531 266.710938 225.152344 C 267.660156 225.441406 268.320312 225.121094 268.6875 224.21875 L 269.710938 221.308594 L 268.25 220.808594 L 268.753906 219.355469 L 273.15625 220.890625 L 271.628906 225.257812 C 271.296875 226.214844 270.722656 226.828125 269.929688 227.097656 C 269.136719 227.363281 268.386719 227.375 267.679688 227.128906 L 264.734375 226.09375 C 263.933594 225.816406 263.347656 225.292969 262.964844 224.519531 C 262.582031 223.742188 262.535156 222.949219 262.8125 222.171875 L 265.347656 214.90625 C 265.621094 214.113281 266.152344 213.535156 266.917969 213.160156 C 267.691406 212.777344 268.480469 212.738281 269.300781 213.015625 L 272.25 214.054688 C 274.097656 214.707031 274.738281 216.015625 274.179688 217.984375 M 256.894531 222.90625 L 253.050781 211.988281 L 249.335938 218.742188 L 247.96875 217.980469 L 254.652344 205.859375 L 255.277344 206.203125 L 259.121094 217.113281 L 262.832031 210.375 L 264.203125 211.117188 L 257.527344 223.253906 Z M 243.90625 213.960938 C 243.039062 214.046875 242.289062 213.816406 241.621094 213.277344 L 239.210938 211.304688 C 238.558594 210.757812 238.183594 210.066406 238.09375 209.210938 C 237.996094 208.359375 238.214844 207.609375 238.75 206.949219 L 243.625 201.003906 C 244.152344 200.335938 244.851562 199.976562 245.710938 199.894531 C 246.570312 199.820312 247.320312 200.039062 247.972656 200.589844 L 250.398438 202.566406 C 251.054688 203.097656 251.433594 203.800781 251.515625 204.660156 C 251.613281 205.515625 251.394531 206.265625 250.855469 206.914062 L 245.984375 212.875 C 245.453125 213.515625 244.765625 213.878906 243.90625 213.960938 M 233.363281 206.046875 L 231.457031 203.800781 L 232.417969 196.625 L 228.324219 200.121094 L 226.300781 197.742188 L 236.839844 188.769531 L 238.855469 191.148438 L 234.457031 194.894531 L 242.238281 195.097656 L 243.914062 197.0625 L 234.597656 196.816406 Z M 223.8125 192.671875 C 223.019531 192.359375 222.449219 191.882812 222.058594 191.25 L 220.453125 188.5625 C 220.023438 187.839844 219.902344 187.050781 220.105469 186.21875 C 220.308594 185.382812 220.773438 184.75 221.496094 184.316406 L 228.097656 180.367188 C 228.8125 179.9375 229.589844 179.824219 230.421875 180.03125 C 231.253906 180.230469 231.894531 180.707031 232.34375 181.457031 L 233.9375 184.136719 C 234.945312 185.820312 234.597656 187.226562 232.902344 188.375 L 232.097656 187.039062 C 232.914062 186.417969 233.085938 185.710938 232.617188 184.925781 L 231.816406 183.589844 C 231.609375 183.230469 231.292969 182.992188 230.871094 182.882812 C 230.460938 182.773438 230.066406 182.828125 229.699219 183.046875 L 223.105469 186.996094 C 222.734375 187.214844 222.503906 187.535156 222.402344 187.949219 C 222.300781 188.367188 222.359375 188.753906 222.570312 189.117188 C 223.128906 189.9375 223.832031 190.109375 224.699219 189.648438 L 227.335938 188.074219 L 226.542969 186.753906 L 227.867188 185.960938 L 230.265625 189.96875 L 226.300781 192.332031 C 225.421875 192.863281 224.589844 192.972656 223.8125 192.671875 M 216.5625 181.308594 L 220.378906 170.386719 L 213.265625 173.335938 L 212.664062 171.890625 L 225.460938 166.582031 L 225.722656 167.25 L 221.917969 178.171875 L 229.03125 175.214844 L 229.632812 176.652344 L 216.835938 181.96875 Z M 210.511719 164.707031 L 209.707031 161.691406 C 209.484375 160.867188 209.585938 160.082031 210.007812 159.339844 C 210.445312 158.589844 211.058594 158.105469 211.867188 157.902344 L 222.285156 155.117188 L 223.082031 158.136719 L 212.679688 160.914062 C 212.277344 161.015625 211.96875 161.253906 211.75 161.628906 C 211.535156 161.992188 211.484375 162.394531 211.585938 162.800781 C 211.710938 163.21875 211.949219 163.523438 212.316406 163.75 C 212.691406 163.960938 213.074219 164.007812 213.484375 163.90625 L 223.894531 161.128906 L 224.699219 164.144531 L 214.273438 166.921875 C 213.476562 167.144531 212.699219 167.027344 211.957031 166.597656 C 211.207031 166.15625 210.730469 165.535156 210.511719 164.707031 M 207.648438 151.417969 L 207.433594 149.859375 C 207.296875 148.832031 207.433594 148.027344 207.867188 147.4375 C 208.304688 146.851562 209.027344 146.488281 210.050781 146.339844 L 210.257812 147.886719 C 210.152344 147.898438 210.070312 147.914062 210.007812 147.914062 C 209.585938 147.976562 209.296875 148.179688 209.121094 148.535156 C 208.949219 148.886719 208.902344 149.257812 208.949219 149.644531 C 209.035156 150.203125 209.214844 150.578125 209.511719 150.777344 C 209.8125 150.980469 210.210938 151.039062 210.703125 150.980469 C 211.097656 150.925781 211.425781 150.71875 211.710938 150.371094 L 214.871094 146.589844 C 215.445312 145.898438 216.117188 145.496094 216.902344 145.386719 L 217.652344 145.28125 C 218.484375 145.152344 219.246094 145.359375 219.9375 145.882812 C 220.617188 146.40625 221.019531 147.082031 221.140625 147.933594 L 221.359375 149.488281 C 221.632812 151.421875 220.757812 152.59375 218.75 153.003906 L 218.527344 151.464844 C 219.527344 151.183594 219.96875 150.625 219.847656 149.792969 C 219.777344 149.246094 219.585938 148.859375 219.289062 148.621094 C 219.003906 148.382812 218.585938 148.300781 218.082031 148.367188 C 217.699219 148.421875 217.367188 148.628906 217.082031 148.96875 L 213.917969 152.757812 C 213.332031 153.453125 212.652344 153.855469 211.886719 153.964844 L 211.117188 154.074219 C 210.292969 154.1875 209.542969 153.984375 208.847656 153.464844 C 208.167969 152.941406 207.765625 152.261719 207.648438 151.417969 M 214.53125 95.058594 C 214.53125 95.058594 220.597656 97.710938 223.035156 93.628906 L 224.730469 94.644531 C 224.730469 94.644531 222.953125 98.554688 218.304688 99.609375 C 218.304688 99.609375 219.847656 102.820312 216.808594 107.894531 L 214.976562 106.792969 C 214.976562 106.792969 218.941406 102.09375 212.597656 98.296875 Z M 219.777344 84.972656 L 234.167969 93.574219 C 237.167969 101.683594 230.53125 106.710938 228.867188 108.203125 C 227.207031 109.703125 220.816406 110.480469 221.753906 103.765625 C 222.667969 97.332031 227.574219 94.035156 227.574219 94.035156 L 222.632812 91.09375 L 221.457031 93.070312 L 219.054688 91.640625 L 220.316406 89.519531 L 217.917969 88.089844 Z M 245.289062 58.082031 C 246.570312 56.917969 248.246094 59.390625 248.246094 59.390625 L 252.335938 63.886719 L 253.054688 63.226562 L 254.5 64.8125 L 252.539062 66.585938 C 254.230469 66.449219 255.671875 66.851562 256.613281 67.886719 C 258.890625 70.402344 257.207031 75.652344 252.839844 79.613281 C 248.476562 83.578125 243.082031 84.742188 240.800781 82.230469 C 239.867188 81.191406 239.597656 79.714844 239.90625 78.050781 L 239.714844 78.230469 L 237.890625 79.882812 L 236.390625 78.242188 L 242.578125 72.628906 C 242.605469 72.59375 242.632812 72.566406 242.652344 72.53125 L 240.285156 69.9375 L 242.851562 67.621094 L 245.070312 70.074219 C 245.65625 69.566406 246.269531 69.121094 246.882812 68.71875 L 249.609375 66.25 L 245.507812 61.757812 L 233.773438 72.410156 L 231.839844 70.285156 Z M 274.21875 43.863281 L 277.980469 43.160156 L 277.988281 43.171875 L 278.015625 43.171875 L 278.253906 44.460938 L 283.757812 43.445312 L 284.292969 46.347656 L 281.660156 46.84375 C 283.0625 47.5625 284.058594 48.738281 284.332031 50.183594 C 284.78125 52.570312 283.117188 54.957031 280.433594 56.125 L 281.0625 59.484375 L 288.175781 58.164062 L 285.246094 42.496094 L 288.710938 41.84375 L 292.546875 62.355469 L 288.992188 63.023438 L 288.5 60.351562 L 271.535156 63.527344 L 271.113281 61.261719 L 277.417969 60.085938 L 276.808594 56.859375 C 273.785156 56.828125 271.234375 55.171875 270.773438 52.71875 C 270.5 51.261719 271.015625 49.816406 272.066406 48.632812 L 269.914062 49.03125 L 269.367188 46.132812 L 274.472656 45.175781 Z M 377.039062 137.777344 C 377.039062 179.113281 343.535156 212.617188 302.199219 212.617188 C 260.871094 212.617188 227.355469 179.113281 227.355469 137.777344 C 227.355469 96.441406 260.871094 62.941406 302.199219 62.941406 C 343.535156 62.941406 377.039062 96.441406 377.039062 137.777344 M 311.898438 41.769531 L 320.117188 42.960938 L 319.667969 46.0625 L 315.601562 45.460938 L 313.902344 57.085938 L 320.984375 58.121094 L 323.128906 43.410156 L 326.945312 43.964844 L 326.183594 49.246094 L 327.804688 49.488281 L 328.550781 44.277344 L 332.21875 44.816406 L 329.21875 65.386719 L 325.5625 64.855469 L 327.367188 52.492188 L 325.820312 52.269531 L 324.019531 64.628906 L 320.199219 64.070312 L 320.660156 60.902344 L 310.984375 59.484375 C 310.984375 59.484375 309.453125 59.179688 309.503906 58.28125 Z M 345.777344 63.796875 L 359.078125 73.875 L 366.574219 63.976562 L 369.507812 66.214844 L 366.136719 70.660156 L 368.238281 72.253906 L 366.84375 74.09375 L 364.746094 72.492188 L 356.863281 82.910156 L 353.914062 80.683594 L 357.484375 75.96875 L 344.199219 65.890625 Z M 349.015625 59.402344 C 349.757812 58.429688 351.011719 57.988281 352.480469 58.058594 L 350.921875 56.867188 L 352.480469 54.957031 L 356.277344 57.835938 L 357.3125 56.460938 L 360.660156 58.996094 L 359.664062 60.300781 L 364.113281 63.664062 L 362.582031 65.710938 L 360.957031 64.472656 C 361.421875 65.867188 361.339844 67.199219 360.601562 68.164062 C 359.050781 70.210938 355.207031 69.902344 352.011719 67.484375 C 348.804688 65.058594 347.46875 61.449219 349.015625 59.402344 M 376.035156 90.480469 L 378.203125 94.070312 L 371.738281 97.976562 L 372.628906 99.453125 L 379.097656 95.539062 L 381.265625 99.128906 L 374.859375 102.980469 L 376.441406 105.59375 L 388.113281 98.542969 L 380.132812 85.320312 L 382.164062 84.097656 L 391.632812 99.773438 C 392.328125 101.082031 390.230469 102.0625 390.230469 102.0625 L 378.484375 109.148438 L 378.996094 109.996094 L 376.746094 111.351562 L 365.074219 92.015625 L 367.324219 90.65625 L 369.5625 94.382812 Z M 302.199219 37.871094 C 247.027344 37.871094 202.300781 82.609375 202.300781 137.777344 C 202.300781 192.953125 247.027344 237.683594 302.199219 237.683594 C 357.375 237.683594 402.097656 192.953125 402.097656 137.777344 C 402.097656 82.609375 357.375 37.871094 302.199219 37.871094 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 225.84375 99.507812 C 224.261719 102.160156 224.113281 104.980469 225.515625 105.816406 C 226.90625 106.65625 229.332031 105.183594 230.914062 102.535156 C 232.492188 99.878906 232.636719 97.054688 231.242188 96.222656 C 229.835938 95.394531 227.421875 96.867188 225.84375 99.507812 "/><path fill-rule="nonzero" fill="rgb(13.725281%, 12.156677%, 12.548828%)" fill-opacity="1" d="M 357.375 65.71875 C 358.207031 64.621094 357.648438 62.796875 356.121094 61.636719 C 354.597656 60.492188 352.695312 60.453125 351.855469 61.550781 C 351.023438 62.652344 351.582031 64.472656 353.101562 65.628906 C 354.628906 66.789062 356.535156 66.828125 357.375 65.71875 "/></symbol><symbol id="skhu-word" viewBox="36.96 337.92 497.76 70.56"><path fill-rule="nonzero" fill="rgb(13.729858%, 12.159729%, 12.548828%)" fill-opacity="1" d="M 56.75 339.992188 L 68.921875 339.992188 C 68.921875 339.992188 71.570312 363.328125 86.917969 363.328125 L 86.917969 369.683594 C 86.917969 369.683594 73.15625 371.269531 62.570312 360.152344 C 62.570312 360.152344 56.21875 369.683594 37.160156 369.683594 L 37.160156 362.800781 C 37.160156 362.800781 56.75 363.816406 56.75 339.992188 "/><path fill-rule="nonzero" fill="rgb(13.729858%, 12.159729%, 12.548828%)" fill-opacity="1" d="M 75.273438 399.832031 C 65.335938 399.832031 57.28125 395.578125 57.28125 390.324219 C 57.28125 385.078125 65.335938 380.820312 75.273438 380.820312 C 85.214844 380.820312 93.269531 385.078125 93.269531 390.324219 C 93.269531 395.578125 85.214844 399.832031 75.273438 399.832031 M 93.800781 340.035156 L 93.800781 349.039062 L 85.863281 349.039062 L 85.863281 358.035156 L 93.273438 358.035156 L 93.273438 376.5625 C 93.273438 376.5625 76.046875 368.433594 56.75 376.5625 C 36.632812 385.035156 49.335938 401.441406 56.21875 403.5625 C 63.101562 405.679688 87.980469 415.734375 105.449219 394.03125 L 105.449219 340.035156 Z M 93.800781 340.035156 "/><path fill-rule="nonzero" fill="rgb(13.729858%, 12.159729%, 12.548828%)" fill-opacity="1" d="M 158.121094 399.785156 C 147.023438 399.785156 138.027344 394.601562 138.027344 388.207031 C 138.027344 381.816406 147.023438 376.636719 158.121094 376.636719 C 169.214844 376.636719 178.210938 381.816406 178.210938 388.207031 C 178.210938 394.601562 169.214844 399.785156 158.121094 399.785156 M 194.117188 369.417969 L 190.941406 369.417969 L 190.941406 349.832031 C 190.941406 349.832031 192.261719 340.304688 186.707031 340.304688 L 128.210938 340.304688 L 128.210938 349.566406 L 179.292969 349.566406 L 179.292969 369.152344 L 167.492188 369.152344 C 165.164062 368.773438 162.738281 368.53125 160.238281 368.445312 L 160.238281 357.773438 L 149.121094 357.773438 L 149.121094 369.089844 C 148.996094 369.113281 148.871094 369.132812 148.75 369.152344 L 121.855469 369.152344 L 121.855469 376.300781 L 130.640625 376.300781 C 126.304688 379.613281 123.730469 383.738281 123.730469 388.207031 C 123.730469 399.148438 139.125 408.015625 158.121094 408.015625 C 177.113281 408.015625 192.511719 399.148438 192.511719 388.207031 C 192.511719 383.738281 189.933594 379.613281 185.597656 376.300781 L 194.117188 376.300781 Z M 194.117188 369.417969 "/><path fill-rule="nonzero" fill="rgb(13.729858%, 12.159729%, 12.548828%)" fill-opacity="1" d="M 296.28125 340.035156 L 323.015625 340.035156 L 323.015625 350.09375 L 309.78125 350.09375 L 309.78125 387.945312 L 332.808594 387.945312 L 332.808594 340.035156 L 345.246094 340.035156 L 345.246094 357.242188 L 350.539062 357.242188 L 350.539062 340.304688 L 362.453125 340.304688 L 362.453125 407.265625 L 350.539062 407.265625 L 350.539062 367.035156 L 345.511719 367.035156 L 345.511719 407.265625 L 333.070312 407.265625 L 333.070312 396.945312 L 301.578125 396.945312 C 301.578125 396.945312 296.546875 396.679688 296.28125 393.769531 Z M 296.28125 340.035156 "/><path fill-rule="nonzero" fill="rgb(13.729858%, 12.159729%, 12.548828%)" fill-opacity="1" d="M 402.8125 370.195312 C 396.660156 370.195312 391.675781 366.589844 391.675781 362.140625 C 391.675781 357.6875 396.660156 354.078125 402.8125 354.078125 C 408.96875 354.078125 413.957031 357.6875 413.957031 362.140625 C 413.957031 366.589844 408.96875 370.195312 402.8125 370.195312 M 427.296875 343.742188 L 409.300781 343.742188 L 409.300781 338.449219 L 395.796875 338.449219 L 395.796875 344.007812 L 380.445312 344.007812 L 380.183594 351.949219 L 386.492188 351.949219 C 382.589844 354.617188 380.195312 358.199219 380.195312 362.140625 C 380.195312 370.390625 390.679688 377.082031 403.605469 377.082031 C 416.539062 377.082031 427.019531 370.390625 427.019531 362.140625 C 427.019531 358.199219 424.625 354.617188 420.722656 351.949219 L 427.296875 351.949219 Z M 427.296875 343.742188 "/><path fill-rule="nonzero" fill="rgb(13.729858%, 12.159729%, 12.548828%)" fill-opacity="1" d="M 380.445312 379.738281 L 380.445312 388.207031 L 434.175781 388.207031 L 434.175781 407.265625 L 446.089844 407.265625 L 446.089844 365.183594 L 454.558594 365.183594 L 454.558594 357.769531 L 446.089844 357.769531 L 446.089844 339.773438 L 434.175781 339.773438 L 434.175781 379.738281 Z M 380.445312 379.738281 "/><path fill-rule="nonzero" fill="rgb(13.729858%, 12.159729%, 12.548828%)" fill-opacity="1" d="M 467.792969 342.152344 L 467.792969 349.832031 L 517.550781 349.832031 L 517.550781 393.769531 L 507.757812 393.769531 L 507.757812 369.683594 L 494.257812 369.683594 L 494.257812 394.03125 L 488.703125 394.03125 L 488.703125 369.683594 L 475.207031 369.683594 L 475.207031 394.03125 L 461.171875 394.03125 L 461.171875 402.5 L 533.960938 402.5 L 533.960938 394.03125 L 530.785156 394.03125 L 530.785156 349.832031 C 530.785156 349.832031 531.582031 342.421875 526.816406 342.152344 Z M 467.792969 342.152344 "/><path fill-rule="nonzero" fill="rgb(13.729858%, 12.159729%, 12.548828%)" fill-opacity="1" d="M 225.234375 363.328125 C 225.234375 357.722656 230.144531 353.175781 236.199219 353.175781 C 242.253906 353.175781 247.160156 357.722656 247.160156 363.328125 C 247.160156 368.9375 242.253906 373.484375 236.199219 373.484375 C 230.144531 373.484375 225.234375 368.9375 225.234375 363.328125 M 265.84375 340.304688 L 265.84375 391.652344 L 242.550781 391.652344 L 242.550781 380.65625 C 251.71875 378.53125 258.410156 371.933594 258.410156 364.125 C 258.410156 359.371094 255.941406 355.066406 251.929688 351.949219 L 260.550781 351.949219 L 260.550781 342.421875 L 242.457031 342.421875 L 242.457031 342.417969 L 242.550781 342.421875 L 242.550781 338.183594 L 242.457031 338.183594 L 242.457031 338.128906 L 230.144531 338.128906 L 230.144531 342.421875 L 213.433594 342.421875 L 213.433594 351.949219 L 220.464844 351.949219 C 216.464844 355.066406 213.988281 359.371094 213.988281 364.125 C 213.988281 372.160156 221.066406 378.914062 230.640625 380.828125 L 230.640625 391.386719 L 209.996094 391.386719 L 209.996094 398.792969 L 265.578125 398.792969 L 265.578125 407.53125 L 277.222656 407.53125 L 277.222656 340.304688 Z M 265.84375 340.304688 "/></symbol></svg>
+
+<!-- ================= HEADER ================= -->
+<div class="utilbar">
+  <div class="utilbar-in">
+    <a href="https://www.skhu.ac.kr" target="_blank" rel="noopener">성공회대학교</a>
+    <a class="hidesm" href="https://www.academyinfo.go.kr" target="_blank" rel="noopener">대학알리미</a>
+    <span class="sp hidesm">✉ opensky1998@skhu.ac.kr</span><span class="sp" style="margin-left:14px">☎ 02-2610-4725</span>
+  </div>
+</div>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#/dashboard" aria-label="성공회대학교 대학IR센터">
+      <svg class="sym" viewBox="0 0 200.64 200.16" aria-hidden="true" focusable="false"><use href="#skhu-sym"/></svg>
+      <svg class="word" viewBox="0 0 497.76 70.56" aria-hidden="true" focusable="false"><use href="#skhu-word"/></svg>
+      <span class="bar"></span>
+      <span class="ctr">대학IR센터</span>
+    </a>
+    <div class="hdr-note">
+      <span class="hidesm">기획처 대학IR센터</span>
+      <button class="icon-btn" id="themeBtn" title="화면 모드 전환" aria-label="화면 모드 전환">◐</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section class="page active" id="p-dashboard">
+  <div class="pagehead"><svg class="wm" viewBox="0 0 200.64 200.16" aria-hidden="true" focusable="false"><use href="#skhu-sym"/></svg><div class="wrap">
+    <p class="crumb">성공회대학교 대학IR센터</p>
+    <h1>성과관리</h1>
+    <p class="lede">대학기관평가인증 정량지표를 기준으로 최근 2개년 실적과 인증 기준값을 모니터링합니다.</p>
+  </div></div>
+
+  <div class="wrap body">
+    <div class="topline">
+      <p class="topline-txt">인증 정량지표 <b class="n">24</b>개 · 2025 · 2026 실적과 인증 기준값 도달 여부</p>
+      <a class="notelink" href="#note">지표 구성 · 자료 기준<span aria-hidden="true">↓</span></a>
+    </div>
+
+    <div class="dashbar">
+      <div class="src" id="srcBox"><span class="dot" id="srcDot"></span><span id="srcText">출처 · 대학알리미 정보공시 및 인증 평가자료</span></div>
+      <div class="spacer"></div>
+      <div class="segmented" id="areaSeg"></div>
+      <label style="font-size:13px;color:var(--muted)">기준연도
+        <select id="yearSel" aria-label="기준연도 선택"></select></label>
+      <button class="btn btn-line btn-sm" id="reloadBtn" hidden>↻ 새로고침</button>
+      <button class="btn btn-blue btn-sm" id="cfgBtn" hidden>⚙ 구글시트 연결</button>
+    </div>
+
+    <div id="fallbackNote" style="margin-bottom:16px;display:none"></div>
+
+    <div class="tiles">
+      <div class="tile t-total"><div class="ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+        <div><div class="k">인증 정량지표</div><div class="v n" id="tTotal">–<small>개</small></div>
+          <div class="ksub" id="tTotalSub">–</div></div></div>
+      <div class="tile t-imp"><div class="ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+        <div><div class="k">전년 대비 개선</div><div class="v n" id="tImp">–</div>
+          <div class="ksub" id="tImpSub">최근 2개년 실적 비교</div></div></div>
+      <div class="tile t-good"><div class="ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <div><div class="k">기준값 달성</div><div class="v n" id="tGood">–</div>
+          <div class="ksub" id="tGoodSub">산출 완료 지표 기준</div></div></div>
+      <div class="tile t-rate"><div class="ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></div>
+        <div><div class="k">기준값 달성률</div><div class="v n" id="tRate">–<small>%</small></div>
+          <div class="ksub" id="tRateSub">–</div></div></div>
+    </div>
+
+    <div class="chartrow">
+      <div class="card"><div class="card-h"><h3>인증 기준 충족률</h3><span class="chip neutral" id="gaugeYear">–</span></div>
+        <div class="card-b"><div class="gauge-wrap" id="gauge"></div></div></div>
+      <div class="card"><div class="card-h"><h3>평가영역별 충족 현황</h3></div>
+        <div class="card-b"><div id="areaBars"></div></div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px"><div class="card-h">
+      <h3>인증 정량지표</h3>
+      <div class="evlegend">
+        <span><i class="ev ev27"></i>2027 모니터링 사전평가 <b class="n">20</b></span>
+        <span><i class="ev ev30"></i>2030 인증평가 <b class="n">4</b></span>
+        <span class="hidesm" style="color:var(--muted)">카드를 클릭하면 아래에서 자세히 볼 수 있습니다</span>
+      </div>
+    </div><div class="card-b" style="background:var(--surface-2);border-radius:0 0 var(--r) var(--r)">
+      <div class="kpi-grid" id="kpiGrid"></div>
+    </div></div>
+
+    <section class="card spot" id="spotCard">
+      <div class="spot-h">
+        <div>
+          <p class="spot-eyebrow">ACTUAL · ACCREDITATION BENCHMARK</p>
+          <h3 id="spotName">–</h3>
+        </div>
+        <div class="spot-nav">
+          <span class="spot-count n" id="spotCount">– / –</span>
+          <button class="navbtn" id="spotPrev" aria-label="이전 지표">‹</button>
+          <button class="navbtn" id="spotNext" aria-label="다음 지표">›</button>
+        </div>
+      </div>
+      <div class="spot-b">
+        <div class="spot-left">
+          <p class="spot-desc" id="spotDesc">–</p>
+          <div class="spot-boxes">
+            <div class="sbox"><div class="sb-k">우리 대학<span id="spotYear2"></span></div><div class="sb-v n" id="spotVal">–</div></div>
+            <div class="sbox"><div class="sb-k">인증 기준값</div><div class="sb-v std" id="spotStd">–</div></div>
+            <div class="sbox"><div class="sb-k">판정</div><div class="sb-v" id="spotJudge">–</div></div>
+            <div class="sbox"><div class="sb-k">전년 대비</div><div class="sb-v" id="spotDelta">–</div></div>
+          </div>
+          <table class="dinfo" id="spotInfo" style="margin-top:16px"></table>
+        </div>
+        <div class="spot-right">
+          <div class="legend" style="margin-bottom:10px;justify-content:flex-end">
+            <span><i class="line" style="background:var(--s1)"></i>우리 대학</span>
+            <span><i class="dash"></i>인증 기준값</span>
+          </div>
+          <div id="spotChart"></div>
+          <div class="scroll-x" style="border:1px solid var(--border);border-radius:5px;overflow:hidden;margin-top:14px">
+            <table class="tbl" id="spotTable"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card kpilist" id="kpiListCard">
+      <div class="kpilist-h">
+        <div>
+          <p class="spot-eyebrow">KPI LIST</p>
+          <h3>정량지표 전체 보기</h3>
+        </div>
+        <span class="kpilist-cnt n" id="listCount">– 개 지표</span>
+      </div>
+      <div class="scroll-x">
+        <table class="tbl listtbl" id="listTbl"></table>
+      </div>
+    </section>
+    <div style="margin-top:26px" class="foot-note" id="note">
+      <h4>지표 구성 및 자료 기준</h4>
+      <ol>
+        <li><b>지표 구성</b> — 한국대학평가원이 주관하는 <b>대학기관평가인증 3주기 정량지표</b> 중 성공회대학교에 적용되는 사립대학 지표 <b>24개</b>로 구성했습니다.</li>
+        <li><b>실적 표기</b> — 각 지표는 최근 2개년 실적을 제시하며, 산출이 완료되지 않은 항목은 <b>‘산출 자료 준비 중’</b>으로 표기하고 그 사유를 함께 적었습니다.</li>
+        <li><b>자료 기준</b> — 한국대학평가원 <b>「2024년(하반기) 대학기관평가인증 편람」</b>과 본교 인증자격 모니터링 사전평가 산출자료를 기준으로 작성했습니다.</li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="foot-in">
+    <div>
+      <div class="foot-brand"><svg class="sym" viewBox="0 0 200.64 200.16" aria-hidden="true" focusable="false"><use href="#skhu-sym"/></svg><span class="fname">성공회대학교 대학IR센터</span></div>
+      <p style="line-height:1.9">
+        (08359) 서울특별시 구로구 연동로 320 · 승연관 3층 기획처 대학IR센터<br>
+        TEL 02-2610-4725 · E-MAIL <a href="mailto:opensky1998@skhu.ac.kr">opensky1998@skhu.ac.kr</a><br>
+        Institutional Research Center, Sungkonghoe University
+      </p>
+      <p style="margin-top:14px;display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px">
+        <a href="https://www.skhu.ac.kr" target="_blank" rel="noopener">대학 홈페이지</a>
+        <a href="https://www.academyinfo.go.kr" target="_blank" rel="noopener">대학알리미</a>
+        <a href="?admin=1">관리자</a>
+      </p>
+    </div>
+    <div><h4>지표 출처</h4><ul>
+      <li>대학기관평가인증 3주기 정량지표</li>
+      <li>대학알리미 정보공시</li>
+      <li>대학도서관 통계 (rinfo.kr)</li>
+      <li>인증 평가자료</li>
+    </ul></div>
+    <div><h4>평가영역</h4><ul id="footAreas"></ul></div>
+  </div>
+  <div class="foot-bot">© Sungkonghoe University. All Rights Reserved. · 대학기관평가인증 3주기 정량지표 모니터링 · 성공회대학교 기획처 대학IR센터</div>
+</footer>
+
+<!-- ================= 설정 모달 ================= -->
+<div class="modal" id="cfgModal" role="dialog" aria-modal="true" aria-labelledby="cfgTitle">
+  <div class="modal-box">
+    <div class="modal-h"><h3 id="cfgTitle">구글시트 연결</h3>
+      <button class="btn btn-sm" id="cfgClose" style="background:rgba(255,255,255,.16);color:#fff">닫기 ✕</button></div>
+    <div class="modal-b">
+      <p style="font-size:13.5px;color:var(--muted);line-height:1.7">
+        구글시트 <code>KPI_DATA</code> 탭에 실적을 입력하면 이 대시보드에 그대로 반영됩니다.</p>
+      <ol class="steps">
+        <li>입력 양식 파일을 구글드라이브에 올려 스프레드시트로 변환합니다.</li>
+        <li><code>파일 → 공유 → 웹에 게시</code>에서 <code>KPI_DATA</code> 탭, <code>쉼표로 구분된 값(.csv)</code>을 선택해 게시합니다.</li>
+        <li>나오는 주소를 아래 칸에 붙여넣고 저장합니다.</li>
+        <li>이후에는 시트 값만 고치고 <b>↻ 새로고침</b>을 누르면 반영됩니다.</li>
+      </ol>
+      <div class="field"><label for="urlKpi">KPI_DATA 시트 CSV 주소</label>
+        <input type="text" id="urlKpi" placeholder="https://docs.google.com/spreadsheets/d/e/…/pub?gid=0&single=true&output=csv">
+        <span class="hint">필수 열: <code>kpi_id</code>, <code>year</code>, <code>value</code> · 선택 열: <code>kpi_name</code>, <code>unit</code>, <code>기준값</code>, <code>입력메모(선택)</code></span></div>
+      <div class="notice" style="font-size:13px"><span class="ii">⚠</span>
+        <span>이 페이지가 <b>claude.ai 아티팩트</b>로 열려 있으면 보안 정책상 외부 주소를 불러올 수 없어 내장 데이터가 표시됩니다.
+          실시간 연동은 HTML 파일을 학교 웹서버나 GitHub Pages 등에 올려 사용할 때 동작합니다.</span></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn btn-line btn-sm" id="cfgReset">연결 해제</button>
+        <button class="btn btn-blue btn-sm" id="cfgSave">저장하고 불러오기</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const KPI_DEF = [
+ {
+  "id": "Q01",
+  "no": 1,
+  "code": "1.4",
+  "codeName": "재정확보",
+  "areaKey": "1영역",
+  "areaName": "대학이념 및 경영",
+  "color": "var(--a1)",
+  "name": "세입 중 등록금 비율",
+  "unit": "%",
+  "dec": 1,
+  "std": 72,
+  "op": "이하",
+  "stdTxt": "72% 이하",
+  "formula": "(등록금 수입 ÷ 운영수입) × 100",
+  "basis": "2024, 2025회계연도 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "사립대학 교비회계 운영수입에서 등록금 수입이 차지하는 비율",
+  "submit": 63.4,
+  "dept": "총무처 회계팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "낮을수록 기준값 달성에 유리(등록금 외 재원이 늘어날수록 비율 감소)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q02",
+  "no": 2,
+  "code": "1.4",
+  "codeName": "재정확보",
+  "areaKey": "1영역",
+  "areaName": "대학이념 및 경영",
+  "color": "var(--a1)",
+  "name": "세입 중 기부금 비율",
+  "unit": "%",
+  "dec": 2,
+  "std": 0.5,
+  "op": "이상",
+  "stdTxt": "0.5% 이상",
+  "formula": "(기부금 ÷ 운영수입) × 100",
+  "basis": "2024, 2025회계연도 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "교비회계 운영수입에서 기부금이 차지하는 비율",
+  "submit": 3.72,
+  "dept": "총무처 회계팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(기부금 모금 실적이 늘어날수록 비율 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q03",
+  "no": 3,
+  "code": "1.4",
+  "codeName": "재정확보",
+  "areaKey": "1영역",
+  "areaName": "대학이념 및 경영",
+  "color": "var(--a1)",
+  "name": "세입 중 법인전입금 비율(사립대)",
+  "unit": "%",
+  "dec": 2,
+  "std": 0.4,
+  "op": "이상",
+  "stdTxt": "0.4% 이상",
+  "formula": "(법인전입금 ÷ 운영수입) × 100",
+  "basis": "2024, 2025회계연도 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "사립대학 교비회계 운영수입에서 법인전입금이 차지하는 비율",
+  "submit": 0.44,
+  "dept": "총무처 회계팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(법인전입금이 늘어날수록 비율 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q04",
+  "no": 4,
+  "code": "1.5",
+  "codeName": "재정집행",
+  "areaKey": "1영역",
+  "areaName": "대학이념 및 경영",
+  "color": "var(--a1)",
+  "name": "교육비 환원율",
+  "unit": "%",
+  "dec": 1,
+  "std": 110,
+  "op": "이상",
+  "stdTxt": "110% 이상",
+  "formula": "{교비회계 교육비 + 산학협력단회계 교육비 + 도서구입비 + 기계기구매입비(최근 5년 평균) + 건축비(최근 5년 평균의 2.5%) − 국가장학금(1유형·다자녀)} ÷ 등록금 수입 × 100",
+  "basis": "2024, 2025회계연도 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "등록금 수입 대비 학생 교육에 투입한 총교육비의 비율",
+  "submit": 138.6,
+  "dept": "총무처 회계팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(교육비 투자가 등록금 수입보다 크게 늘어날수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q05",
+  "no": 5,
+  "code": "3.1",
+  "codeName": "교원 확보",
+  "areaKey": "3영역",
+  "areaName": "교원 및 직원",
+  "color": "var(--a2)",
+  "name": "전임교원 확보율",
+  "unit": "%",
+  "dec": 1,
+  "std": 64,
+  "op": "이상",
+  "stdTxt": "64% 이상",
+  "formula": "(전임교원 수 ÷ 교원 법정정원) × 100  ·  편제정원 기준과 재학생 기준 중 낮은 값 적용",
+  "basis": "2025.4.1., 2026.4.1. 평균 편제 및 재학생 기준 중 낮은 수치",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "교원 법정정원 대비 전임교원 확보 비율",
+  "submit": 71.7,
+  "dept": "교무처 교무팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(전임교원 수 증가 또는 편제정원 감소 시 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q06",
+  "no": 6,
+  "code": "3.3",
+  "codeName": "교원 처우 및 복지",
+  "areaKey": "3영역",
+  "areaName": "교원 및 직원",
+  "color": "var(--a2)",
+  "name": "강사 강의료",
+  "unit": "원",
+  "dec": 0,
+  "std": 54200,
+  "op": "이상",
+  "stdTxt": "54,200원 이상",
+  "formula": "Σ(등급별 시간당 지급기준 단가 × 총 강의시간) ÷ 총 강의시간",
+  "basis": "2025.1학기, 2026.1학기",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "강사에게 지급한 시간당 평균 강의료",
+  "submit": 61200.0,
+  "stdY": {
+   "2025": 53100,
+   "2026": 54200
+  },
+  "dept": "교무처 교무팀",
+  "disclosure": "연 1회 (6월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(시간당 지급 단가가 높을수록 증가)",
+  "fnote": "",
+  "remark": [
+   "2025년 53,100원 · 2026년 54,200원 (물가상승률을 고려하여 매년 재설정)"
+  ],
+  "naReason": ""
+ },
+ {
+  "id": "Q07",
+  "no": 7,
+  "code": "3.4",
+  "codeName": "교원의 교육 및 연구활동 지원",
+  "areaKey": "3영역",
+  "areaName": "교원 및 직원",
+  "color": "var(--a2)",
+  "name": "전임교원 1인당 교내연구비",
+  "unit": "천원",
+  "dec": 1,
+  "std": 500,
+  "op": "이상",
+  "stdTxt": "500천원 이상",
+  "formula": "(교내연구비 + 교내대응자금)(천원) ÷ 전임교원 수",
+  "basis": "2024.1.1.~2024.12.31., 2025.1.1.~2025.12.31. 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "전임교원 1인당 대학이 자체 지원한 교내연구비와 교내대응자금",
+  "submit": 891.0,
+  "dept": "연구정보처 연구지원팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(교내연구비 예산이 늘어날수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q08",
+  "no": 8,
+  "code": "3.5",
+  "codeName": "직원 확보 및 인사",
+  "areaKey": "3영역",
+  "areaName": "교원 및 직원",
+  "color": "var(--a2)",
+  "name": "직원 1인당 학생수",
+  "unit": "명",
+  "dec": 1,
+  "std": 70,
+  "op": "이하",
+  "stdTxt": "70명 이하",
+  "formula": "(학부 + 대학원 주야간 재학생 수) ÷ 직원 수",
+  "basis": "2025.4.1., 2026.4.1. 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "직원 1명이 담당하는 학부와 대학원 재학생 수",
+  "submit": 30.4,
+  "dept": "교무처 교무팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "낮을수록 기준값 달성에 유리(직원 수 증가 또는 재학생 수 감소 시 감소)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q09",
+  "no": 9,
+  "code": "4.1",
+  "codeName": "장학 제도 및 학생자치활동 지원",
+  "areaKey": "4영역",
+  "areaName": "학생지원 및 시설",
+  "color": "var(--a3)",
+  "name": "장학금 비율",
+  "unit": "%",
+  "dec": 1,
+  "std": 12,
+  "op": "이상",
+  "stdTxt": "12% 이상",
+  "formula": "(학부 교내장학금 + 학부 교외장학금) ÷ (학부 수업료 − 계절학기 수입) × 100",
+  "basis": "2024, 2025회계연도 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "학부 장학금이 학부 등록금에서 차지하는 비율",
+  "submit": 17.4,
+  "dept": "학생복지처 학생복지팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(장학금 총액이 등록금 총액보다 크게 늘어날수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q10",
+  "no": 10,
+  "code": "4.4",
+  "codeName": "교육시설",
+  "areaKey": "4영역",
+  "areaName": "학생지원 및 시설",
+  "color": "var(--a3)",
+  "name": "교사 확보율",
+  "unit": "%",
+  "dec": 1,
+  "std": 100,
+  "op": "이상",
+  "stdTxt": "100% 이상",
+  "formula": "교사 보유면적 ÷ 교사 기준면적 × 100  ·  기준면적 = (인문사회 입학정원 × 12㎡) + (공학 입학정원 × 14㎡)",
+  "basis": "2026.4.1.",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "교사 기준면적 대비 보유면적의 비율",
+  "submit": 139.0,
+  "dept": "교무처 교무팀",
+  "disclosure": "연 1회 (10월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(교사시설 보유면적이 기준면적보다 여유 있을수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q11",
+  "no": 11,
+  "code": "4.5",
+  "codeName": "기숙사 및 학생 복지시설",
+  "areaKey": "4영역",
+  "areaName": "학생지원 및 시설",
+  "color": "var(--a3)",
+  "name": "기숙사 수용률",
+  "unit": "%",
+  "dec": 1,
+  "std": 11,
+  "op": "이상",
+  "stdTxt": "11% 이상",
+  "formula": "기숙사 수용 가능 인원 ÷ (학부 + 대학원 주간 재학생 수) × 100",
+  "basis": "2026.4.1.",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "학부 및 주간 대학원 재학생 대비 기숙사 수용 가능 인원의 비율",
+  "submit": 18.4,
+  "dept": "학생생활관",
+  "disclosure": "연 1회 (10월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(기숙사 수용 인원이 늘어날수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q12",
+  "no": 12,
+  "code": "4.6",
+  "codeName": "도서관",
+  "areaKey": "4영역",
+  "areaName": "학생지원 및 시설",
+  "color": "var(--a3)",
+  "name": "재학생 1인당 연간 자료구입비(결산)",
+  "unit": "원",
+  "dec": 0,
+  "std": 54000,
+  "op": "이상",
+  "stdTxt": "54,000원 이상",
+  "formula": "자료구입비 ÷ (학부 + 대학원 주야간 재학생 수)",
+  "basis": "2024, 2025회계연도 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "재학생 1인당 연간 도서·전자자료·연속간행물 구입비",
+  "submit": 81937.5,
+  "dept": "중앙도서관",
+  "disclosure": "-",
+  "direction": "높을수록 기준값 달성에 유리(도서·전자자료 구입 예산이 늘어날수록 증가)",
+  "fnote": "자료구입비 = 기타운영비 중 중앙도서관 전자정보 구독료 + 도서구입비",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q13",
+  "no": 13,
+  "code": "4.6",
+  "codeName": "도서관",
+  "areaKey": "4영역",
+  "areaName": "학생지원 및 시설",
+  "color": "var(--a3)",
+  "name": "재학생 1,000명당 도서관 직원수",
+  "unit": "명",
+  "dec": 2,
+  "std": 1.0,
+  "op": "이상",
+  "stdTxt": "1.0명 이상",
+  "formula": "도서관 직원 수 ÷ (학부 + 대학원 주야간 재학생 수) × 1,000",
+  "basis": "2025.4.1., 2026.4.1. 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "재학생 1,000명당 환산 도서관 직원 수",
+  "submit": 1.17,
+  "dept": "중앙도서관",
+  "disclosure": "-",
+  "direction": "높을수록 기준값 달성에 유리(도서관 전담 직원이 늘어날수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q14",
+  "no": 14,
+  "code": "5.2",
+  "codeName": "교육성과",
+  "areaKey": "5영역",
+  "areaName": "대학성과 및 사회적 책무",
+  "color": "var(--a4)",
+  "name": "정원내 신입생 충원율",
+  "unit": "%",
+  "dec": 1,
+  "std": 95,
+  "op": "이상",
+  "stdTxt": "95% 이상",
+  "formula": "(정원내 입학자 수 ÷ 정원내 모집인원) × 100",
+  "basis": "2025.4.1., 2026.4.1. 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "정원내 모집인원 대비 실제 입학한 정원내 신입생의 비율",
+  "submit": 103.7,
+  "dept": "입학홍보처 입학홍보팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(모집정원 대비 입학자가 많을수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q15",
+  "no": 15,
+  "code": "5.2",
+  "codeName": "교육성과",
+  "areaKey": "5영역",
+  "areaName": "대학성과 및 사회적 책무",
+  "color": "var(--a4)",
+  "name": "정원내 재학생 충원율",
+  "unit": "%",
+  "dec": 1,
+  "std": 80,
+  "op": "이상",
+  "stdTxt": "80% 이상",
+  "formula": "정원내 재학생 수 ÷ (학생정원 − 모집정지 인원) × 100",
+  "basis": "2025.4.1., 2026.4.1. 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "학생정원 대비 정원내 재학생의 비율",
+  "submit": 96.8,
+  "dept": "입학홍보처 입학홍보팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(학사경고·제적·휴학 관리로 재학생이 유지될수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q16",
+  "no": 16,
+  "code": "5.3",
+  "codeName": "연구성과",
+  "areaKey": "5영역",
+  "areaName": "대학성과 및 사회적 책무",
+  "color": "var(--a4)",
+  "name": "전임교원 1인당 등재(후보)지 논문 실적",
+  "unit": "건",
+  "dec": 3,
+  "std": 0.35,
+  "op": "이상",
+  "stdTxt": "0.35건 이상",
+  "formula": "연구재단 등재(후보)지 게재 논문 수 ÷ 전임교원 수",
+  "basis": "2024.1.1.~2024.12.31., 2025.1.1.~2025.12.31. 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "전임교원 1인당 한국연구재단 등재(후보)학술지 게재 논문 수",
+  "submit": 0.447,
+  "dept": "연구정보처 연구지원팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(등재(후보)지 게재 실적이 늘어날수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q18",
+  "no": 18,
+  "code": "5.3",
+  "codeName": "연구성과",
+  "areaKey": "5영역",
+  "areaName": "대학성과 및 사회적 책무",
+  "color": "var(--a4)",
+  "name": "전임교원 1인당 저역서 실적",
+  "unit": "건",
+  "dec": 3,
+  "std": 0.06,
+  "op": "이상",
+  "stdTxt": "0.06건 이상",
+  "formula": "저역서 수 ÷ 전임교원 수",
+  "basis": "2024.1.1.~2024.12.31., 2025.1.1.~2025.12.31. 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "전임교원 1인당 저서·역서 실적",
+  "submit": 0.113,
+  "dept": "연구정보처 연구지원팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(저서·역서 발간 실적이 늘어날수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q19",
+  "no": 19,
+  "code": "5.3",
+  "codeName": "연구성과",
+  "areaKey": "5영역",
+  "areaName": "대학성과 및 사회적 책무",
+  "color": "var(--a4)",
+  "name": "전임교원 1인당 교외연구비",
+  "unit": "천원",
+  "dec": 1,
+  "std": 2000,
+  "op": "이상",
+  "stdTxt": "2,000천원 이상",
+  "formula": "(교외연구비 + 교외대응자금) ÷ 전임교원 수",
+  "basis": "2024.1.1.~2024.12.31., 2025.1.1.~2025.12.31. 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "전임교원 1인당 외부에서 수주한 교외연구비와 교외대응자금",
+  "submit": 8218.7,
+  "dept": "연구정보처 연구지원팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(외부 수탁·국고 연구비 수주가 늘어날수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q20",
+  "no": 20,
+  "code": "5.3",
+  "codeName": "연구성과",
+  "areaKey": "5영역",
+  "areaName": "대학성과 및 사회적 책무",
+  "color": "var(--a4)",
+  "name": "연구성과 기준값 대비 실적",
+  "unit": "",
+  "dec": 1,
+  "std": 3,
+  "op": "이상",
+  "stdTxt": "3 이상",
+  "formula": "(1인당 등재지 실적 ÷ 0.35) + (1인당 저역서 실적 ÷ 0.06) + (1인당 교외연구비 ÷ 2,000천원)",
+  "basis": "2024.1.1.~2024.12.31., 2025.1.1.~2025.12.31. 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "등재(후보)지 · 저역서 · 교외연구비를 각 기준값으로 나누어 합산한 연구성과 지표",
+  "submit": 7.2,
+  "dept": "연구정보처 연구지원팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(세 개 연구 지표의 기준값 대비 달성 배수를 합산하므로 개별 지표가 개선될수록 증가)",
+  "fnote": "",
+  "remark": [
+   "자연계열 교수 비율이 20% 미만인 대학은 전임교원 1인당 SCI급 논문 실적을 제외하고 3 이상",
+   "기준값 대비 실적의 합은 2개 이상의 지표가 기준값을 충족한 경우에만 인정"
+  ],
+  "naReason": ""
+ },
+ {
+  "id": "Q21",
+  "no": 21,
+  "code": "5.4",
+  "codeName": "취·창업지원 및 성과",
+  "areaKey": "5영역",
+  "areaName": "대학성과 및 사회적 책무",
+  "color": "var(--a4)",
+  "name": "졸업생의 취업률",
+  "unit": "%",
+  "dec": 1,
+  "std": 50,
+  "op": "이상",
+  "stdTxt": "50% 이상",
+  "formula": "취업자 수 ÷ (졸업자 수 − 산정 제외자 수) × 100",
+  "basis": "2024.12.31., 2025.12.31. 평균",
+  "evalKey": "2027",
+  "evalName": "2027 모니터링사전평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "졸업자 중 취업대상자 대비 취업자의 비율",
+  "submit": null,
+  "dept": "학생성장지원센터",
+  "disclosure": "연 1회 (12월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(졸업생 취업자 수가 늘어날수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": "2025년도 취업통계조사 2027년 1월 실시 예정"
+ },
+ {
+  "id": "Q22",
+  "no": 22,
+  "code": "1.5",
+  "codeName": "교육성과(2030인증평가 신설)",
+  "areaKey": "1영역",
+  "areaName": "대학이념 및 경영",
+  "color": "var(--a1)",
+  "name": "재학생 충원율(정원내외)",
+  "unit": "%",
+  "dec": 1,
+  "std": 85,
+  "op": "이상",
+  "stdTxt": "85% 이상",
+  "formula": "정원내외 재학생 수 ÷ (학생정원 − 모집정지 인원) × 100",
+  "basis": "2028, 2029, 2030 공시 평균",
+  "evalKey": "2030",
+  "evalName": "2030 인증평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "정원 내외를 합한 재학생이 학생정원에서 차지하는 비율",
+  "submit": null,
+  "dept": "입학홍보처 입학홍보팀",
+  "disclosure": "연 1회 (8월 공시)",
+  "direction": "높을수록 기준값 달성에 유리(정원 내외 재학생이 유지될수록 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q23",
+  "no": 23,
+  "code": "4.4",
+  "codeName": "교육시설",
+  "areaKey": "4영역",
+  "areaName": "학생지원 및 시설",
+  "color": "var(--a3)",
+  "name": "재학생 1인당 강의실 면적",
+  "unit": "㎡",
+  "dec": 2,
+  "std": 1.2,
+  "op": "이상",
+  "stdTxt": "1.2㎡ 이상",
+  "formula": "강의실(일반 + 멀티미디어) 실면적 ÷ (학부 + 대학원 주간 재학생 수)",
+  "basis": "2030.4.1.",
+  "evalKey": "2030",
+  "evalName": "2030 인증평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "재학생 1인당 일반·멀티미디어 강의실 면적",
+  "submit": null,
+  "dept": "총무처 시설관리팀",
+  "disclosure": "-",
+  "direction": "높을수록 기준값 달성에 유리(강의실 면적 증가 또는 재학생 수 감소 시 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q24",
+  "no": 24,
+  "code": "4.4",
+  "codeName": "교육시설",
+  "areaKey": "4영역",
+  "areaName": "학생지원 및 시설",
+  "color": "var(--a3)",
+  "name": "재학생 1인당 실험·실습실 면적",
+  "unit": "㎡",
+  "dec": 2,
+  "std": 2.5,
+  "op": "이상",
+  "stdTxt": "2.5㎡ 이상",
+  "formula": "실험·실습실 실면적 ÷ 계열 가중 재학생 수  ·  계열 가중 재학생 수 = (인문사회 재학생 ÷ 3) + 공학 재학생",
+  "basis": "2030.4.1.",
+  "evalKey": "2030",
+  "evalName": "2030 인증평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "계열 가중 재학생 1인당 실험·실습실 면적",
+  "submit": null,
+  "dept": "총무처 시설관리팀",
+  "disclosure": "-",
+  "direction": "높을수록 기준값 달성에 유리(실험·실습실 면적 증가 또는 재학생 수 감소 시 증가)",
+  "fnote": "",
+  "remark": [],
+  "naReason": ""
+ },
+ {
+  "id": "Q25",
+  "no": 25,
+  "code": "4.4",
+  "codeName": "교육시설",
+  "areaKey": "4영역",
+  "areaName": "학생지원 및 시설",
+  "color": "var(--a3)",
+  "name": "재학생 1인당 실험·실습 기자재 구입비",
+  "unit": "천원",
+  "dec": 1,
+  "std": 89,
+  "op": "이상",
+  "stdTxt": "89천원 이상",
+  "formula": "공학계열 실험·실습 기자재 구입비 ÷ 공학계열 재학생 수(학부 + 대학원 주간)",
+  "basis": "2027, 2028, 2029회계연도 평균",
+  "evalKey": "2030",
+  "evalName": "2030 인증평가",
+  "src": "2024하반기 인증자격모니터링 사전평가 정량지표 산출자료",
+  "desc": "재학생 1인당 실험·실습 기자재 구입비",
+  "submit": null,
+  "dept": "총무처 시설관리팀",
+  "disclosure": "-",
+  "direction": "높을수록 기준값 달성에 유리(실험·실습 기자재 구입 예산이 늘어날수록 증가)",
+  "fnote": "",
+  "remark": [
+   "기준값 89천원 = (공학계열 평균등록금 8,073,973원 − 인문사회계열 평균등록금 7,479,938원) × 15%"
+  ],
+  "naReason": "산출 대상 회계연도(2027~2029) 미도래"
+ }
+];
+const SAMPLE_VALUES = [{"id": "Q01", "year": 2024, "v": 63.2}, {"id": "Q01", "year": 2025, "v": 63.6}, {"id": "Q01", "year": 2026, "v": 63.3}, {"id": "Q02", "year": 2024, "v": 3.51}, {"id": "Q02", "year": 2025, "v": 4.28}, {"id": "Q02", "year": 2026, "v": 3.17}, {"id": "Q03", "year": 2024, "v": 1.27}, {"id": "Q03", "year": 2025, "v": 0.12}, {"id": "Q03", "year": 2026, "v": 0.77}, {"id": "Q04", "year": 2024, "v": 150.3}, {"id": "Q04", "year": 2025, "v": 143.4}, {"id": "Q04", "year": 2026, "v": 133.8}, {"id": "Q05", "year": 2024, "v": 73.5}, {"id": "Q05", "year": 2025, "v": 69.5}, {"id": "Q05", "year": 2026, "v": 73.9}, {"id": "Q06", "year": 2024, "v": 61200.0}, {"id": "Q06", "year": 2025, "v": 61200.0}, {"id": "Q06", "year": 2026, "v": 61200.0}, {"id": "Q07", "year": 2024, "v": 827.8}, {"id": "Q07", "year": 2025, "v": 895.0}, {"id": "Q07", "year": 2026, "v": 887.0}, {"id": "Q08", "year": 2024, "v": 29.0}, {"id": "Q08", "year": 2025, "v": 30.4}, {"id": "Q08", "year": 2026, "v": 30.5}, {"id": "Q09", "year": 2024, "v": 17.6}, {"id": "Q09", "year": 2025, "v": 16.6}, {"id": "Q09", "year": 2026, "v": 18.3}, {"id": "Q10", "year": 2024, "v": 123.7}, {"id": "Q10", "year": 2025, "v": 137.7}, {"id": "Q10", "year": 2026, "v": 139.0}, {"id": "Q11", "year": 2024, "v": 21.1}, {"id": "Q11", "year": 2025, "v": 19.3}, {"id": "Q11", "year": 2026, "v": 18.4}, {"id": "Q12", "year": 2024, "v": 82788.0}, {"id": "Q12", "year": 2025, "v": 81998.9}, {"id": "Q12", "year": 2026, "v": 81876.1}, {"id": "Q13", "year": 2024, "v": 1.31}, {"id": "Q13", "year": 2025, "v": 1.2}, {"id": "Q13", "year": 2026, "v": 1.15}, {"id": "Q14", "year": 2024, "v": 99.9}, {"id": "Q14", "year": 2025, "v": 100.3}, {"id": "Q14", "year": 2026, "v": 107.1}, {"id": "Q15", "year": 2024, "v": 93.8}, {"id": "Q15", "year": 2025, "v": 94.5}, {"id": "Q15", "year": 2026, "v": 99.1}, {"id": "Q16", "year": 2024, "v": 0.291}, {"id": "Q16", "year": 2025, "v": 0.368}, {"id": "Q16", "year": 2026, "v": 0.527}, {"id": "Q18", "year": 2024, "v": 0.092}, {"id": "Q18", "year": 2025, "v": 0.117}, {"id": "Q18", "year": 2026, "v": 0.109}, {"id": "Q19", "year": 2024, "v": 23295.6}, {"id": "Q19", "year": 2025, "v": 10674.9}, {"id": "Q19", "year": 2026, "v": 5762.6}, {"id": "Q20", "year": 2024, "v": 13.9}, {"id": "Q20", "year": 2025, "v": 8.3}, {"id": "Q20", "year": 2026, "v": 6.2}, {"id": "Q21", "year": 2024, "v": 59.5}, {"id": "Q21", "year": 2025, "v": 56.9}, {"id": "Q22", "year": 2025, "v": 111.2}, {"id": "Q22", "year": 2026, "v": 117.2}, {"id": "Q23", "year": 2024, "v": 1.3}, {"id": "Q23", "year": 2025, "v": 1.42}, {"id": "Q23", "year": 2026, "v": 1.35}, {"id": "Q24", "year": 2024, "v": 2.75}, {"id": "Q24", "year": 2025, "v": 2.63}, {"id": "Q24", "year": 2026, "v": 2.59}, {"id": "Q25", "year": 2024, "v": 221.2}, {"id": "Q25", "year": 2025, "v": 227.0}];
+</script>
+<script>
+/* ================= 설정 / CSV / 계산 ================= */
+const LS_KEY='skhu_ir_sheet_cfg_v1';
+const DEFAULT_CFG={kpi:''};   /* ← 여기에 CSV 주소를 넣어두면 모든 방문자에게 기본 적용됩니다 */
+function loadCfg(){try{const r=localStorage.getItem(LS_KEY);if(r)return Object.assign({},DEFAULT_CFG,JSON.parse(r));}catch(e){}return Object.assign({},DEFAULT_CFG);}
+function saveCfg(c){try{localStorage.setItem(LS_KEY,JSON.stringify(c));}catch(e){}}
+let CFG=loadCfg();
+/* 관리자 모드: 주소 뒤에 ?admin=1 을 붙이면 설정 버튼이 나타납니다. ?admin=0 으로 해제. */
+const ADMIN=(function(){
+  try{
+    const q=new URLSearchParams(location.search);
+    if(q.get('admin')==='1'){localStorage.setItem('skhu_ir_admin','1');return true;}
+    if(q.get('admin')==='0'){localStorage.removeItem('skhu_ir_admin');return false;}
+    return localStorage.getItem('skhu_ir_admin')==='1';
+  }catch(e){return false;}
+})();
+function parseCSV(text){
+  const rows=[];let row=[],cur='',q=false;
+  text=text.replace(/^﻿/,'');
+  for(let i=0;i<text.length;i++){const c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+    else if(c==='"')q=true;
+    else if(c===',')  {row.push(cur);cur='';}
+    else if(c==='\n') {row.push(cur);rows.push(row);row=[];cur='';}
+    else if(c!=='\r') cur+=c;
+  }
+  if(cur!==''||row.length){row.push(cur);rows.push(row);}
+  return rows.filter(r=>r.some(v=>String(v).trim()!==''));
+}
+function toObjects(rows){
+  if(!rows.length)return[];
+  const head=rows[0].map(h=>String(h).trim().toLowerCase().replace(/\s/g,''));
+  return rows.slice(1).map(r=>{const o={};head.forEach((h,i)=>o[h]=(r[i]??'').trim());return o;});
+}
+function pick(o,names){for(const n of names){const k=n.toLowerCase().replace(/\s/g,'');if(o[k]!==undefined&&o[k]!=='')return o[k];}return'';}
+function num(v){if(v===''||v==null)return null;const n=parseFloat(String(v).replace(/[,\s%원편]/g,''));return isFinite(n)?n:null;}
+async function fetchCSV(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return toObjects(parseCSV(await r.text()));}
+</script>
+<script>
+
+/* ================= 상태 · 계산 ================= */
+const META = Object.fromEntries(KPI_DEF.map(d => [d.id, d]));
+const AREAS = (function(){
+  const seen = [];
+  KPI_DEF.forEach(d => { if(!seen.some(a => a.key === d.areaKey))
+    seen.push({key:d.areaKey, name:d.areaName, color:d.color}); });
+  return seen;
+})();
+const ST_KO = {ok:'충족', warn:'주의', no:'미충족', na:'자료 준비 중'};
+const ST_CLS = {ok:'good', warn:'warn', no:'bad', na:'na'};
+
+let ROWS = [], LIVE = false, LOAD_MSG = '';
+let YEARS = [], CUR_YEAR = null, CUR_AREA = 'all', CUR_KPI = null;
+
+function useSample(){ ROWS = SAMPLE_VALUES.slice(); LIVE = false; }
+
+async function loadData(){
+  if(!CFG.kpi){ useSample(); LOAD_MSG = '구글시트가 연결되지 않아 내장 데이터를 표시합니다.'; return; }
+  try{
+    const objs = await fetchCSV(CFG.kpi), out = [];
+    objs.forEach(o => {
+      const id = pick(o, ['kpi_id','kpiid','지표id','지표코드','id']).toUpperCase();
+      const y  = num(pick(o, ['year','연도','기준연도']));
+      if(!id || !META[id] || !y) return;
+      const v = num(pick(o, ['value','실적값','값','실적']));
+      if(v != null) out.push({id:id, year:y, v:v});
+      const std = num(pick(o, ['기준값','인증기준값','std']));
+      if(std != null) META[id].std = std;
+    });
+    if(!out.length) throw new Error('유효한 행이 없습니다');
+    ROWS = out; LIVE = true; LOAD_MSG = '';
+  }catch(err){
+    useSample();
+    LOAD_MSG = '구글시트를 불러오지 못해 내장 데이터를 표시합니다. (' + err.message + ')';
+  }
+}
+
+const seriesOf = id => ROWS.filter(r => r.id === id).sort((a,b) => a.year - b.year);
+const allYears = () => [...new Set(ROWS.map(r => r.year))].sort((a,b) => a - b);
+/* 처장님 지시 7 : 최근 2개 연도만 표시 */
+const shownYears = () => allYears().slice(-2);
+function atYear(id, y){ const s = seriesOf(id).filter(r => r.year === y); return s.length ? s[0] : null; }
+
+/* 강사 강의료처럼 연도별로 기준값이 달라지는 지표 지원 */
+function stdOf(d, y){
+  if(d.stdY && d.stdY[String(y)] != null) return d.stdY[String(y)];
+  return d.std;
+}
+function stdTxtOf(d, y){
+  if(d.stdY && d.stdY[String(y)] != null)
+    return d.stdY[String(y)].toLocaleString('ko-KR') + d.unit + ' ' + d.op;
+  return d.stdTxt;
+}
+function ratioValOf(v, d, y){
+  const s = stdOf(d, y);
+  if(v == null || s == null || !s) return null;
+  return d.op === '이하' ? (s / v) * 100 : (v / s) * 100;
+}
+function ratioOf(id, y){
+  const d = META[id], r = atYear(id, y);
+  return ratioValOf(r ? r.v : null, d, y);
+}
+function statusOf(id, y){
+  const p = ratioOf(id, y);
+  return p == null ? 'na' : (p >= 100 ? 'ok' : p >= 95 ? 'warn' : 'no');
+}
+function statusOfVal(v, d, y){
+  const p = ratioValOf(v, d, y);
+  return p == null ? 'na' : (p >= 100 ? 'ok' : p >= 95 ? 'warn' : 'no');
+}
+function deltaOf(id, y){
+  const s = seriesOf(id).filter(r => r.year < y);
+  const prev = s.length ? s[s.length-1] : null, cur = atYear(id, y);
+  if(!prev || !cur || prev.v == null || cur.v == null) return null;
+  return {diff: cur.v - prev.v, pct: prev.v ? (cur.v - prev.v) / Math.abs(prev.v) * 100 : null, prevYear: prev.year};
+}
+function fmt(v, m){ return v == null ? '–' : v.toLocaleString('ko-KR',{minimumFractionDigits:m.dec, maximumFractionDigits:m.dec}); }
+function ratioTxt(p){ return p == null ? '–' : ((p < 100 && p >= 99.5) ? p.toFixed(1) : p.toFixed(0)) + '%'; }
+function shortNum(v, m){
+  if(m.unit === '원' || m.unit === '천원'){
+    return Math.abs(v) >= 10000 ? (v/10000).toLocaleString('ko-KR',{maximumFractionDigits:1}) + '만'
+                                : v.toLocaleString('ko-KR',{maximumFractionDigits:0});
+  }
+  return v.toLocaleString('ko-KR',{maximumFractionDigits:m.dec});
+}
+function niceStep(x){ if(!isFinite(x)||x<=0) return 1; const e=Math.pow(10,Math.floor(Math.log10(x))), f=x/e;
+  return (f<=1?1:f<=2?2:f<=5?5:10)*e; }
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $ = s => document.querySelector(s);
+const judged = y => KPI_DEF.filter(d => statusOf(d.id, y) !== 'na');
+const inView = () => CUR_AREA === 'all' ? KPI_DEF : KPI_DEF.filter(d => d.areaKey === CUR_AREA);
+function improvedOf(id, y){        /* 전년 대비 개선 여부 */
+  const d = META[id], del = deltaOf(id, y);
+  if(!del || del.diff === 0) return null;
+  return d.op === '이하' ? del.diff < 0 : del.diff > 0;
+}
+
+/* ================= 차트 ================= */
+function arc(cx,cy,r,a0,a1){
+  const p=a=>[cx+r*Math.cos(a*Math.PI/180), cy+r*Math.sin(a*Math.PI/180)];
+  const [x0,y0]=p(a0),[x1,y1]=p(a1);
+  return `M ${x0.toFixed(2)} ${y0.toFixed(2)} A ${r} ${r} 0 ${Math.abs(a1-a0)>180?1:0} ${a1>a0?1:0} ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+}
+function gaugeChart(pct, label){
+  const W=250,H=168,cx=125,cy=132,R=96,SW=20;
+  const col = pct==null?'var(--muted)': pct>=100?'var(--good)': pct>=80?'var(--warn)':'var(--bad)';
+  const clamp = Math.max(0, Math.min(100, pct==null?0:pct));
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:290px;display:block" role="img"
+      aria-label="인증 기준 충족률 ${pct==null?'자료없음':pct.toFixed(1)+'퍼센트'}">
+    <path d="${arc(cx,cy,R,180,360)}" fill="none" stroke="var(--surface-3)" stroke-width="${SW}" stroke-linecap="round"/>
+    ${clamp>0?`<path d="${arc(cx,cy,R,180,180+clamp*1.8)}" fill="none" stroke="${col}" stroke-width="${SW}" stroke-linecap="round"/>`:''}
+    <text x="${cx}" y="${cy-14}" text-anchor="middle" font-size="46" font-weight="900" fill="var(--ink)" style="letter-spacing:-2px">${pct==null?'–':pct.toFixed(1)}</text>
+    <text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="12.5" fill="var(--muted)">%  ·  ${esc(label)}</text>
+    <text x="${cx-R}" y="${cy+18}" text-anchor="middle" font-size="10.5" fill="var(--muted)">0</text>
+    <text x="${cx+R}" y="${cy+18}" text-anchor="middle" font-size="10.5" fill="var(--muted)">100</text>
+  </svg>`;
+}
+function donutChart(parts, total){
+  const W=200,H=200,cx=100,cy=100,R=74,SW=26,GAP=2.4;
+  const use = parts.filter(p => p.v > 0);
+  const sum = use.reduce((a,p) => a+p.v, 0) || 1;
+  let cur = -90, segs = '';
+  use.forEach(p => {
+    const sweep = (p.v/sum)*360, a0 = cur+GAP/2, a1 = cur+sweep-GAP/2;
+    if(a1 > a0) segs += `<path d="${arc(cx,cy,R,a0,a1)}" fill="none" stroke="${p.c}" stroke-width="${SW}"/>`;
+    cur += sweep;
+  });
+  return `<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center">
+    <svg viewBox="0 0 ${W} ${H}" width="150" height="150" role="img" aria-label="지표 판정 구성">
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--surface-3)" stroke-width="${SW}"/>${segs}
+      <text x="${cx}" y="${cy-2}" text-anchor="middle" font-size="34" font-weight="900" fill="var(--ink)">${total}</text>
+      <text x="${cx}" y="${cy+20}" text-anchor="middle" font-size="12" fill="var(--muted)">개 지표</text></svg>
+    <div style="display:flex;flex-direction:column;gap:9px;min-width:126px">
+      ${parts.map(p => `<div style="display:flex;align-items:center;gap:8px;font-size:13px">
+        <span style="width:12px;height:12px;border-radius:3px;background:${p.c};flex-shrink:0"></span>
+        <span style="color:var(--ink-2)">${esc(p.k)}</span>
+        <b class="n" style="margin-left:auto">${p.v}</b>
+        <span style="color:var(--muted);font-size:12px">${total?Math.round(p.v/total*100):0}%</span></div>`).join('')}
+    </div></div>`;
+}
+function areaStatChart(y){
+  return `<div class="areastat">${AREAS.map(a => {
+    const ms = KPI_DEF.filter(d => d.areaKey === a.key);
+    const c = {ok:0,warn:0,no:0,na:0};
+    ms.forEach(d => c[statusOf(d.id, y)]++);
+    const okAll = c.ok, noAll = c.warn + c.no, tot = ms.length;
+    const seg = (n,cls) => n ? `<i class="${cls}" style="width:${(n/tot*100).toFixed(2)}%"></i>` : '';
+    return `<div class="row" style="--ac:${a.color}">
+      <div class="lb"><span>${a.key} · ${esc(a.name)}</span>
+        <b class="n" style="color:${okAll===tot-c.na&&tot-c.na>0?'var(--good-tx)':'var(--ink)'}">${okAll} <span style="color:var(--muted);font-weight:400">/ ${tot}</span></b></div>
+      <div class="track">${seg(c.ok,'ok')}${seg(noAll,'no')}${seg(c.na,'na')}</div></div>`;
+  }).join('')}
+  <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:2px">
+    <span><i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--good);vertical-align:-1px;margin-right:5px"></i>충족</span>
+    <span><i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--bad);vertical-align:-1px;margin-right:5px"></i>미충족</span>
+    <span><i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--border-strong);vertical-align:-1px;margin-right:5px"></i>자료 준비 중</span>
+  </div></div>`;
+}
+/* 최근 2개 연도 실적 추이 + 인증 기준선 */
+function trendChart(id){
+  const m = META[id], ys = shownYears();
+  const s = ys.map(y => ({year:y, v:(atYear(id,y)||{}).v ?? null}));
+  if(!s.some(r => r.v != null))
+    return `<div class="chart-na">산출 자료 준비 중${m.naReason?`<span>${esc(m.naReason)}</span>`:''}</div>`;
+  const W=560,H=250,L=58,R=118,T=30,B=40,iw=W-L-R,ih=H-T-B;
+  const stdRef = stdOf(m, ys[ys.length-1]);
+  const vals = s.filter(r=>r.v!=null).map(r=>r.v).concat(stdRef!=null?[stdRef]:[]);
+  let mx = Math.max(...vals), mn = Math.min(...vals);
+  const pad = (mx-mn) || Math.abs(mx)*0.25 || 1;
+  mn = Math.max(0, mn - pad*0.9); mx = mx + pad*0.55;
+  const step = niceStep((mx-mn)/3);
+  mn = Math.max(0, Math.floor(mn/step)*step); mx = Math.ceil(mx/step)*step;
+  const X = i => L + (s.length===1 ? iw/2 : i*iw/(s.length-1));
+  const Y = v => T + ih - ((v-mn)/(mx-mn))*ih;
+  let g='';
+  for(let v=mn; v<=mx+1e-9; v+=step){
+    g += `<line x1="${L}" y1="${Y(v).toFixed(1)}" x2="${W-R}" y2="${Y(v).toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>
+          <text x="${L-9}" y="${(Y(v)+4).toFixed(1)}" text-anchor="end" font-size="11" fill="var(--muted)">${shortNum(v,m)}</text>`;
+  }
+  const pts = s.map((r,i) => r.v==null ? null : [X(i), Y(r.v)]);
+  const have = pts.filter(Boolean);
+  const path = have.map((p,i) => (i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const area = have.length>1 ? path + ` L${have[have.length-1][0].toFixed(1)} ${T+ih} L${have[0][0].toFixed(1)} ${T+ih} Z` : '';
+  const dots = s.map((r,i) => r.v==null ? '' :
+    `<circle cx="${X(i).toFixed(1)}" cy="${Y(r.v).toFixed(1)}" r="5.5" fill="var(--s1)" stroke="var(--surface)" stroke-width="2.5"/>
+     <text x="${X(i).toFixed(1)}" y="${(Y(r.v)-15).toFixed(1)}" text-anchor="${i===0?'start':'end'}" font-size="14" font-weight="900" fill="var(--ink)">${fmt(r.v,m)}</text>`).join('');
+  let std='';
+  const stdTx = stdTxtOf(m, ys[ys.length-1]);
+  if(stdRef!=null && stdRef>=mn && stdRef<=mx){
+    std = `<line x1="${L}" y1="${Y(stdRef).toFixed(1)}" x2="${W-R+8}" y2="${Y(stdRef).toFixed(1)}" stroke="var(--s2)" stroke-width="2.5" stroke-dasharray="7 5" stroke-linecap="round"/>
+      <text x="${W-R+14}" y="${(Y(stdRef)-4).toFixed(1)}" font-size="11" font-weight="700" fill="var(--s2)">인증 기준값</text>
+      <text x="${W-R+14}" y="${(Y(stdRef)+12).toFixed(1)}" font-size="12.5" font-weight="900" fill="var(--s2)">${esc(stdTx)}</text>`;
+  }else if(stdRef!=null){
+    std = `<text x="${W-R+14}" y="${T+14}" font-size="11" font-weight="700" fill="var(--s2)">인증 기준값</text>
+      <text x="${W-R+14}" y="${T+30}" font-size="12.5" font-weight="900" fill="var(--s2)">${esc(stdTx)}</text>
+      <text x="${W-R+14}" y="${T+46}" font-size="10.5" fill="var(--muted)">(축 범위 밖)</text>`;
+  }
+  const xs = s.map((r,i) => `<text x="${X(i).toFixed(1)}" y="${H-B+24}" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--ink-2)">${r.year}</text>`).join('');
+  const gid = 'sg_'+id;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:340px;display:block" role="img"
+      aria-label="${esc(m.name)} 최근 2개 연도 추이와 인증 기준값"><title>${esc(m.name)} 추이</title>
+    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--s1)" stop-opacity=".18"/><stop offset="100%" stop-color="var(--s1)" stop-opacity="0"/></linearGradient></defs>
+    ${g}<line x1="${L}" y1="${T+ih}" x2="${W-R}" y2="${T+ih}" stroke="var(--border-strong)" stroke-width="1.5"/>
+    ${area?`<path d="${area}" fill="url(#${gid})"/>`:''}
+    ${have.length>1?`<path d="${path}" fill="none" stroke="var(--s1)" stroke-width="2.5" stroke-linecap="round"/>`:''}
+    ${std}${dots}${xs}</svg>`;
+}
+
+/* ================= 렌더 ================= */
+function renderControls(){
+  YEARS = shownYears();
+  CUR_YEAR = (CUR_YEAR && YEARS.includes(CUR_YEAR)) ? CUR_YEAR : YEARS[YEARS.length-1];
+  $('#yearSel').innerHTML = YEARS.slice().reverse().map(y =>
+    `<option value="${y}"${y===CUR_YEAR?' selected':''}>${y}년</option>`).join('');
+  const seg = $('#areaSeg');
+  if(!seg.dataset.built){
+    seg.innerHTML = `<button data-area="all" class="on">전체 영역</button>` +
+      AREAS.map(a => `<button data-area="${a.key}" title="${esc(a.name)}">${a.key}</button>`).join('');
+    seg.dataset.built = '1';
+  }
+  const fa = $('#footAreas');
+  if(fa) fa.innerHTML = AREAS.map(a => `<li>${a.key} · ${esc(a.name)}</li>`).join('');
+}
+function renderSource(){
+  const dot = $('#srcDot'), txt = $('#srcText'), note = $('#fallbackNote');
+  dot.className = LIVE ? 'dot' : 'dot warnd';
+  txt.innerHTML = '출처 · 대학알리미 정보공시 및 인증 평가자료';
+  note.style.display = 'none'; note.innerHTML = '';
+  if(ADMIN){
+    txt.innerHTML = LIVE ? `구글시트 연동 · <b class="n">${ROWS.length}</b>행`
+                         : `연동 대기 · 내장 데이터 표시 중${LOAD_MSG ? ' · ' + esc(LOAD_MSG) : ''}`;
+  }
+}
+function renderSummary(){
+  const view = inView();
+  const c = {ok:0, warn:0, no:0, na:0};
+  view.forEach(d => c[statusOf(d.id, CUR_YEAR)]++);
+  const jud = c.ok + c.warn + c.no;
+  const rate = jud ? c.ok / jud * 100 : null;
+
+  let imp = 0, cmp = 0;
+  view.forEach(d => { const v = improvedOf(d.id, CUR_YEAR); if(v !== null) cmp++; if(v === true) imp++; });
+  const prevY = allYears().filter(y => y < CUR_YEAR).pop();
+
+  $('#tTotal').innerHTML   = `${view.length}<small>개</small>`;
+  $('#tTotalSub').textContent = c.na ? `산출 자료 준비 중 ${c.na}개 포함` : '전 지표 산출 완료';
+  $('#tImp').innerHTML     = `${imp}<small> / ${cmp}개</small>`;
+  $('#tImpSub').textContent = prevY ? `${prevY}년 대비 실적 개선` : '직전 연도 실적 미입력';
+  $('#tGood').innerHTML    = `${c.ok}<small> / ${jud}개</small>`;
+  $('#tGoodSub').textContent = (c.warn + c.no) ? `기준값 미달성 ${c.warn + c.no}개` : '판정 가능 지표 전부 달성';
+  $('#tRate').innerHTML    = rate == null ? '–' : `${rate.toFixed(1)}<small>%</small>`;
+  $('#tRateSub').textContent = `인증 정량지표 ${view.length}개 중 ${c.ok}개 기준값 달성`;
+
+  $('#gaugeYear').textContent = CUR_YEAR + '년 기준';
+  $('#gauge').innerHTML = gaugeChart(rate, `판정 가능 ${jud}개 중 ${c.ok}개 달성`);
+  $('#areaBars').innerHTML = areaStatChart(CUR_YEAR);
+}
+function kpiCard(d){
+  const r = atYear(d.id, CUR_YEAR), st = statusOf(d.id, CUR_YEAR), p = ratioOf(d.id, CUR_YEAR);
+  const del = deltaOf(d.id, CUR_YEAR);
+  let dHtml = '<span class="delta flat">전년 대비 자료 없음</span>';
+  if(del && del.diff === 0){
+    dHtml = `<span class="delta flat">전년과 동일<em> vs ${del.prevYear}</em></span>`;
+  }else if(del){
+    const better = d.op === '이하' ? del.diff < 0 : del.diff > 0;
+    dHtml = `<span class="delta ${better?'good':'poor'}">${del.diff>0?'▲':'▼'} <span class="n">${fmt(Math.abs(del.diff), d)}</span>` +
+      (del.pct != null ? `<span class="n"> (${del.pct>0?'+':''}${del.pct.toFixed(1)}%)</span>` : '') +
+      `<em> vs ${del.prevYear}</em></span>`;
+  }
+  const w = p == null ? 0 : Math.max(2, Math.min(100, p));
+  return `<button class="kpi ev-${d.evalKey} st-${st==='ok'?'good':st==='warn'?'warn':st==='no'?'bad':'na'}${CUR_KPI===d.id?' sel':''}"
+      data-id="${d.id}" aria-label="${esc(d.name)}${d.evalKey==='2030'?' · 2030 인증평가':''} 상세 보기">
+    <div class="kpi-top"><span class="kcode">${d.id}</span>
+      <span class="kstat"><span class="chip ${ST_CLS[st]}">${ST_KO[st]}${p!=null?` <b class="n">${ratioTxt(p)}</b>`:''}</span></span></div>
+    <div class="kpi-name">${esc(d.name)}</div>
+    <div class="kpi-mid">${(r&&r.v!=null)
+      ? `<div class="kpi-val"><b class="n">${fmt(r.v,d)}</b><span>${d.unit}</span></div>`
+      : `<div class="kpi-na-txt">산출 자료 준비 중${d.naReason?`<em>${esc(d.naReason)}</em>`:''}</div>`}</div>
+    ${dHtml}
+    <div class="kpi-std">기준 <b>${esc(stdTxtOf(d, CUR_YEAR))}</b>${(d.remark&&d.remark.length)?'<span class="chip cond">비고</span>':''}${d.evalKey==='2030'?'<span class="ev-tag">2030</span>':''}</div>
+    <div class="kpi-foot"><div class="meter"><i class="${st==='ok'?'good':st==='warn'?'warn':'bad'}" style="width:${w}%"></i></div></div>
+  </button>`;
+}
+function renderGrid(){
+  const host = $('#kpiGrid');
+  const view = inView();
+  const groups = AREAS.filter(a => view.some(d => d.areaKey === a.key));
+  host.innerHTML = groups.map(a => {
+    const ms = view.filter(d => d.areaKey === a.key);
+    const c = {ok:0,warn:0,no:0,na:0}; ms.forEach(d => c[statusOf(d.id, CUR_YEAR)]++);
+    return `<section class="kgroup" style="--gc:${a.color}">
+      <header class="kgroup-h">
+        <span class="kgroup-code">${a.key}</span>
+        <span class="kgroup-name">${esc(a.name)}</span>
+        <span class="kgroup-cnt">${ms.length}개 지표</span>
+        <span class="kgroup-avg">충족 <b class="n">${c.ok}</b> · 미충족 <b class="n">${c.warn+c.no}</b>${c.na?` · 자료 준비 중 <b class="n">${c.na}</b>`:''}</span>
+      </header>
+      <div class="kgroup-grid">${ms.map(kpiCard).join('')}</div></section>`;
+  }).join('');
+  host.querySelectorAll('.kpi').forEach(b => b.addEventListener('click', () => setSpot(b.dataset.id, true)));
+}
+function spotList(){ return inView(); }
+function setSpot(id, scroll){
+  const list = spotList();
+  if(!list.length) return;
+  CUR_KPI = list.some(d => d.id === id) ? id : list[0].id;
+  const d = META[CUR_KPI], y = CUR_YEAR;
+  const r = atYear(CUR_KPI, y), st = statusOf(CUR_KPI, y), p = ratioOf(CUR_KPI, y);
+  const idx = list.findIndex(x => x.id === CUR_KPI);
+
+  $('#spotCount').textContent = String(idx+1).padStart(2,'0') + ' / ' + String(list.length).padStart(2,'0');
+  $('#spotName').innerHTML = `<span class="chip blue" style="margin-right:6px;vertical-align:2px">${d.id}</span>${esc(d.name)}`
+;
+  $('#spotDesc').textContent = d.desc || d.formula;
+  $('#spotYear2').textContent = ` (${y})`;
+  $('#spotVal').innerHTML = (r && r.v != null)
+    ? `${fmt(r.v, d)}<small>${d.unit}</small>` : `<span style="font-size:15px;color:var(--muted)">산출 자료 준비 중</span>`;
+  $('#spotStd').textContent = stdTxtOf(d, y);
+  $('#spotJudge').innerHTML = `<span class="chip ${ST_CLS[st]}" style="font-size:12.5px;padding:4px 11px">${ST_KO[st]}</span>` +
+    (p != null ? `<span style="font-size:13px;color:var(--muted);margin-left:7px">기준 대비 ${ratioTxt(p)}</span>` : '') +
+    (st === 'na' && d.naReason ? `<div class="na-why">${esc(d.naReason)}</div>` : '');
+
+  const del = deltaOf(CUR_KPI, y);
+  if(!del){
+    $('#spotDelta').innerHTML = `<span class="mut" style="font-size:15px;color:var(--muted);font-weight:700">–</span>`;
+  }else if(del.diff === 0){
+    $('#spotDelta').innerHTML = `<span style="font-size:16px;color:var(--muted);font-weight:700">전년과 동일</span>`;
+  }else{
+    const better = d.op === '이하' ? del.diff < 0 : del.diff > 0;
+    $('#spotDelta').innerHTML = `<span style="color:${better?'var(--good-tx)':'var(--bad-tx)'}">${del.diff>0?'▲':'▼'} ${fmt(Math.abs(del.diff), d)}</span>` +
+      (del.pct != null ? `<small style="color:${better?'var(--good-tx)':'var(--bad-tx)'};margin-left:6px">(${del.pct>0?'+':''}${del.pct.toFixed(1)}%)</small>` : '') +
+      `<div style="font-size:11.5px;color:var(--muted);font-weight:400;margin-top:2px">${del.prevYear}년 대비 ${better?'개선':'하락'}</div>`;
+  }
+
+  $('#spotChart').innerHTML = trendChart(CUR_KPI);
+
+  const ys = shownYears().slice().reverse();
+  $('#spotTable').innerHTML =
+    `<thead><tr><th>연도</th><th class="r">실적</th><th class="r">인증 기준값</th><th class="r">기준 대비</th><th class="r">전년 대비</th></tr></thead><tbody>`
+    + ys.map(yy => {
+        const rr = atYear(CUR_KPI, yy), s2 = statusOf(CUR_KPI, yy), pp = ratioOf(CUR_KPI, yy), dd = deltaOf(CUR_KPI, yy);
+        const col = s2==='ok'?'var(--good-tx)': s2==='warn'?'var(--warn-tx)': s2==='no'?'var(--bad-tx)':'var(--muted)';
+        let dt = '<span style="color:var(--muted)">–</span>';
+        if(dd && dd.diff === 0) dt = '<span style="color:var(--muted)">전년과 동일</span>';
+        else if(dd){
+          const better = d.op === '이하' ? dd.diff < 0 : dd.diff > 0;
+          dt = `<span style="color:${better?'var(--good-tx)':'var(--bad-tx)'};font-weight:700">${dd.diff>0?'▲':'▼'} ${fmt(Math.abs(dd.diff), d)}${dd.pct!=null?` (${dd.pct>0?'+':''}${dd.pct.toFixed(1)}%)`:''}</span>`;
+        }
+        return `<tr><td class="n"><b>${yy}</b></td>
+          <td class="r"><b>${rr&&rr.v!=null?fmt(rr.v,d):'<span style="color:var(--muted);font-weight:400">자료 준비 중</span>'}</b></td>
+          <td class="r" style="color:var(--muted)">${esc(stdTxtOf(d, yy))}</td>
+          <td class="r" style="color:${col};font-weight:700">${pp==null?'–':ratioTxt(pp)}</td>
+          <td class="r">${dt}</td></tr>`;
+      }).join('') + '</tbody>';
+
+  let subVal = '<span class="dmut">-</span>';
+  if(d.submit != null){
+    const ly = shownYears()[shownYears().length-1];
+    const ss = statusOfVal(d.submit, d, ly), sp = ratioValOf(d.submit, d, ly);
+    subVal = `<b style="font-size:15px">${fmt(d.submit,d)}${d.unit}</b>`
+      + `<span class="chip ${ST_CLS[ss]}" style="margin-left:8px">${ST_KO[ss]}${sp!=null?` ${ratioTxt(sp)}`:''}</span>`
+      + `<div class="dsub">${esc(d.evalName)}에 제출되는 2개년 평균값</div>`;
+  }else if(d.naReason){
+    subVal = `<span class="dmut">산출 자료 준비 중</span><div class="dsub">${esc(d.naReason)}</div>`;
+  }
+  const remarkRow = (d.remark && d.remark.length)
+    ? `<tr><th>비고</th><td><ul class="dlist">${d.remark.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></td></tr>` : '';
+  const row = (k, v) => `<tr><th>${k}</th><td>${v || '<span class="dmut">-</span>'}</td></tr>`;
+  $('#spotInfo').innerHTML =
+      row('관리부서', esc(d.dept || '-'))
+    + row('준거', `${d.areaKey} ${esc(d.areaName)} · ${d.code} ${esc(d.codeName)}`)
+    + row('계산식', `${esc(d.formula)}${d.fnote?`<div class="dsub">※ ${esc(d.fnote)}</div>`:''}`)
+    + remarkRow
+    + row('평가 제출값', subVal)
+    + row('기준연도', esc(d.basis))
+    + row('해당 평가', esc(d.evalName))
+    + row('자료 출처', esc(d.src))
+    + row('관리 방향', esc(d.direction || '-'))
+    + row('정보공시시기', esc(d.disclosure || '-'));
+  renderGrid(); renderList();
+  if(scroll) $('#spotCard').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function moveSpot(step){
+  const list = spotList();
+  if(!list.length) return;
+  let i = list.findIndex(d => d.id === CUR_KPI);
+  if(i < 0) i = 0;
+  setSpot(list[(i + step + list.length) % list.length].id, false);
+}
+function renderAll(){
+  renderControls(); renderSource(); renderSummary(); renderGrid(); renderList();
+  setSpot(CUR_KPI || spotList()[0].id, false);
+}
+
+
+/* ================= 정량지표 전체 보기 ================= */
+function deltaUnit(d){ return d.unit === '%' ? '%p' : d.unit; }
+function miniTrend(id){
+  const m = META[id], ys = shownYears();
+  const s = ys.map(y => ({year:y, v:(atYear(id,y)||{}).v ?? null}));
+  const have = s.filter(r => r.v != null);
+  if(!have.length) return '<span class="lt-mut">–</span>';
+  if(have.length === 1) return `<svg width="46" height="26" viewBox="0 0 46 26" aria-hidden="true"><circle cx="23" cy="13" r="3.6" fill="var(--s1)"/></svg>`;
+  const vs = have.map(r => r.v), mn = Math.min(...vs), mx = Math.max(...vs), sp = (mx-mn) || 1;
+  const W=46,H=26,P=4;
+  const pts = s.map((r,i) => r.v==null ? null : [P + i*(W-2*P)/(s.length-1), H-P-((r.v-mn)/sp)*(H-2*P)]);
+  const hp = pts.filter(Boolean);
+  const dpath = hp.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const last = hp[hp.length-1];
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" aria-hidden="true" style="overflow:visible">
+    <path d="${dpath}" fill="none" stroke="var(--s1)" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="3.4" fill="var(--s1)" stroke="var(--surface)" stroke-width="1.6"/></svg>`;
+}
+function renderList(){
+  const host = $('#listTbl'); if(!host) return;
+  const view = inView(), y = CUR_YEAR;
+  $('#listCount').textContent = `${view.length}개 지표`;
+  host.innerHTML = `<thead><tr>
+      <th style="width:150px">평가영역 · 준거</th>
+      <th style="min-width:300px">지표명</th>
+      <th style="width:112px" class="r">${y}년 실적</th>
+      <th style="width:270px">인증 기준값</th>
+      <th style="width:126px">모니터링 판정</th>
+      <th style="width:118px" class="r">전년 대비</th>
+      <th style="width:66px" class="r">추이</th>
+    </tr></thead><tbody>` + view.map(d => {
+    const r = atYear(d.id, y), st = statusOf(d.id, y), del = deltaOf(d.id, y);
+    /* 판정 : 기준값 달성 / 미달성 / 자료 준비 중 */
+    let judge = '<span class="lt-mut">–</span>';
+    if(st === 'ok')      judge = '<span class="chip good">기준값 달성</span>';
+    else if(st === 'warn') judge = '<span class="chip warn">기준값 근접</span>';
+    else if(st === 'no')   judge = '<span class="chip bad">기준값 미달성</span>';
+    else if(st === 'na') judge = `<span class="chip na">자료 준비 중</span>`
+                            + (d.naReason ? `<span class="lt-why">${esc(d.naReason)}</span>` : '');
+
+    let dl = '<span class="lt-mut">–</span>';
+    if(del && del.diff === 0) dl = '<span class="lt-dl flat">변동 없음</span>';
+    else if(del){
+      const better = d.op === '이하' ? del.diff < 0 : del.diff > 0;
+      dl = `<span class="lt-dl ${better?'good':'poor'}">${del.diff>0?'▲':'▼'} ${fmt(Math.abs(del.diff), d)}${deltaUnit(d)}</span>`;
+    }
+    /* 기준값 : 조건부 문구를 괄호가 아니라 아랫줄로 분리 */
+    const stdCell = `<div class="lt-std">${esc(stdTxtOf(d, y))}`
+      + ((d.remark && d.remark.length) ? d.remark.map(t=>`<span class="lt-cond">· ${esc(t)}</span>`).join('') : '')
+      + `</div>`;
+    return `<tr data-id="${d.id}" class="ev-${d.evalKey}${CUR_KPI===d.id?' on':''}">
+      <td><div class="lt-areawrap" style="--ac:${d.color}">
+        <span class="lt-areakey">${d.areaKey}</span>
+        <span class="lt-areaname">${esc(d.areaName)}</span>
+        <span class="lt-critcode">준거 ${d.code} ${esc(d.codeName)}</span></div></td>
+      <td><div class="lt-name">${esc(d.name)}${d.evalKey==='2030'?' <span class="ev-tag">2030 인증평가</span>':''}</div>
+        <div class="lt-desc">${esc(d.desc||'')}</div></td>
+      <td class="r mid"><span class="lt-val${(r&&r.v!=null)?'':' na'}">${(r&&r.v!=null)?fmt(r.v,d)+d.unit:'–'}</span></td>
+      <td>${stdCell}</td>
+      <td class="mid"><div class="lt-judge">${judge}</div></td>
+      <td class="r mid">${dl}</td>
+      <td class="r mid">${miniTrend(d.id)}</td>
+    </tr>`;
+  }).join('') + '</tbody>';
+  host.querySelectorAll('tbody tr').forEach(tr =>
+    tr.addEventListener('click', () => setSpot(tr.dataset.id, true)));
+}
+
+/* ================= UI ================= */
+function initUI(){
+  if(ADMIN){ $('#cfgBtn').hidden = false; $('#reloadBtn').hidden = false; }
+  const tb = $('#themeBtn');
+  const stored = (() => { try{ return localStorage.getItem('skhu_ir_theme'); }catch(e){ return null; } })();
+  if(stored) document.documentElement.setAttribute('data-theme', stored);
+  tb.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const isDark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    const next = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem('skhu_ir_theme', next); }catch(e){}
+    renderSummary(); renderGrid(); setSpot(CUR_KPI, false);
+  });
+  $('#areaSeg').addEventListener('click', e => {
+    const b = e.target.closest('button'); if(!b) return;
+    $('#areaSeg').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    CUR_AREA = b.dataset.area;
+    renderSummary(); renderGrid(); renderList();
+    setSpot(spotList().some(d => d.id === CUR_KPI) ? CUR_KPI : spotList()[0].id, false);
+  });
+  $('#yearSel').addEventListener('change', e => {
+    CUR_YEAR = +e.target.value; renderSummary(); renderGrid(); setSpot(CUR_KPI, false);
+  });
+  $('#spotPrev').addEventListener('click', () => moveSpot(-1));
+  $('#spotNext').addEventListener('click', () => moveSpot(1));
+  document.addEventListener('keydown', e => {
+    if(e.target.matches('input,select,textarea')) return;
+    if(e.key === 'ArrowLeft') moveSpot(-1);
+    if(e.key === 'ArrowRight') moveSpot(1);
+  });
+  $('#reloadBtn').addEventListener('click', async () => { await loadData(); renderAll(); });
+
+  const modal = $('#cfgModal');
+  const open = () => { $('#urlKpi').value = CFG.kpi || ''; modal.classList.add('open'); };
+  const close = () => modal.classList.remove('open');
+  $('#cfgBtn').addEventListener('click', open);
+  $('#cfgClose').addEventListener('click', close);
+  modal.addEventListener('click', e => { if(e.target === modal) close(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
+  $('#cfgSave').addEventListener('click', async () => {
+    CFG = {kpi: $('#urlKpi').value.trim()}; saveCfg(CFG); close(); await loadData(); renderAll();
+  });
+  $('#cfgReset').addEventListener('click', async () => {
+    CFG = {kpi:''}; saveCfg(CFG); close(); await loadData(); renderAll();
+  });
+}
+
+(async function init(){
+  initUI();
+  await loadData();
+  renderAll();
+})();
+</script>
+
+</body>
+</html>
